@@ -765,7 +765,7 @@ namespace cryptonote
 	if (!get_block_hashing_blob(b, blob))
 		return false;
 
-	if (BLOCK_MAJOR_VERSION_2 <= b.major_version)
+	if (b.major_version == BLOCK_MAJOR_VERSION_2 || b.major_version == BLOCK_MAJOR_VERSION_3)
 	{
 		blobdata parent_blob;
 		auto sbb = make_serializable_bytecoin_block(b, true, false);
@@ -930,6 +930,7 @@ namespace cryptonote
 	  case BLOCK_MAJOR_VERSION_1: return check_proof_of_work_v1(bl, current_diffic, proof_of_work);
 	  case BLOCK_MAJOR_VERSION_2:
 	  case BLOCK_MAJOR_VERSION_3:
+	  case BLOCK_MAJOR_VERSION_4:
 		  return check_proof_of_work_v2(bl, current_diffic, proof_of_work);
 	  }
 

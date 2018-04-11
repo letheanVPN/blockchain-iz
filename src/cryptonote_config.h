@@ -47,7 +47,7 @@
 #define BLOCK_MAJOR_VERSION_1                           1
 #define BLOCK_MAJOR_VERSION_2                           2
 #define BLOCK_MAJOR_VERSION_3                           3
-#define BLOCK_MAJOR_VERSION_4							4
+#define BLOCK_MAJOR_VERSION_4                           4
 #define CRYPTONOTE_BLOCK_FUTURE_TIME_LIMIT              60*60*2
 #define CRYPTONOTE_DEFAULT_TX_SPENDABLE_AGE             0
 

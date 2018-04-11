@@ -1180,7 +1180,7 @@ bool Blockchain::create_block_template(block& b, const account_public_address& m
    */
   //make blocks coin-base tx looks close to real coinbase tx to get truthful blob size
   uint8_t hf_version = m_hardfork->get_current_version();
-  size_t max_outs = hf_version >= 4 ? 1 : (height == 1 ? 12 : 11);
+  size_t max_outs = hf_version >= BLOCK_MAJOR_VERSION_4 ? 1 : (height == 1 ? 12 : 11);
   bool r = construct_miner_tx(height, median_size, already_generated_coins, txs_size, fee, miner_address, b.miner_tx, ex_nonce, max_outs, hf_version);
   CHECK_AND_ASSERT_MES(r, false, "Failed to construct miner tx, first chance");
   size_t cumulative_size = txs_size + get_object_blobsize(b.miner_tx);
@@ -2327,6 +2327,8 @@ bool Blockchain::check_tx_outputs(const transaction& tx, tx_verification_context
   // CHANGEME - more XMR changes that are not retroactive with our blockchain
 
   // from hard fork 2, we forbid dust and compound outputs
+  /*
+  ITNS never enabled dust removal with TX version 1
   if (m_hardfork->get_current_version() >= 6) {
     for (auto &o: tx.vout) {
       if (tx.version == 1)
@@ -2338,9 +2340,10 @@ bool Blockchain::check_tx_outputs(const transaction& tx, tx_verification_context
       }
     }
   }
+  */
 
   // in a v2 tx, all outputs must have 0 amount
-  if (m_hardfork->get_current_version() >= 2) {
+  if (m_hardfork->get_current_version() >= BLOCK_MAJOR_VERSION_4) {
     if (tx.version >= 2) {
       for (auto &o: tx.vout) {
         if (o.amount != 0) {
@@ -2467,7 +2470,7 @@ bool Blockchain::check_tx_inputs(transaction& tx, tx_verification_context &tvc, 
   // CHANGEME XMR HARDCODE for fork 2 - bumped to fork 6 to delay action for ITNS
   // from hard fork 2, we require mixin at least 2 unless one output cannot mix with 2 others
   // if one output cannot mix with 2 others, we accept at most 1 output that can mix
-  if (hf_version >= 6)
+  if (hf_version >= BLOCK_MAJOR_VERSION_4)
   {
     size_t n_unmixable = 0, n_mixable = 0;
     size_t mixin = std::numeric_limits<size_t>::max();
@@ -2517,7 +2520,7 @@ bool Blockchain::check_tx_inputs(transaction& tx, tx_verification_context &tvc, 
     }
 
     // min/max tx version based on HF, and we accept v1 txes if having a non mixable
-    const size_t max_tx_version = (hf_version <= 3) ? 1 : 2;
+    const size_t max_tx_version = (hf_version <= BLOCK_MAJOR_VERSION_3) ? 1 : 2;
     if (tx.version > max_tx_version)
     {
       MERROR_VER("transaction version " << (unsigned)tx.version << " is higher than max accepted version " << max_tx_version);
@@ -2850,7 +2853,7 @@ static uint64_t get_fee_quantization_mask()
 uint64_t Blockchain::get_dynamic_per_kb_fee(uint64_t block_reward, size_t median_block_size, uint8_t version)
 {
   const uint64_t min_block_size = get_min_block_size(version);
-  const uint64_t fee_per_kb_base = version >= 5 ? DYNAMIC_FEE_PER_KB_BASE_FEE_V5 : DYNAMIC_FEE_PER_KB_BASE_FEE;
+  const uint64_t fee_per_kb_base = version >= BLOCK_MAJOR_VERSION_4 ? DYNAMIC_FEE_PER_KB_BASE_FEE_V5 : DYNAMIC_FEE_PER_KB_BASE_FEE;
 
   if (median_block_size < min_block_size)
     median_block_size = min_block_size;
@@ -2960,7 +2963,7 @@ bool Blockchain::is_tx_spendtime_unlocked(uint64_t unlock_time) const
   {
     //interpret as time
     uint64_t current_time = static_cast<uint64_t>(time(NULL));
-    if(current_time + (get_current_hard_fork_version() < 2 ? CRYPTONOTE_LOCKED_TX_ALLOWED_DELTA_SECONDS_V1 : CRYPTONOTE_LOCKED_TX_ALLOWED_DELTA_SECONDS_V2) >= unlock_time)
+    if(current_time + (get_current_hard_fork_version() < BLOCK_MAJOR_VERSION_2 ? CRYPTONOTE_LOCKED_TX_ALLOWED_DELTA_SECONDS_V1 : CRYPTONOTE_LOCKED_TX_ALLOWED_DELTA_SECONDS_V2) >= unlock_time)
       return true;
     else
       return false;
@@ -3478,7 +3481,7 @@ leave:
 //------------------------------------------------------------------
 bool Blockchain::update_next_cumulative_size_limit()
 {
-	if (get_current_hard_fork_version() == BLOCK_MAJOR_VERSION_3)
+	if (get_current_hard_fork_version() >= BLOCK_MAJOR_VERSION_3)
 	{
 		//support ITNS max cumulative size limit change since 65k: large blocks every 5 blocks only
 		//transaction size is also checked here.
@@ -3628,7 +3631,8 @@ void Blockchain::block_longhash_worker(uint64_t height, const std::vector<block>
        break;
     crypto::hash id = get_block_hash(block);
 	crypto::hash pow;
-	if (get_hard_fork_version(height + 1) == BLOCK_MAJOR_VERSION_1) {
+	if (get_hard_fork_version(height + 1) == BLOCK_MAJOR_VERSION_1 ||
+		get_hard_fork_version(height + 1) >= BLOCK_MAJOR_VERSION_4) {
 		get_block_longhash(block, height++);
 		map.emplace(id, pow);
 	}
