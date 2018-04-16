@@ -854,7 +854,9 @@ namespace cryptonote
   bool get_block_longhash(const block& b, crypto::hash& res, uint64_t height)
   {
     blobdata bd = get_block_hashing_blob(b);
-    crypto::cn_slow_hash(bd.data(), bd.size(), res);
+    // PoW variant 1 appeared in block version 4, so our current PoW variant is calculated with "block version - 3"
+    const int cn_variant = b.major_version >= BLOCK_MAJOR_VERSION_4 ? b.major_version - 3 : 0;
+    crypto::cn_slow_hash(bd.data(), bd.size(), res, cn_variant);
     return true;
   }
   //---------------------------------------------------------------
