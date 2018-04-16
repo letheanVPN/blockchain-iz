@@ -107,6 +107,7 @@ static const struct {
   { 1, 1, 0, config::testnet::GENESIS_TIMESTAMP },
   { 2, 101, 0, 1518115575 },
   { 3, 201, 0, 1518117468 },
+  { 4, 301, 0, 1518118888 },
 };
 static const uint64_t testnet_hard_fork_version_1_till = 100;
 
@@ -1179,7 +1180,7 @@ bool Blockchain::create_block_template(block& b, const account_public_address& m
    */
   //make blocks coin-base tx looks close to real coinbase tx to get truthful blob size
   uint8_t hf_version = m_hardfork->get_current_version();
-  size_t max_outs = hf_version >= 4 ? 1 : (height == 1 ? 12 : 11);
+  size_t max_outs = hf_version >= 4 ? 1 : (height == 1 ? 16 : 11);
   bool r = construct_miner_tx(height, median_size, already_generated_coins, txs_size, fee, miner_address, b.miner_tx, ex_nonce, max_outs, hf_version);
   CHECK_AND_ASSERT_MES(r, false, "Failed to construct miner tx, first chance");
   size_t cumulative_size = txs_size + get_object_blobsize(b.miner_tx);
