@@ -110,7 +110,7 @@
 #define P2P_LOCAL_GRAY_PEERLIST_LIMIT                   5000
 
 #define P2P_DEFAULT_CONNECTIONS_COUNT                   8
-#define P2P_DEFAULT_HANDSHAKE_INTERVAL                  60           //secondes
+#define P2P_DEFAULT_HANDSHAKE_INTERVAL                  60           //seconds
 #define P2P_DEFAULT_PACKET_MAX_SIZE                     50000000     //50000000 bytes maximum packet size
 #define P2P_DEFAULT_PEERS_IN_HANDSHAKE                  250
 #define P2P_DEFAULT_CONNECTION_TIMEOUT                  5000       //5 seconds
@@ -120,10 +120,10 @@
 #define P2P_DEFAULT_WHITELIST_CONNECTIONS_PERCENT       70
 #define P2P_DEFAULT_ANCHOR_CONNECTIONS_COUNT            2
 
-#define P2P_FAILED_ADDR_FORGET_SECONDS                  (60*60)     //1 hour
-#define P2P_IP_BLOCKTIME                                (60*60*24)  //24 hour
-#define P2P_IP_FAILS_BEFORE_BLOCK                       10
-#define P2P_IDLE_CONNECTION_KILL_INTERVAL               (5*60) //5 minutes
+#define P2P_FAILED_ADDR_FORGET_SECONDS                  (60*60*3)  //3  hours (originally 1 hour)
+#define P2P_IP_BLOCKTIME                                (60*60*48) //48 hours (originally 12 hours)
+#define P2P_IP_FAILS_BEFORE_BLOCK                       3          //originally 10
+#define P2P_IDLE_CONNECTION_KILL_INTERVAL               (60*5)     //5 minutes
 
 #define P2P_SUPPORT_FLAG_FLUFFY_BLOCKS                  0x01
 #define P2P_SUPPORT_FLAGS                               P2P_SUPPORT_FLAG_FLUFFY_BLOCKS
