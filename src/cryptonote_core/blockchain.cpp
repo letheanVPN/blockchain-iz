@@ -1113,7 +1113,7 @@ bool Blockchain::create_block_template(block& b, const account_public_address& m
   uint64_t median_ts;
   if (!check_block_timestamp(b, median_ts))
   {
-    b.timestamp = median_ts;
+    b.timestamp = std::max(median_ts, m_db->get_top_block_timestamp() - CRYPTONOTE_BLOCK_FUTURE_TIME_LIMIT);
   }
 
   diffic = get_difficulty_for_next_block();
@@ -3076,6 +3076,16 @@ bool Blockchain::check_block_timestamp(std::vector<uint64_t>& timestamps, const 
 {
   LOG_PRINT_L3("Blockchain::" << __func__);
   median_ts = epee::misc_utils::median(timestamps);
+
+  uint8_t hf_version = get_current_hard_fork_version();
+  size_t blockchain_timestamp_check_window = hf_version < 2 ? BLOCKCHAIN_TIMESTAMP_CHECK_WINDOW : BLOCKCHAIN_TIMESTAMP_CHECK_WINDOW_V2;
+
+  uint64_t top_block_timestamp = m_db->get_top_block_timestamp();
+  if (hf_version > 5 && b.timestamp < top_block_timestamp - CRYPTONOTE_BLOCK_FUTURE_TIME_LIMIT_V6)
+  {
+    MERROR_VER("Timestamp of block with id: " << get_block_hash(b) << ", " << b.timestamp << ", is less than top block timestamp - FTL " << top_block_timestamp - CRYPTONOTE_BLOCK_FUTURE_TIME_LIMIT_V6);
+    return false;
+  }
 
   if(b.timestamp < median_ts)
   {
