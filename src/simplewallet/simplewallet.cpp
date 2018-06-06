@@ -497,13 +497,13 @@ bool simple_wallet::set_default_ring_size(const std::vector<std::string> &args/*
   {
     if (strchr(args[1].c_str(), '-'))
     {
-      fail_msg_writer() << tr("ring size must be an integer >= 3");
+      fail_msg_writer() << tr("ring size must be an integer >= ") << (DEFAULT_MIX + 1);
       return true;
     }
     uint32_t ring_size = boost::lexical_cast<uint32_t>(args[1]);
-    if (ring_size < 3 && ring_size != 0)
+    if (ring_size < (DEFAULT_MIX + 1) && ring_size != 0)
     {
-      fail_msg_writer() << tr("ring size must be an integer >= 3");
+      fail_msg_writer() << tr("ring size must be an integer >= ") << (DEFAULT_MIX + 1);
       return true;
     }
     if (ring_size == 0)
@@ -519,7 +519,7 @@ bool simple_wallet::set_default_ring_size(const std::vector<std::string> &args/*
   }
   catch(const boost::bad_lexical_cast &)
   {
-    fail_msg_writer() << tr("ring size must be an integer >= 3");
+    fail_msg_writer() << tr("ring size must be an integer >= ") << (DEFAULT_MIX + 1);
     return true;
   }
   catch(...)
@@ -848,7 +848,7 @@ bool simple_wallet::set_variable(const std::vector<std::string> &args)
     CHECK_SIMPLE_VARIABLE("always-confirm-transfers", set_always_confirm_transfers, tr("0 or 1"));
     CHECK_SIMPLE_VARIABLE("print-ring-members", set_print_ring_members, tr("0 or 1"));
     CHECK_SIMPLE_VARIABLE("store-tx-info", set_store_tx_info, tr("0 or 1"));
-    CHECK_SIMPLE_VARIABLE("default-ring-size", set_default_ring_size, tr("integer >= 3"));
+    CHECK_SIMPLE_VARIABLE("default-ring-size", set_default_ring_size, tr("integer >= 5"));
     CHECK_SIMPLE_VARIABLE("auto-refresh", set_auto_refresh, tr("0 or 1"));
     CHECK_SIMPLE_VARIABLE("refresh-type", set_refresh_type, tr("full (slowest, no assumptions); optimize-coinbase (fast, assumes the whole coinbase is paid to a single address); no-coinbase (fastest, assumes we receive no coinbase transaction), default (same as optimize-coinbase)"));
     CHECK_SIMPLE_VARIABLE("priority", set_default_priority, tr("0, 1, 2, 3, or 4"));
