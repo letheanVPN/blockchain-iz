@@ -712,7 +712,7 @@ difficulty_type Blockchain::get_difficulty_for_next_block()
   //    then when the next block difficulty is queried, push the latest height data and
   //    pop the oldest one from the list. This only requires 1x read per height instead
   //    of doing 735 (DIFFICULTY_BLOCKS_COUNT).
-  if (m_timestamps_and_difficulties_height != 0 && ((height - m_timestamps_and_difficulties_height) == 1))
+  if (m_timestamps_and_difficulties_height != 0 && ((height - m_timestamps_and_difficulties_height) == 1) && m_timestamps.size() >= difficultyBlocks)
   {
     uint64_t index = height - 1;
     m_timestamps.push_back(m_db->get_block_timestamp(index));
@@ -1113,7 +1113,7 @@ bool Blockchain::create_block_template(block& b, const account_public_address& m
   CHECK_AND_ASSERT_MES(diffic, false, "difficulty overhead.");
 
   //to calculate reward without a penalty, use the full reward zone as the median, or the median size of the last 100 blocks
-  //previously median_size was cumulative limit / 2. LTHN's large blocks every 5 was making the cumulative_size_limit larger 
+  //previously median_size was cumulative limit / 2. LTHN's large blocks every 5 was making the cumulative_size_limit larger
   //than this but not accounting for the decreased reward correctly
   std::vector<size_t> last_blocks_sizes;
   get_last_n_blocks_sizes(last_blocks_sizes, CRYPTONOTE_REWARD_BLOCKS_WINDOW);
@@ -1123,7 +1123,7 @@ bool Blockchain::create_block_template(block& b, const account_public_address& m
   //using the named constant as a reminder to change this section when we go to v5 and allow a max of (m_current_block_cumul_sz_limit / 2) for all blocks
   if (b.major_version < BLOCK_MAJOR_VERSION_5)
 	median_size = (median_size > (m_current_block_cumul_sz_limit / 2) ? (m_current_block_cumul_sz_limit / 2) : median_size);
-  
+
   already_generated_coins = m_db->get_block_already_generated_coins(height - 1);
 
   CRITICAL_REGION_END();
@@ -3506,7 +3506,7 @@ leave:
 //------------------------------------------------------------------
 bool Blockchain::update_next_cumulative_size_limit()
 {
-	if (get_current_hard_fork_version() == BLOCK_MAJOR_VERSION_3 || 
+	if (get_current_hard_fork_version() == BLOCK_MAJOR_VERSION_3 ||
 		get_current_hard_fork_version() == BLOCK_MAJOR_VERSION_4)
 	{
 		//support LTHN max cumulative size limit change since 65k: large blocks every 5 blocks only
