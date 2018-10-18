@@ -1123,7 +1123,7 @@ bool Blockchain::create_block_template(block& b, const account_public_address& m
   //using the named constant as a reminder to change this section when we go to v5 and allow a max of (m_current_block_cumul_sz_limit / 2) for all blocks
   if (b.major_version < BLOCK_MAJOR_VERSION_5)
 	median_size = (median_size > (m_current_block_cumul_sz_limit / 2) ? (m_current_block_cumul_sz_limit / 2) : median_size);
-	
+  
   already_generated_coins = m_db->get_block_already_generated_coins(height - 1);
 
   CRITICAL_REGION_END();
