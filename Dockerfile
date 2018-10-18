@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 
-ENV SRC_DIR /usr/local/src/intensecoin
+ENV SRC_DIR /usr/local/src/lethean
 
 RUN set -x \
   && buildDeps=' \
@@ -16,7 +16,7 @@ RUN set -x \
   && apt-get -qq update \
   && apt-get -qq --no-install-recommends install $buildDeps
 
-RUN git clone https://github.com/valiant1x/intensecoin.git $SRC_DIR
+RUN git clone https://github.com/LetheanMovement/intensecoin.git $SRC_DIR
 WORKDIR $SRC_DIR
 RUN git checkout xmr
 # checkout is temporary until master is also xmr source
@@ -28,11 +28,11 @@ RUN cp build/release/bin/* /usr/local/bin/ \
   && apt-get -qq --auto-remove purge $buildDeps
 
 # Contains the blockchain
-VOLUME /root/.intensecoin
+VOLUME /root/.lethean
 
 # Generate your wallet via accessing the container and run:
 # cd /wallet
-# intense-wallet-cli
+# lethean-wallet-cli
 VOLUME /wallet
 
 ENV LOG_LEVEL 0
@@ -44,4 +44,4 @@ ENV RPC_BIND_PORT 48782
 EXPOSE 48782
 EXPOSE 48772
 
-CMD intensecoind --log-level=$LOG_LEVEL --p2p-bind-ip=$P2P_BIND_IP --p2p-bind-port=$P2P_BIND_PORT --rpc-bind-ip=$RPC_BIND_IP --rpc-bind-port=$RPC_BIND_PORT
+CMD letheand --log-level=$LOG_LEVEL --p2p-bind-ip=$P2P_BIND_IP --p2p-bind-port=$P2P_BIND_PORT --rpc-bind-ip=$RPC_BIND_IP --rpc-bind-port=$RPC_BIND_PORT

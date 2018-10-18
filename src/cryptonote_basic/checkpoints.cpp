@@ -188,7 +188,7 @@ namespace cryptonote
   {
     std::vector<std::string> records;
 
-    // CHANGEME add ITNS DNS checkpoints
+    // CHANGEME add LTHN DNS checkpoints
     static const std::vector<std::string> dns_urls = {
     };
 

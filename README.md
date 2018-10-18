@@ -1,33 +1,33 @@
-[![Build Status](https://travis-ci.org/valiant1x/intensecoin.svg?branch=master)](https://travis-ci.org/valiant1x/intensecoin)
+[![Build Status](https://travis-ci.org/LetheanMovement/lethean.svg?branch=master)](https://travis-ci.org/LetheanMovement/lethean)
 
-# Intense Coin
+# Lethean
 
-Portions Copyright (c) 2018, The Intense Coin developers
+Portions Copyright (c) 2018, The Lethean developers
 Copyright (c) 2014-2017, The Monero Project
 Portions Copyright (c) 2012-2013, The Cryptonote developers
 
 ## Development Resources
 
-- Web: [intensecoin.com](https://intensecoin.com/)
-- GitHub: [https://github.com/valiant1x/intensecoin](https://github.com/valiant1x/intensecoin)
+- Web: [lethean.io](https://lethean.io/)
+- GitHub: [https://github.com/LetheanMovement/intensecoin](https://github.com/LetheanMovement/intensecoin)
 
 ## Introduction
 
-Intense Coin is a private, secure, untraceable, decentralised digital currency. You are your bank, you control your funds, and nobody can trace your transfers unless you allow them to do so.
+Lethean is a private, secure, untraceable, decentralised digital currency. You are your bank, you control your funds, and nobody can trace your transfers unless you allow them to do so.
 
-**Privacy:** Intense Coin uses a cryptographically sound system to allow you to send and receive funds without your transactions being easily revealed on the blockchain (the ledger of transactions that everyone has). This ensures that your purchases, receipts, and all transfers remain absolutely private by default.
+**Privacy:** Lethean uses a cryptographically sound system to allow you to send and receive funds without your transactions being easily revealed on the blockchain (the ledger of transactions that everyone has). This ensures that your purchases, receipts, and all transfers remain absolutely private by default.
 
 **Security:** Using the power of a distributed peer-to-peer consensus network, every transaction on the network is cryptographically secured. Individual wallets have a 25 word mnemonic seed that is only displayed once, and can be written down to backup the wallet. Wallet files are encrypted with a passphrase to ensure they are useless if stolen.
 
-**Untraceability:** By taking advantage of ring signatures, a special property of a certain type of cryptography, Intense Coin is able to ensure that transactions are not only untraceable, but have an optional measure of ambiguity that ensures that transactions cannot easily be tied back to an individual user or computer.
+**Untraceability:** By taking advantage of ring signatures, a special property of a certain type of cryptography, Lethean is able to ensure that transactions are not only untraceable, but have an optional measure of ambiguity that ensures that transactions cannot easily be tied back to an individual user or computer.
 
 ## About this Project
 
-This is the core implementation of Intense Coin. It is open source and completely free to use without restrictions, except for those specified in the license agreement below. There are no restrictions on anyone creating an alternative implementation of Intense Coin that uses the protocol and network in a compatible manner.
+This is the core implementation of Lethean. It is open source and completely free to use without restrictions, except for those specified in the license agreement below. There are no restrictions on anyone creating an alternative implementation of Lethean that uses the protocol and network in a compatible manner.
 
 As with many development projects, the repository on Github is considered to be the "staging" area for the latest changes. Before changes are merged into that branch on the main repository, they are tested by individual developers in their own branches, submitted as a pull request, and then subsequently tested by contributors who focus on testing and code reviews. That having been said, the repository should be carefully considered before using it in a production environment, unless there is a patch in the repository for a particular show-stopping issue you are experiencing. It is generally a better idea to use a tagged release for stability.
 
-**Anyone is welcome to contribute to Intense Coin's codebase!** If you have a fix or code change, feel free to submit it as a pull request directly to the "master" branch. In cases where the change is relatively small or does not affect other parts of the codebase it may be merged in immediately by any one of the collaborators. On the other hand, if the change is particularly large or complex, it is expected that it will be discussed at length either well in advance of the pull request being submitted, or even directly on the pull request.
+**Anyone is welcome to contribute to Lethean's codebase!** If you have a fix or code change, feel free to submit it as a pull request directly to the "master" branch. In cases where the change is relatively small or does not affect other parts of the codebase it may be merged in immediately by any one of the collaborators. On the other hand, if the change is particularly large or complex, it is expected that it will be discussed at length either well in advance of the pull request being submitted, or even directly on the pull request.
 
 ## License
 
@@ -41,13 +41,13 @@ If you want to help out, see [CONTRIBUTING](CONTRIBUTING.md) for a set of guidel
 
 See [Vulnerability Response Process](VULNERABILITY_RESPONSE_PROCESS.md).
 
-## Intense Coin software updates and consensus protocol changes (hard fork schedule)
+## Lethean software updates and consensus protocol changes (hard fork schedule)
 
-Intense Coin uses a fixed-schedule hard fork mechanism to implement new features. This means that users of Intense Coin (end users and service providers) need to run current versions and update their software on a regular schedule.
+Lethean uses a fixed-schedule hard fork mechanism to implement new features. This means that users of Lethean (end users and service providers) need to run current versions and update their software on a regular schedule.
 
 **The last hard fork was on April 18, 2018. Version 2.0.0 (Belaya) or later of the software is required to be compliant with the latest hard fork!**
 
-## Compiling Intense Coin from Source
+## Compiling Lethean from Source
 
 ### Dependencies
 
@@ -82,7 +82,7 @@ build the library binary manually. This can be done with the following command `
 
 ### Build instructions
 
-Intense Coin uses the CMake build system and a top-level [Makefile](Makefile) that
+Lethean uses the CMake build system and a top-level [Makefile](Makefile) that
 invokes cmake commands as needed.
 
 #### On Linux and OS X
@@ -90,7 +90,7 @@ invokes cmake commands as needed.
 * Install the dependencies
 * Change to the root of the source code directory and build:
 
-        cd intensecoin
+        cd lethean
         make
 
     *Optional*: If your machine has several cores and enough memory, enable
@@ -100,9 +100,9 @@ invokes cmake commands as needed.
 
 * The resulting executables can be found in `build/release/bin`
 
-* Add `PATH="$PATH:$HOME/intensecoin/build/release/bin"` to `.profile`
+* Add `PATH="$PATH:$HOME/lethean/build/release/bin"` to `.profile`
 
-* Run Intense Coin with `intensecoind --detach`
+* Run Lethean with `letheand --detach`
 
 * **Optional**: build and run the test suite to verify the binaries:
 
@@ -128,7 +128,7 @@ Tested on a Raspberry Pi 2 with a clean install of minimal Debian Jessie from ht
 
 * `apt-get update && apt-get upgrade` to install all of the latest software
 
-* Install the dependencies for Intense Coin except libunwind and libboost-all-dev
+* Install the dependencies for Lethean except libunwind and libboost-all-dev
 
 * Increase the system swap size:
 ```	
@@ -154,16 +154,16 @@ Tested on a Raspberry Pi 2 with a clean install of minimal Debian Jessie from ht
 
 * Change to the root of the source code directory and build:
 ```
-        cd intensecoin
+        cd lethean
         make release
 ```
 * Wait ~4 hours
 
 * The resulting executables can be found in `build/release/bin`
 
-* Add `PATH="$PATH:$HOME/intensecoin/build/release/bin"` to `.profile`
+* Add `PATH="$PATH:$HOME/lethean/build/release/bin"` to `.profile`
 
-* Run Intense Coin with `intensecoind --detach`
+* Run Lethean with `letheand --detach`
 
 * You may wish to reduce the size of the swap file after the build has finished, and delete the boost directory from your home directory
 
@@ -218,9 +218,9 @@ application.
 
 ### On FreeBSD:
 
-The project can be built from scratch by following instructions for Linux above. If you are running Intense Coin in a jail you need to add the flag: `allow.sysvipc=1` to your jail configuration, otherwise lmdb will throw the error message: `Failed to open lmdb environment: Function not implemented`.
+The project can be built from scratch by following instructions for Linux above. If you are running Lethean in a jail you need to add the flag: `allow.sysvipc=1` to your jail configuration, otherwise lmdb will throw the error message: `Failed to open lmdb environment: Function not implemented`.
 
-We expect to add Intense Coin into the ports tree in the near future, which will aid in managing installations using ports or packages.
+We expect to add Lethean into the ports tree in the near future, which will aid in managing installations using ports or packages.
 
 ### On OpenBSD:
 
@@ -233,18 +233,18 @@ The doxygen and graphviz packages are optional and require the xbase set.
 The Boost package has a bug that will prevent librpc.a from building correctly. In order to fix this, you will have to Build boost yourself from scratch. Follow the directions here (under "Building Boost"):
 https://github.com/bitcoin/bitcoin/blob/master/doc/build-openbsd.md
 
-You will have to add the serialization, date_time, and regex modules to Boost when building as they are needed by Intense Coin.
+You will have to add the serialization, date_time, and regex modules to Boost when building as they are needed by Lethean.
 
 To build: `env CC=egcc CXX=eg++ CPP=ecpp DEVELOPER_LOCAL_TOOLS=1 BOOST_ROOT=/path/to/the/boost/you/built make release-static-64`
 
 ### On Linux for Android (using docker):
 
         # Build image (select android64.Dockerfile for aarch64)
-        cd utils/build_scripts/ && docker build -f android32.Dockerfile -t intensecoin-android .
+        cd utils/build_scripts/ && docker build -f android32.Dockerfile -t lethean-android .
         # Create container
-        docker create -it --name intensecoin-android intensecoin-android bash
+        docker create -it --name lethean-android lethean-android bash
         # Get binaries
-        docker cp intensecoin-android:/opt/android/intensecoin/build/release/bin .
+        docker cp lethean-android:/opt/android/lethean/build/release/bin .
 
 ### Building Portable Statically Linked Binaries
 
@@ -258,15 +258,15 @@ By default, in either dynamically or statically linked builds, binaries target t
 * ```make release-static-win64``` builds binaries on 64-bit Windows portable across 64-bit Windows systems
 * ```make release-static-win32``` builds binaries on 64-bit or 32-bit Windows portable across 32-bit Windows systems
 
-## Running intensecoind
+## Running letheand
 
 The build places the binary in `bin/` sub-directory within the build directory
 from which cmake was invoked (repository root by default). To run in
 foreground:
 
-    ./bin/intensecoind
+    ./bin/letheand
 
-To list all available options, run `./bin/intensecoind --help`.  Options can be
+To list all available options, run `./bin/letheand --help`.  Options can be
 specified either on the command line or in a configuration file passed by the
 `--config-file` argument.  To specify an option in the configuration file, add
 a line with the syntax `argumentname=value`, where `argumentname` is the name
@@ -274,7 +274,7 @@ of the argument without the leading dashes, for example `log-level=1`.
 
 To run in background:
 
-    ./bin/intensecoind --log-file intensecoind.log --detach
+    ./bin/letheand --log-file letheand.log --detach
 
 ## Internationalization
 

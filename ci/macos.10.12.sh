@@ -46,14 +46,15 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "CI: Creating release archive..."
-RELEASE_NAME="intensecoin-cli-mac-64bit-$BUILD_VERSION"
+RELEASE_NAME="lethean-cli-mac-64bit-$BUILD_VERSION"
 cd build/release/bin/
 mkdir $RELEASE_NAME
-cp intense-blockchain-export $RELEASE_NAME/
-cp intense-blockchain-import $RELEASE_NAME/
-cp intense-wallet-cli $RELEASE_NAME/
-cp intense-wallet-rpc $RELEASE_NAME/
-cp intensecoind $RELEASE_NAME/
+cp lethean-blockchain-export $RELEASE_NAME/
+cp lethean-blockchain-import $RELEASE_NAME/
+cp lethean-wallet-cli $RELEASE_NAME/
+cp lethean-wallet-rpc $RELEASE_NAME/
+cp lethean-wallet-vpn-rpc $RELEASE_NAME/
+cp letheand $RELEASE_NAME/
 cp ../../../ci/package-artifacts/CHANGELOG.txt $RELEASE_NAME/
 cp ../../../ci/package-artifacts/README.txt $RELEASE_NAME/
 tar -cvjf $RELEASE_NAME.tar.bz2 $RELEASE_NAME

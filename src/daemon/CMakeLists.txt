@@ -102,5 +102,5 @@ target_link_libraries(daemon
 add_dependencies(daemon version)
 set_property(TARGET daemon
   PROPERTY
-    OUTPUT_NAME "intensecoind")
+    OUTPUT_NAME "letheand")
 install(TARGETS daemon DESTINATION bin)

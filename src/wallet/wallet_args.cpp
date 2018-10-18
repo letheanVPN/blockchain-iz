@@ -149,7 +149,7 @@ namespace wallet_args
 
     if (command_line::get_arg(vm, command_line::arg_help))
     {
-      tools::msg_writer() << "Intense Coin '" << MONERO_RELEASE_NAME << "' (v" << MONERO_VERSION_FULL << ")" << ENDL;
+      tools::msg_writer() << "Lethean '" << MONERO_RELEASE_NAME << "' (v" << MONERO_VERSION_FULL << ")" << ENDL;
       tools::msg_writer() << wallet_args::tr("This is the command line monero wallet. It needs to connect to a monero\n"
 												"daemon to work correctly.") << ENDL;
       tools::msg_writer() << wallet_args::tr("Usage:") << ENDL << "  " << usage;
@@ -158,14 +158,14 @@ namespace wallet_args
     }
     else if (command_line::get_arg(vm, command_line::arg_version))
     {
-      tools::msg_writer() << "Intense Coin '" << MONERO_RELEASE_NAME << "' (v" << MONERO_VERSION_FULL << ")";
+      tools::msg_writer() << "Lethean '" << MONERO_RELEASE_NAME << "' (v" << MONERO_VERSION_FULL << ")";
       return boost::none;
     }
 
     if(command_line::has_arg(vm, arg_max_concurrency))
       tools::set_max_concurrency(command_line::get_arg(vm, arg_max_concurrency));
 
-    tools::scoped_message_writer(epee::console_color_white, true) << "Intense Coin '" << MONERO_RELEASE_NAME << "' (v" << MONERO_VERSION_FULL << ")";
+    tools::scoped_message_writer(epee::console_color_white, true) << "Lethean '" << MONERO_RELEASE_NAME << "' (v" << MONERO_VERSION_FULL << ")";
 
     if (!vm["log-level"].defaulted())
       MINFO("Setting log level = " << command_line::get_arg(vm, arg_log_level));

@@ -1,3 +1,9 @@
+v3.0.0.b2 - 2018.09.28
+ - added functionality for proxy service
+ - rebranded to Lethean: https://github.com/LetheanMovement/lethean/pull/116
+ - fixed issue with mixable outputs: https://github.com/LetheanMovement/lethean/pull/117
+ - fixed issue with DoS on RPC: https://github.com/LetheanMovement/lethean/pull/115
+
 v2.0.2.1 - 2018.05.10
  - added ability to open additional types of wallets created before version v2.0.0
  - fixed issue with the connection_id field not being a valid string in the get_connections RPC command

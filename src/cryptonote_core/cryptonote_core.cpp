@@ -302,7 +302,7 @@ namespace cryptonote
       {
         MWARNING("Found old-style blockchain.bin in " << old_files.string());
         MWARNING("Monero now uses a new format. You can either remove blockchain.bin to start syncing");
-        MWARNING("the blockchain anew, or use intense-blockchain-export and intense-blockchain-import to");
+        MWARNING("the blockchain anew, or use lethean-blockchain-export and lethean-blockchain-import to");
         MWARNING("convert your existing blockchain.bin to the new format. See README.md for instructions.");
         return false;
       }
@@ -729,7 +729,7 @@ namespace cryptonote
       }
     }
     // for version > 1, ringct signatures check verifies amounts match
-	// CHANGEME - this should be reduced from *50 in the future; currently only allowing accommodation of large ITNS blocks every 5
+	// CHANGEME - this should be reduced from *50 in the future; currently only allowing accommodation of large LTHN blocks every 5
 	// as XMR receives pool transactions at variable times, independent of the block sync,
 	// we cannot use height % 5 as an indicator of whether or not TX size is appropriate - thus appropriat TX size is multiplied by 50
     if(!keeped_by_block && get_object_blobsize(tx) >= m_blockchain_storage.get_current_cumulative_blocksize_limit() * 50 - CRYPTONOTE_COINBASE_BLOB_RESERVED_SIZE)
@@ -1300,7 +1300,7 @@ namespace cryptonote
   //-----------------------------------------------------------------------------------------------
   bool core::check_updates()
   {
-    static const char software[] = "intensecoin";
+    static const char software[] = "lethean";
 #ifdef BUILD_TAG
     static const char buildtag[] = BOOST_PP_STRINGIZE(BUILD_TAG);
     static const char subdir[] = "cli"; // because it can never be simple
@@ -1309,7 +1309,7 @@ namespace cryptonote
     static const char subdir[] = "source"; // because it can never be simple
 #endif
 
-    MCDEBUG("updates", "Skipping checking for a new " << software << " version - not configured for Intense Coin");
+    MCDEBUG("updates", "Skipping checking for a new " << software << " version - not configured for Lethean");
     //CHANGE ME
     return true;
 

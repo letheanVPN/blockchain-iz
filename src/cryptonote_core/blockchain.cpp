@@ -1035,7 +1035,7 @@ bool Blockchain::validate_miner_transaction(const block& b, size_t cumulative_bl
     return false;
   }
   // From hard fork 2, we allow a miner to claim less block reward than is allowed, in case a miner wants less dust
-  // -- Reward penalties were in place from block 0 on Intense Coin -> miners may not use full block reward amount.
+  // -- Reward penalties were in place from block 0 on Lethean -> miners may not use full block reward amount.
   /*if (m_hardfork->get_current_version() < 2)
   {
     if(base_reward + fee != money_in_use)
@@ -1132,7 +1132,7 @@ bool Blockchain::create_block_template(block& b, const account_public_address& m
   CHECK_AND_ASSERT_MES(diffic, false, "difficulty overhead.");
 
   //to calculate reward without a penalty, use the full reward zone as the median, or the median size of the last 100 blocks
-  //previously median_size was cumulative limit / 2. ITNS's large blocks every 5 was making the cumulative_size_limit larger
+  //previously median_size was cumulative limit / 2. LTHN's large blocks every 5 was making the cumulative_size_limit larger 
   //than this but not accounting for the decreased reward correctly
   std::vector<size_t> last_blocks_sizes;
   get_last_n_blocks_sizes(last_blocks_sizes, CRYPTONOTE_REWARD_BLOCKS_WINDOW);
@@ -2372,7 +2372,7 @@ bool Blockchain::check_tx_outputs(const transaction& tx, tx_verification_context
 
   // from hard fork 2, we forbid dust and compound outputs
   /*
-  ITNS never enabled dust removal with TX version 1
+  LTHN never enabled dust removal with TX version 1
   if (m_hardfork->get_current_version() >= 6) {
     for (auto &o: tx.vout) {
       if (tx.version == 1)
@@ -2511,7 +2511,7 @@ bool Blockchain::check_tx_inputs(transaction& tx, tx_verification_context &tvc, 
 
   const uint8_t hf_version = m_hardfork->get_current_version();
 
-  // CHANGEME XMR HARDCODE for fork 2 - bumped to fork 6 to delay action for ITNS
+  // CHANGEME XMR HARDCODE for fork 2 - bumped to fork 6 to delay action for LTHN
   // from hard fork 2, we require mixin at least 2 unless one output cannot mix with 2 others
   // if one output cannot mix with 2 others, we accept at most 1 output that can mix
   if (hf_version >= BLOCK_MAJOR_VERSION_4)
@@ -3529,7 +3529,7 @@ bool Blockchain::update_next_cumulative_size_limit()
 	if (get_current_hard_fork_version() == BLOCK_MAJOR_VERSION_3 ||
 		get_current_hard_fork_version() == BLOCK_MAJOR_VERSION_4)
 	{
-		//support ITNS max cumulative size limit change since 65k: large blocks every 5 blocks only
+		//support LTHN max cumulative size limit change since 65k: large blocks every 5 blocks only
 		//transaction size is also checked here.
 		uint64_t height = m_db->height();
 		size_t size_limit = 20 * 1024;

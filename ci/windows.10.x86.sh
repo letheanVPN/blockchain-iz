@@ -9,14 +9,15 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "CI: Creating release archive..."
-RELEASE_NAME="intensecoin-cli-win-32bit-$BUILD_VERSION"
+RELEASE_NAME="lethean-cli-win-32bit-$BUILD_VERSION"
 cd build/release/bin/
 mkdir $RELEASE_NAME
-cp intense-blockchain-export.exe $RELEASE_NAME/
-cp intense-blockchain-import.exe $RELEASE_NAME/
-cp intense-wallet-cli.exe $RELEASE_NAME/
-cp intense-wallet-rpc.exe $RELEASE_NAME/
-cp intensecoind.exe $RELEASE_NAME/
+cp lethean-blockchain-export.exe $RELEASE_NAME/
+cp lethean-blockchain-import.exe $RELEASE_NAME/
+cp lethean-wallet-cli.exe $RELEASE_NAME/
+cp lethean-wallet-rpc.exe $RELEASE_NAME/
+cp lethean-wallet-vpn-rpc.exe $RELEASE_NAME/
+cp letheand.exe $RELEASE_NAME/
 cp ../../../ci/package-artifacts/CHANGELOG.txt $RELEASE_NAME/
 cp ../../../ci/package-artifacts/README.txt $RELEASE_NAME/
 zip -rv $RELEASE_NAME.zip $RELEASE_NAME

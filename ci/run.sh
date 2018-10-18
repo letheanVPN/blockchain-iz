@@ -9,6 +9,7 @@ else
 	BUILD_COMMIT=`git rev-parse --short HEAD`
 	BUILD_VERSION="$BUILD_BRANCH-$BUILD_COMMIT"
 fi
+BUILD_VERSION=${BUILD_VERSION//\//-}
 export BUILD_VERSION
 
 # determine build host

@@ -2,7 +2,7 @@
 
 if [ ! -d "$SNAP_USER_DATA/etc" ]; then
   mkdir $SNAP_USER_DATA/etc/
-  cp -R $SNAP/etc/intensecoind.conf $SNAP_USER_DATA/etc/intensecoind.conf
+  cp -R $SNAP/etc/letheand.conf $SNAP_USER_DATA/etc/letheand.conf
 fi
 
-exec "$SNAP/bin/intensecoind" "$@"
+exec "$SNAP/bin/letheand" "$@"

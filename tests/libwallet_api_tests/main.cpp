@@ -67,7 +67,7 @@ const char * WALLET_PASS = "password";
 const char * WALLET_PASS2 = "password22";
 const char * WALLET_LANG = "English";
 
-std::string WALLETS_ROOT_DIR = "/var/intense/testnet_pvt";
+std::string WALLETS_ROOT_DIR = "/var/lethean/testnet_pvt";
 std::string TESTNET_WALLET1_NAME;
 std::string TESTNET_WALLET2_NAME;
 std::string TESTNET_WALLET3_NAME;

@@ -1,30 +1,30 @@
-name: Intense Coin
+name: Lethean
 version: 0.10.2-1
-summary: "Intense Coin: Blockchain driven VPN https://intensecoin.com"
+summary: "Lethean: Blockchain driven VPN https://lethean.io"
 description: |
-    Intense Coin is a private, secure, untraceable, decentralised digital currency.
-    It is the fuel for the distributed Intense Virtual Private Network (VPN).
+    Lethean is a private, secure, untraceable, decentralised digital currency.
+    It is the fuel for the distributed Lethean Virtual Private Network (VPN).
 grade: devel
 confinement: strict
 
 apps:
-    intensecoind:
+    letheand:
         daemon: forking
         command: |
-          intensecoind-wrapper --detach --data-dir ${SNAP_COMMON} --config-file ${SNAP_USER_DATA}/etc/intensecoind.conf
+          letheand-wrapper --detach --data-dir ${SNAP_COMMON} --config-file ${SNAP_USER_DATA}/etc/letheand.conf
         plugs:
             - network
             - network-bind
-    intense-wallet-rpc:
+    lethean-wallet-rpc:
         command: |
-          intense-wallet-rpc --log-file ${SNAP_USER_DATA}
+          lethean-wallet-rpc --log-file ${SNAP_USER_DATA}
         plugs:
             - home
             - network
             - network-bind
-    intense-wallet-cli:
+    lethean-wallet-cli:
         command: |
-          intense-wallet-cli --log-file ${SNAP_USER_DATA}
+          lethean-wallet-cli --log-file ${SNAP_USER_DATA}
         plugs:
             - home
             - network
@@ -67,8 +67,8 @@ parts:
         plugin: dump
         source: .
         organize:
-            contrib/snap/intensecoind.conf: etc/intensecoind.conf
-            contrib/snap/intensecoind-wrapper: bin/intensecoind-wrapper
+            contrib/snap/letheand.conf: etc/letheand.conf
+            contrib/snap/letheand-wrapper: bin/letheand-wrapper
         prime:
             - etc
             - bin

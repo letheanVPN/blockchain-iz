@@ -671,7 +671,6 @@ void wallet2::process_new_transaction(const crypto::hash &txid, const cryptonote
 
   if (!miner_tx)
     process_unconfirmed(txid, tx, height);
-  std::vector<size_t> outs;
   uint64_t tx_money_got_in_outs = 0;
   crypto::public_key tx_pub_key = null_pkey;
 
@@ -684,8 +683,10 @@ void wallet2::process_new_transaction(const crypto::hash &txid, const cryptonote
 
   // Don't try to extract tx public key if tx has no ouputs
   size_t pk_index = 0;
+  uint64_t total_received_1 = 0;
   while (!tx.vout.empty())
   {
+		std::vector<size_t> outs;
     // if tx.vout is not empty, we loop through all tx pubkeys
 
     tx_extra_pub_key pub_key_field;
@@ -887,6 +888,7 @@ void wallet2::process_new_transaction(const crypto::hash &txid, const cryptonote
             + ", m_transfers.size() is " + boost::lexical_cast<std::string>(m_transfers.size()));
         if (kit == m_pub_keys.end())
         {
+					uint64_t amount_s = (tx.vout[o].amount ? tx.vout[o].amount : amount[o]);
           if (!pool)
           {
 	    m_transfers.push_back(boost::value_initialized<transfer_details>());
@@ -898,12 +900,11 @@ void wallet2::process_new_transaction(const crypto::hash &txid, const cryptonote
 	    td.m_txid = txid;
             td.m_key_image = ki[o];
             td.m_key_image_known = !m_watch_only;
-            td.m_amount = tx.vout[o].amount;
+            td.m_amount = amount_s;
             td.m_pk_index = pk_index - 1;
-            if (td.m_amount == 0)
+            if (tx.vout[o].amount == 0)
             {
               td.m_mask = mask[o];
-              td.m_amount = amount[o];
               td.m_rct = true;
             }
             else if (miner_tx && tx.version == 2)
@@ -923,6 +924,7 @@ void wallet2::process_new_transaction(const crypto::hash &txid, const cryptonote
 	    if (0 != m_callback)
 	      m_callback->on_money_received(height, txid, tx, td.m_amount);
           }
+					total_received_1 += amount_s;
         }
 	else if (m_transfers[kit->second].m_spent || m_transfers[kit->second].amount() >= tx.vout[o].amount)
         {
@@ -936,8 +938,17 @@ void wallet2::process_new_transaction(const crypto::hash &txid, const cryptonote
 	  LOG_ERROR("Public key " << epee::string_tools::pod_to_hex(kit->first)
               << " from received " << print_money(tx.vout[o].amount) << " output already exists with "
               << print_money(m_transfers[kit->second].amount()) << ", replacing with new output");
+
           // The new larger output replaced a previous smaller one
-          tx_money_got_in_outs -= tx.vout[o].amount;
+		THROW_WALLET_EXCEPTION_IF(tx_money_got_in_outs < tx.vout[o].amount,
+				error::wallet_internal_error, "Unexpected values of new and old outputs");
+		THROW_WALLET_EXCEPTION_IF(m_transfers[kit->second].amount() > tx.vout[o].amount,
+				error::wallet_internal_error, "Unexpected values of new and old outputs");
+		tx_money_got_in_outs -= m_transfers[kit->second].amount();
+//          tx_money_got_in_outs -= tx.vout[o].amount;
+
+		uint64_t amount_s = (tx.vout[o].amount ? tx.vout[o].amount : amount[o]);
+		uint64_t extra_amount = amount_s - m_transfers[kit->second].amount();
 
           if (!pool)
           {
@@ -947,12 +958,11 @@ void wallet2::process_new_transaction(const crypto::hash &txid, const cryptonote
 	    td.m_global_output_index = o_indices[o];
 	    td.m_tx = (const cryptonote::transaction_prefix&)tx;
 	    td.m_txid = txid;
-            td.m_amount = tx.vout[o].amount;
+            td.m_amount = amount_s;
             td.m_pk_index = pk_index - 1;
-            if (td.m_amount == 0)
+            if (tx.vout[o].amount == 0)
             {
               td.m_mask = mask[o];
-              td.m_amount = amount[o];
               td.m_rct = true;
             }
             else if (miner_tx && tx.version == 2)
@@ -972,6 +982,7 @@ void wallet2::process_new_transaction(const crypto::hash &txid, const cryptonote
 	    if (0 != m_callback)
 	      m_callback->on_money_received(height, txid, tx, td.m_amount);
           }
+          total_received_1 += extra_amount;
         }
       }
     }
@@ -1052,6 +1063,17 @@ void wallet2::process_new_transaction(const crypto::hash &txid, const cryptonote
     {
       LOG_PRINT_L2("Found unencrypted payment ID: " << payment_id);
     }
+
+		if (total_received_1 != tx_money_got_in_outs)
+		{
+			const el::Level level = el::Level::Warning;
+			MCLOG_RED(level, "global", "**********************************************************************");
+			MCLOG_RED(level, "global", "Consistency failure in amounts received");
+			MCLOG_RED(level, "global", "Check transaction " << txid);
+			MCLOG_RED(level, "global", "**********************************************************************");
+			exit(1);
+			return;
+		}
 
     payment_details payment;
     payment.m_tx_hash      = txid;
@@ -2025,7 +2047,7 @@ namespace
 	//----------------------------------------------------------------------------------------------------
 	//legacy wallet deserialization and decryption functions
 	//Following four functions Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers GNUGPL
-	//Modifications Copyright (c) 2018 Intense Coin developers
+	//Modifications Copyright (c) 2018 Lethean developers
 	std::string readCipher(Common::IInputStream& source, const size_t& sz, const std::string& name) {
 		//use a vector of dynamic size instead of std::string. using std::string reads the entire file
 		std::vector<char> cipher(sz);
@@ -2057,10 +2079,10 @@ namespace
 		//LOG_PRINT_L0("Decrypted [" << plain.length() << "] " << string_tools::buff_to_hex_nodelimer(plain));
 		deserialize(obj, name, plain);
 	}
-	//End Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers GNUGPL 
+	//End Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers GNUGPL
 	//----------------------------------------------------------------------------------------------------
 }
-bool wallet2::upgrade_legacy_wallet(const std::string& wallet_file_name, const std::string& password) 
+bool wallet2::upgrade_legacy_wallet(const std::string& wallet_file_name, const std::string& password)
 {
 	clear();
 	prepare_file_names(wallet_file_name);
@@ -2116,7 +2138,7 @@ bool wallet2::upgrade_legacy_wallet(const std::string& wallet_file_name, const s
 		crypto::chacha8(cipher.data(), cipher.size(), enc_key, iv, &plain[0]);
 
 		Common::MemoryInputStream decryptedStream(plain.data(), plain.size());
-		CryptoNote::BinaryInputStreamSerializer serializer(decryptedStream);	
+		CryptoNote::BinaryInputStreamSerializer serializer(decryptedStream);
 
 		try {
 			legacy_keys.serialize(serializer, "keys");
@@ -2127,11 +2149,11 @@ bool wallet2::upgrade_legacy_wallet(const std::string& wallet_file_name, const s
 		}
 	}
 	else if (version <= 6) {
-		
+
 		CryptoContext cryptoContext;
 
 		crypto::chacha8_iv nextIv;
-		serializerEncrypted(nextIv, "nextIv");		
+		serializerEncrypted(nextIv, "nextIv");
 		//first IV is unused? get next IV...
 		serializerEncrypted(nextIv, "nextIv");
 		serializerEncrypted.endObject();
@@ -2177,7 +2199,7 @@ bool wallet2::upgrade_legacy_wallet(const std::string& wallet_file_name, const s
 		LOG_PRINT_L0("Unexpected wallet version " << version);
 		return false;
 	}
-	
+
 	// check the spend and view keys match the given address
 	cryptonote::account_public_address address;
 	address.m_spend_public_key = legacy_keys.spendPublicKey;
@@ -5204,14 +5226,14 @@ const wallet2::transfer_details &wallet2::get_transfer_details(size_t idx) const
 std::vector<size_t> wallet2::select_available_unmixable_outputs(bool trusted_daemon)
 {
   // request all outputs with less than 3 instances
-  const size_t min_mixin = use_fork_rules(6, 10) ? 4 : 2; // v6 increases min mixin from 2 to 4
+  const size_t min_mixin = use_fork_rules(BLOCK_MAJOR_VERSION_4, 10) ? 4 : 2; // v4 increases min mixin from 2 to 4
   return select_available_outputs_from_histogram(min_mixin + 1, false, true, false, trusted_daemon);
 }
 //----------------------------------------------------------------------------------------------------
 std::vector<size_t> wallet2::select_available_mixable_outputs(bool trusted_daemon)
 {
   // request all outputs with at least 3 instances, so we can use mixin 2 with
-  const size_t min_mixin = use_fork_rules(6, 10) ? 4 : 2; // v6 increases min mixin from 2 to 4
+  const size_t min_mixin = use_fork_rules(BLOCK_MAJOR_VERSION_4, 10) ? 4 : 2; // v4 increases min mixin from 2 to 4
   return select_available_outputs_from_histogram(min_mixin + 1, true, true, true, trusted_daemon);
 }
 //----------------------------------------------------------------------------------------------------

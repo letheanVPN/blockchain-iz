@@ -93,7 +93,7 @@ add_dependencies(blockchain_import
 	version)
 set_property(TARGET blockchain_import
 	PROPERTY
-	OUTPUT_NAME "intense-blockchain-import")
+	OUTPUT_NAME "lethean-blockchain-import")
 
 monero_add_executable(blockchain_export
   ${blockchain_export_sources}
@@ -115,5 +115,5 @@ add_dependencies(blockchain_export
 	version)
 set_property(TARGET blockchain_export
 	PROPERTY
-	OUTPUT_NAME "intense-blockchain-export")
+	OUTPUT_NAME "lethean-blockchain-export")
 

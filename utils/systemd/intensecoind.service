@@ -1,17 +1,17 @@
 [Unit]
-Description=Intense Coin Full Node
+Description=Lethean Full Node
 After=network.target
 
 [Service]
-User=intense
-Group=intense
+User=lethean
+Group=lethean
 WorkingDirectory=~
 
 Type=forking
-PIDFile=/var/run/intensecoind.pid
+PIDFile=/var/run/letheand.pid
 
-ExecStart=/usr/bin/intensecoind --config-file /etc/intensecoind.conf \
-    --detach --pidfile /var/run/intensecoind.pid
+ExecStart=/usr/bin/letheand --config-file /etc/letheand.conf \
+    --detach --pidfile /var/run/letheand.pid
 
 [Install]
 WantedBy=multi-user.target
