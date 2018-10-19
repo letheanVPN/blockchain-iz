@@ -471,7 +471,7 @@ namespace cryptonote
 
     BEGIN_SERIALIZE()
       VARINT_FIELD(major_version)
-		if (major_version > BLOCK_MAJOR_VERSION_4) {
+		if (major_version > BLOCK_MAJOR_VERSION_5) {
 			MERROR("Block version is too high " << (unsigned)major_version);
 			return false;
 		}
