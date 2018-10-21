@@ -1,4 +1,6 @@
 // Copyright (c) 2014-2017, The Monero Project
+// Copryight (c) 2017-2018, Lethean
+// Portions Copyright (c) 2017-2018, The Masari Project
 //
 // All rights reserved.
 //
