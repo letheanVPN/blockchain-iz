@@ -131,7 +131,48 @@ namespace cryptonote {
 
 	difficulty_type next_difficulty(uint8_t blockMajorVersion, std::vector<uint64_t> timestamps, std::vector<difficulty_type> cumulativeDifficulties) {
 
-		if (blockMajorVersion >= BLOCK_MAJOR_VERSION_4) {
+		if (blockMajorVersion >= BLOCK_MAJOR_VERSION_5) {
+			// LWMA-3 difficulty algorithm 
+			// Copyright (c) 2017-2018 Zawy, MIT License
+			// https://github.com/zawy12/difficulty-algorithms/issues/3
+			// See commented version for required config file changes. Fix your FTL and MTP.
+
+			uint64_t  T = DIFFICULTY_TARGET_V2;
+		    uint64_t  N = DIFFICULTY_WINDOW_V4; // N=45, 60, and 90 for T=600, 120, 60.
+		    uint64_t  L(0), ST, sum_3_ST(0), next_D, prev_D, max_TS, prev_max_TS;
+		        
+		    assert(timestamps.size() == cumulativeDifficulties.size() && 
+		    	timestamps.size() <= N+1 );
+
+		    // If it's a new coin, do startup code. 
+		    // Increase difficulty_guess if it needs to be much higher, but guess lower than lowest guess.
+		    uint64_t difficulty_guess = 10000; 
+		    if (timestamps.size() <= 10) { return difficulty_guess; }
+		    if (timestamps.size() < N +1) { N = timestamps.size()-1; }
+
+		    prev_max_TS = timestamps.front();
+		    for ( uint64_t i = 1; i <= N; i++) {  
+		      if (timestamps[i] > prev_max_TS) {   
+		      	max_TS = timestamps[i];
+		      } else {
+		      	max_TS = prev_max_TS + 1;   
+		      }
+		      ST = std::min(6*T, max_TS - prev_max_TS);
+		      prev_max_TS = max_TS;
+		      L +=  ST * i ; 
+		      if ( i > N-3 ) { sum_3_ST += ST; } 
+		    }
+		    next_D = ((cumulativeDifficulties[N] - cumulativeDifficulties[0])*T*(N+1)*99)/(100*2*L);
+
+		    prev_D = cumulativeDifficulties[N] - cumulativeDifficulties[N-1];
+		    next_D = std::max((prev_D*67)/100, std::min(next_D, (prev_D*150)/100));
+
+		    // implement LWMA-2 change from LWMA. 
+		    if ( sum_3_ST < (8*T)/10) {  next_D = std::max(next_D,(prev_D*108)/100); }
+
+		    return next_D;
+
+		} else if (blockMajorVersion == BLOCK_MAJOR_VERSION_4) {
 			// LWMA difficulty algorithm
 			// Background:  https://github.com/zawy12/difficulty-algorithms/issues/3
 			// Copyright (c) 2017-2018 Zawy (pseudocode)

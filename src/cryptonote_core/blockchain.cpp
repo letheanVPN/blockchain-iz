@@ -702,7 +702,9 @@ difficulty_type Blockchain::get_difficulty_for_next_block()
   uint8_t blockMajorVersion = get_current_hard_fork_version();
 
   size_t difficultyBlocks;
-  if (blockMajorVersion >= BLOCK_MAJOR_VERSION_4)
+  if (blockMajorVersion >= BLOCK_MAJOR_VERSION_5)
+    difficultyBlocks = DIFFICULTY_BLOCKS_COUNT_V4;
+  else if (blockMajorVersion == BLOCK_MAJOR_VERSION_4)
 	  difficultyBlocks = DIFFICULTY_BLOCKS_COUNT_V3;
   else if (blockMajorVersion == BLOCK_MAJOR_VERSION_3)
 	  difficultyBlocks = DIFFICULTY_BLOCKS_COUNT_V2;
@@ -898,8 +900,10 @@ difficulty_type Blockchain::get_next_difficulty_for_alternative_chain(const std:
   uint8_t blockMajorVersion = get_ideal_hard_fork_version(bei.height);
 
   size_t difficultyBlocks;
-  if (blockMajorVersion >= BLOCK_MAJOR_VERSION_4)
-	  difficultyBlocks = DIFFICULTY_BLOCKS_COUNT_V3;
+  if (blockMajorVersion >= BLOCK_MAJOR_VERSION_5)
+    difficultyBlocks = DIFFICULTY_BLOCKS_COUNT_V4;
+  else if (blockMajorVersion == BLOCK_MAJOR_VERSION_4)
+    difficultyBlocks = DIFFICULTY_BLOCKS_COUNT_V3;
   else if (blockMajorVersion == BLOCK_MAJOR_VERSION_3)
 	  difficultyBlocks = DIFFICULTY_BLOCKS_COUNT_V2;
   else
