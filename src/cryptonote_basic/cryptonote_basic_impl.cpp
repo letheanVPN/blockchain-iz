@@ -71,7 +71,7 @@ namespace cryptonote {
   {
     if (version < BLOCK_MAJOR_VERSION_2)
       return CRYPTONOTE_BLOCK_GRANTED_FULL_REWARD_ZONE_V1;
-    if (version < BLOCK_MAJOR_VERSION_5)
+    if (version < BLOCK_MAJOR_VERSION_6)
       return CRYPTONOTE_BLOCK_GRANTED_FULL_REWARD_ZONE_V2;
     return CRYPTONOTE_BLOCK_GRANTED_FULL_REWARD_ZONE_V5;
   }

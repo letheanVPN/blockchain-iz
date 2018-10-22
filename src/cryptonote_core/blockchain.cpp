@@ -1130,7 +1130,7 @@ bool Blockchain::create_block_template(block& b, const account_public_address& m
   median_size = std::max(median_last_blocks, get_min_block_size(b.major_version));
   //the reason this is so lengthy is to accommodate for what happens in the future in validate_miner_transaction
   //using the named constant as a reminder to change this section when we go to v5 and allow a max of (m_current_block_cumul_sz_limit / 2) for all blocks
-  if (b.major_version < BLOCK_MAJOR_VERSION_5)
+  if (b.major_version < BLOCK_MAJOR_VERSION_6)
 	median_size = (median_size > (m_current_block_cumul_sz_limit / 2) ? (m_current_block_cumul_sz_limit / 2) : median_size);
 
   already_generated_coins = m_db->get_block_already_generated_coins(height - 1);
@@ -3528,7 +3528,8 @@ leave:
 bool Blockchain::update_next_cumulative_size_limit()
 {
 	if (get_current_hard_fork_version() == BLOCK_MAJOR_VERSION_3 ||
-		get_current_hard_fork_version() == BLOCK_MAJOR_VERSION_4)
+		get_current_hard_fork_version() == BLOCK_MAJOR_VERSION_4 ||
+		get_current_hard_fork_version() == BLOCK_MAJOR_VERSION_5)
 	{
 		//support LTHN max cumulative size limit change since 65k: large blocks every 5 blocks only
 		//transaction size is also checked here.
