@@ -1,3 +1,9 @@
+v3.0.0.b5 - 2018.11.xx
+ - fixed: OpenAlias strings now refer to Lethean
+     https://github.com/LetheanMovement/lethean/pull/142
+ - fixed: unknown block crash
+     https://github.com/LetheanMovement/lethean/pull/145
+
 v3.0.0.b4 - 2018.10.25
  - fixed: difficulty calculation when crossing fork thresholds
      https://github.com/LetheanMovement/lethean/pull/137
