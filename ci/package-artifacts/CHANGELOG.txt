@@ -1,4 +1,4 @@
-v3.0.0.b5 - 2018.11.xx
+v3.0.0 - 2018.11.07
  - fixed: OpenAlias strings now refer to Lethean
      https://github.com/LetheanMovement/lethean/pull/142
  - fixed: unknown block crash
