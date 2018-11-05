@@ -150,7 +150,7 @@ namespace wallet_args
     if (command_line::get_arg(vm, command_line::arg_help))
     {
       tools::msg_writer() << "Lethean '" << MONERO_RELEASE_NAME << "' (v" << MONERO_VERSION_FULL << ")" << ENDL;
-      tools::msg_writer() << wallet_args::tr("This is the command line monero wallet. It needs to connect to a monero\n"
+      tools::msg_writer() << wallet_args::tr("This is the command line Lethean wallet. It needs to connect to a Lethean\n"
 												"daemon to work correctly.") << ENDL;
       tools::msg_writer() << wallet_args::tr("Usage:") << ENDL << "  " << usage;
       tools::msg_writer() << desc_all;
