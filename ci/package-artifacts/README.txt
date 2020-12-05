@@ -34,7 +34,7 @@ completed, your status message will look like this:
 It indicates that you have a copy of the same number of blocks that the network has
 created. This is also called the "height" of the network.
 
-Now you can run lethean-wallet-cli to set up your wallet.
+Now you can run lethean-wallet-cli to set up your wallet. See below optional commands below if experiencing issues with wallet sync.
 
 
 
@@ -49,3 +49,11 @@ status
  - returns a summary of your synchronization status, network hashrate and connections
 
 
+------------------------------------------------
+Optional Commands: lethean-wallet-cli
+------------------------------------------------
+
+By default the local daemon is used to synchronize your wallet.
+If you have issues synchronizing you may use a remote daemon for your wallet as shown below:
+
+     lethean-wallet-cli --daemon-address sync.lethean.io:48782
