@@ -161,10 +161,10 @@ namespace config
 
   uint64_t const CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX = 0xfb;
   uint64_t const CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX = 0x81;
-  uint16_t const P2P_DEFAULT_PORT = 48772;
-  uint16_t const RPC_DEFAULT_PORT = 48782;
+  uint16_t const P2P_DEFAULT_PORT = 58772;
+  uint16_t const RPC_DEFAULT_PORT = 58782;
   boost::uuids::uuid const NETWORK_ID = { {
-      0x8c, 0x40, 0x3d, 0x04, 0x8f, 0x82, 0x2c, 0x3d, 0x82, 0x5f, 0x2c, 0x1a, 0x44, 0x32, 0x7d, 0x82
+      0x9c, 0x40, 0x3d, 0x04, 0x9f, 0x82, 0x2c, 0x3d, 0x82, 0x5f, 0x2c, 0x1a, 0x44, 0x32, 0x7d, 0x92
     } };
   std::string const GENESIS_TX = "013c01ff0001af9ea896c605029b2e4c0281c0b02e7c53291a94d1d0cbff8883f8024f5142ee494ffbbd0880712101e444827ebec7bfe1938c8505128cbcf59343e9651afb0893d3d664f560fd216f";
   uint32_t const GENESIS_NONCE = 70;
@@ -175,10 +175,10 @@ namespace config
   {
     uint64_t const CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX = 0x629f;
     uint64_t const CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX = 0xea1;
-    uint16_t const P2P_DEFAULT_PORT = 38772;
-    uint16_t const RPC_DEFAULT_PORT = 38782;
+    uint16_t const P2P_DEFAULT_PORT = 68772;
+    uint16_t const RPC_DEFAULT_PORT = 68782;
     boost::uuids::uuid const NETWORK_ID = { {
-        0x8c, 0x40, 0x3d, 0x04, 0x8f, 0x82, 0x2c, 0x3d, 0x82, 0x5f, 0x2c, 0x1a, 0x44, 0x32, 0x7d, 0x83
+        0x9c, 0x40, 0x3d, 0x04, 0x9f, 0x82, 0x2c, 0x3d, 0x82, 0x5f, 0x2c, 0x1a, 0x44, 0x32, 0x7d, 0x93
       } };
     std::string const GENESIS_TX = "013c01ff0001af9ea896c605029b2e4c0281c0b02e7c53291a94d1d0cbff8883f8024f5142ee494ffbbd0880712101b7ee91be2ade5d4cd0b3c832d238081e380b6243bb5d4eb32a8ea10eac516af5";
     uint32_t const GENESIS_NONCE = 1001;
