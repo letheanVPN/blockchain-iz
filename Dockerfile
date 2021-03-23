@@ -6,9 +6,17 @@ RUN set -x \
   && buildDeps=' \
       ca-certificates \
       cmake \
-      g++ \
+      libunbound-dev \
+      libminiupnpc-dev \
+      libunwind8-dev \
+      liblzma-dev \
+      libldns-dev \
+      libexpat1-dev \
+      build-essential \
+      libreadline-dev \
+      gcc-4.8 \
       git \
-      libboost1.58-all-dev \
+      libboost-all-dev \
       libssl-dev \
       make \
       pkg-config \
@@ -16,11 +24,10 @@ RUN set -x \
   && apt-get -qq update \
   && apt-get -qq --no-install-recommends install $buildDeps
 
-RUN git clone https://github.com/LetheanMovement/intensecoin.git $SRC_DIR
+RUN git clone --recurse-submodules https://gitlab.com/lethean.io/blockchain/lethean.git $SRC_DIR
 WORKDIR $SRC_DIR
-RUN git checkout xmr
-# checkout is temporary until master is also xmr source
-RUN make -j$(nproc) release-static
+
+RUN make release-static
 
 RUN cp build/release/bin/* /usr/local/bin/ \
   \
