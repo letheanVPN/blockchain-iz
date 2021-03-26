@@ -16,11 +16,11 @@ RUN set -x \
   && apt-get -qq update \
   && apt-get -qq --no-install-recommends install $buildDeps
 
-RUN git clone https://github.com/LetheanMovement/intensecoin.git $SRC_DIR
+RUN git clone https://gitlab.com/lethean.io/blockchain/lethean.git $SRC_DIR
 WORKDIR $SRC_DIR
-RUN git checkout xmr
+
 # checkout is temporary until master is also xmr source
-RUN make -j$(nproc) release-static
+RUN make release-static
 
 RUN cp build/release/bin/* /usr/local/bin/ \
   \
