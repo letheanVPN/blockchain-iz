@@ -1,6 +1,8 @@
 FROM ubuntu:16.04
 
 ENV SRC_DIR /usr/local/src/lethean
+# fix for gitlab
+RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 
 RUN set -x \
   && buildDeps=' \
