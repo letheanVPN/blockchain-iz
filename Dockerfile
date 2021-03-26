@@ -2,10 +2,11 @@ FROM ubuntu:16.04
 
 ENV SRC_DIR /usr/local/src/lethean
 # fix for gitlab
-RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
+RUN apt-get update -qq && apt-get -qq --no-install-recommends install apt-utils
 
 RUN set -x \
   && buildDeps=' \
+      libzmq3-dev \
       ca-certificates \
       cmake \
       g++ \
