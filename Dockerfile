@@ -6,15 +6,11 @@ RUN apt-get update -qq && apt-get -qq --no-install-recommends install apt-utils
 
 RUN set -x \
   && buildDeps=' \
-      libzmq3-dev \
-      ca-certificates \
-      cmake \
-      g++ \
-      git \
-      libboost1.58-all-dev \
-      libssl-dev \
-      make \
-      pkg-config \
+      build-essential cmake pkg-config libboost-all-dev libssl-dev libzmq3-dev \
+      libunbound-dev libsodium-dev libunwind8-dev liblzma-dev libreadline6-dev \
+      libldns-dev libexpat1-dev doxygen graphviz libpgm-dev qttools5-dev-tools \
+      libhidapi-dev libusb-1.0-0-dev libprotobuf-dev protobuf-compiler libudev-dev \
+      ca-certificates git \
   ' \
   && apt-get -qq update \
   && apt-get -qq --no-install-recommends install $buildDeps
