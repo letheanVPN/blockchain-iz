@@ -66,6 +66,7 @@ CMakeFiles
 cmake_install.cmake
 install_manifest.txt
 *.cmake
+!/cmake/*.cmake
 
 ### Linux ###
 *~
