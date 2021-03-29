@@ -7,8 +7,13 @@ WORKDIR /src
 # pull in from build context
 COPY . .
 
+# make type to use, to change --build-arg RELEASE_TYPE=release-test
+ARG RELEASE_TYPE=release-static
+
 # if you want to clear build, purge the runner cache/prune the builder
-RUN set -ex && make release-static
+RUN set -ex \
+    && rm -rf build \
+    && make ${RELEASE_TYPE}
 
 # New image, changes output image to a fresh Ubuntu image.
 FROM ubuntu:16.04
