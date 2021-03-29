@@ -1,50 +1,48 @@
-FROM ubuntu:16.04
+# Uses a pre configured ubuntu:16.04 image
+FROM registry.gitlab.com/lethean.io/devops:latest as builder
 
-ENV SRC_DIR /usr/local/src/lethean
+# Where all the works done.
+WORKDIR /src
 
-WORKDIR /usr/local
-
-RUN set -x \
-  && buildDeps=' \
-      ca-certificates \
-            cmake \
-            g++ \
-            git \
-            libboost1.58-all-dev \
-            libssl-dev \
-            make \
-            pkg-config \
-  ' \
-  && apt-get -qq update \
-  && apt-get -qq --no-install-recommends install $buildDeps
-
-WORKDIR $SRC_DIR
+# pull in from build context
 COPY . .
 
-ENV USE_SINGLE_BUILDDIR=1
-RUN rm -rf build
-RUN make release-static
+# if you want to clear build, purge the runner cache/prune the builder
+RUN set -ex && make release-static
 
-RUN cp build/release/bin/* /usr/local/bin/ \
-  \
-  && rm -r $SRC_DIR \
-  && apt-get -qq --auto-remove purge $buildDeps
+# New image, changes output image to a fresh Ubuntu image.
+FROM ubuntu:16.04
+
+# grab the files made in the builder stage
+COPY --from=builder /src/build/release/bin /usr/local/bin/
+
+# clean up this new ubuntu
+RUN set -ex && \
+    apt-get update && \
+    apt-get --no-install-recommends --yes install ca-certificates && \
+    apt-get clean && \
+    rm -rf /var/lib/apt
+
+# Create lethean user
+RUN adduser --system --group --disabled-password lethean && \
+	mkdir -p /wallet /home/lethean/.lethean && \
+	chown -R lethean:lethean /home/lethean/.lethean && \
+	chown -R lethean:lethean /wallet
 
 # Contains the blockchain
-VOLUME /root/.lethean
+VOLUME /home/lethean/.lethean
 
 # Generate your wallet via accessing the container and run:
 # cd /wallet
 # lethean-wallet-cli
 VOLUME /wallet
 
-ENV LOG_LEVEL 0
-ENV P2P_BIND_IP 0.0.0.0
-ENV P2P_BIND_PORT 48772
-ENV RPC_BIND_IP 127.0.0.1
-ENV RPC_BIND_PORT 48782
-
+# ports needed when running this image
 EXPOSE 48782
 EXPOSE 48772
 
-CMD letheand --log-level=$LOG_LEVEL --p2p-bind-ip=$P2P_BIND_IP --p2p-bind-port=$P2P_BIND_PORT --rpc-bind-ip=$RPC_BIND_IP --rpc-bind-port=$RPC_BIND_PORT
+# switch to lethean
+USER letheand
+
+ENTRYPOINT ["letheand", "--p2p-bind-ip=0.0.0.0", "--p2p-bind-port=48772", "--rpc-bind-ip=0.0.0.0", "--rpc-bind-port=48782", "--non-interactive", "--confirm-external-bind"]
+

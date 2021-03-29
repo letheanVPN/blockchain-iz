@@ -1,4 +1,4 @@
-# Copyright (c) 2014-2018, The Monero Project
+# Copyright (c) 2014-2017, The Monero Project
 #
 # All rights reserved.
 #
@@ -27,16 +27,8 @@
 # THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 # Parts of this file are originally copyright (c) 2012-2013 The Cryptonote developers
-list(INSERT CMAKE_MODULE_PATH 0
-        "${CMAKE_SOURCE_DIR}/cmake")
-include(CheckCCompilerFlag)
-include(CheckCXXCompilerFlag)
-include(CheckLinkerFlag)
-include(CheckLibraryExists)
-include(CheckFunctionExists)
-
 if (IOS)
-  INCLUDE(CmakeLists_IOS.txt)
+    INCLUDE(CmakeLists_IOS.txt)
 endif()
 
 cmake_minimum_required(VERSION 2.8.7)
@@ -55,47 +47,6 @@ function (die msg)
 
   message(FATAL_ERROR "${BoldRed}${msg}${ColourReset}")
 endfunction ()
-
-function (add_c_flag_if_supported flag var)
-  string(REPLACE "-" "_" supported ${flag}_c)
-  check_c_compiler_flag(${flag} ${supported})
-  if(${${supported}})
-    set(${var} "${${var}} ${flag}" PARENT_SCOPE)
-  endif()
-endfunction()
-
-function (add_cxx_flag_if_supported flag var)
-  string(REPLACE "-" "_" supported ${flag}_cxx)
-  check_cxx_compiler_flag(${flag} ${supported})
-  if(${${supported}})
-    set(${var} "${${var}} ${flag}" PARENT_SCOPE)
-  endif()
-endfunction()
-
-function (add_linker_flag_if_supported flag var)
-  string(REPLACE "-" "_" supported ${flag}_ld)
-  string(REPLACE "," "_" supported ${flag}_ld)
-  check_linker_flag(${flag} ${supported})
-  if(${${supported}})
-    set(${var} "${${var}} ${flag}" PARENT_SCOPE)
-  endif()
-endfunction()
-
-function (add_definition_if_function_found function var)
-  string(REPLACE "-" "_" supported ${function}_function)
-  check_function_exists(${function} ${supported})
-  if(${${supported}})
-    add_definitions("-D${var}")
-  endif()
-endfunction()
-
-function (add_definition_if_library_exists library function header var)
-  string(REPLACE "-" "_" supported ${function}_library)
-  check_library_exists(${library} ${function} ${header} ${supported})
-  if(${${supported}})
-    add_definitions("-D${var}")
-  endif()
-endfunction()
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
@@ -164,7 +115,7 @@ if(PER_BLOCK_CHECKPOINT)
 endif()
 
 list(INSERT CMAKE_MODULE_PATH 0
-        "${CMAKE_SOURCE_DIR}/cmake")
+  "${CMAKE_SOURCE_DIR}/cmake")
 
 if (NOT DEFINED ENV{DEVELOPER_LOCAL_TOOLS})
   message(STATUS "Could not find DEVELOPER_LOCAL_TOOLS in env (not required)")
@@ -196,7 +147,6 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 enable_testing()
 
 option(BUILD_DOCUMENTATION "Build the Doxygen documentation." ON)
-option(BUILD_TESTS "Build tests." OFF)
 
 # Check whether we're on a 32-bit or 64-bit system
 if(CMAKE_SIZEOF_VOID_P EQUAL "8")
@@ -236,7 +186,7 @@ endif()
 # elseif(CMAKE_SYSTEM_NAME MATCHES ".*BSDI.*")
 #   set(BSDI TRUE)
 
-include_directories(external/rapidjson/include external/easylogging++ src contrib/epee/include external)
+include_directories(external/easylogging++ src contrib/epee/include external "${CMAKE_BINARY_DIR}/version")
 
 if(APPLE)
   include_directories(SYSTEM /usr/include/malloc)
@@ -254,16 +204,16 @@ option(STATIC "Link libraries statically" ${DEFAULT_STATIC})
 
 # This is a CMake built-in switch that concerns internal libraries
 if (NOT DEFINED BUILD_SHARED_LIBS AND NOT STATIC AND CMAKE_BUILD_TYPE_LOWER STREQUAL "debug")
-  set(BUILD_SHARED_LIBS ON)
+    set(BUILD_SHARED_LIBS ON)
 endif()
 
 if (BUILD_SHARED_LIBS)
   message(STATUS "Building internal libraries with position independent code")
+  set(PIC_FLAG "-fPIC")
   add_definitions("-DBUILD_SHARED_LIBS")
 else()
   message(STATUS "Building internal libraries as static")
 endif()
-set(PIC_FLAG "-fPIC")
 
 if(MINGW)
   string(REGEX MATCH "^[^/]:/[^/]*" msys2_install_path "${CMAKE_C_COMPILER}")
@@ -284,21 +234,10 @@ if(STATIC)
   else()
     set(CMAKE_FIND_LIBRARY_SUFFIXES .a ${CMAKE_FIND_LIBRARY_SUFFIXES})
   endif()
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DZMQ_STATIC")
-endif()
-
-if(SANITIZE)
-  if (MSVC)
-    message(FATAL_ERROR "Cannot sanitize with MSVC")
-  else()
-    message(STATUS "Using ASAN")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
-  endif()
 endif()
 
 # Set default blockchain storage location:
-# memory was the default in Cryptonote before Monero implemented LMDB, it still works but is unnecessary.
+# memory was the default in Cryptonote before Monero implimented LMDB, it still works but is unneccessary.
 # set(DATABASE memory)
 set(DATABASE lmdb)
 
@@ -324,7 +263,7 @@ if (DATABASE STREQUAL "lmdb")
 elseif (DATABASE STREQUAL "berkeleydb")
   find_package(BerkeleyDB)
   if(NOT BERKELEY_DB)
-    die("Found BerkeleyDB includes, but could not find BerkeleyDB library. Please make sure you have installed libdb and libdb-dev / libdb++-dev or the equivalent.")
+      die("Found BerkeleyDB includes, but could not find BerkeleyDB library. Please make sure you have installed libdb and libdb-dev / libdb++-dev or the equivalent.")
   else()
     message(STATUS "Found BerkeleyDB include (db.h) in ${BERKELEY_DB_INCLUDE_DIR}")
     if(BERKELEY_DB_LIBRARIES)
@@ -353,13 +292,11 @@ add_definitions("-DBLOCKCHAIN_DB=${BLOCKCHAIN_DB}")
 
 # Can't install hook in static build on OSX, because OSX linker does not support --wrap
 # On ARM, having libunwind package (with .so's only) installed breaks static link.
-# When possible, avoid stack tracing using libunwind in favor of using easylogging++.
 if (APPLE)
   set(DEFAULT_STACK_TRACE OFF)
   set(LIBUNWIND_LIBRARIES "")
 elseif(CMAKE_C_COMPILER_ID STREQUAL "GNU" AND NOT MINGW)
   set(DEFAULT_STACK_TRACE ON)
-  set(STACK_TRACE_LIB "easylogging++") # for diag output only
   set(LIBUNWIND_LIBRARIES "")
 elseif (ARM AND STATIC)
   set(DEFAULT_STACK_TRACE OFF)
@@ -368,7 +305,6 @@ else()
   find_package(Libunwind)
   if(LIBUNWIND_FOUND)
     set(DEFAULT_STACK_TRACE ON)
-    set(STACK_TRACE_LIB "libunwind") # for diag output only
   else()
     set(DEFAULT_STACK_TRACE OFF)
     set(LIBUNWIND_LIBRARIES "")
@@ -378,9 +314,26 @@ endif()
 option(STACK_TRACE "Install a hook that dumps stack on exception" ${DEFAULT_STACK_TRACE})
 
 if(STACK_TRACE)
-  message(STATUS "Stack trace on exception enabled (using ${STACK_TRACE_LIB})")
+  message(STATUS "Stack trace on exception enabled")
 else()
   message(STATUS "Stack trace on exception disabled")
+endif()
+
+# Handle OpenSSL, used for sha256sum on binary updates
+if (APPLE AND NOT IOS)
+  if (NOT OpenSSL_DIR)
+      EXECUTE_PROCESS(COMMAND brew --prefix openssl
+        OUTPUT_VARIABLE OPENSSL_ROOT_DIR
+        OUTPUT_STRIP_TRAILING_WHITESPACE)
+    message(STATUS "Using OpenSSL found at ${OPENSSL_ROOT_DIR}")
+  endif()
+endif()
+
+find_package(OpenSSL REQUIRED)
+if(STATIC AND NOT IOS)
+  if(UNIX)
+    set(OPENSSL_LIBRARIES "${OPENSSL_LIBRARIES};${CMAKE_DL_LIBS}")
+  endif()
 endif()
 
 if (UNIX AND NOT APPLE)
@@ -389,46 +342,17 @@ if (UNIX AND NOT APPLE)
   find_package(Threads)
 endif()
 
-# Handle OpenSSL, used for sha256sum on binary updates and light wallet ssl http
-if (CMAKE_SYSTEM_NAME MATCHES "(SunOS|Solaris)")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthreads")
-endif ()
-
-if (APPLE AND NOT IOS)
-  if (NOT OpenSSL_DIR)
-    EXECUTE_PROCESS(COMMAND brew --prefix openssl
-            OUTPUT_VARIABLE OPENSSL_ROOT_DIR
-            OUTPUT_STRIP_TRAILING_WHITESPACE)
-    message(STATUS "Using OpenSSL found at ${OPENSSL_ROOT_DIR}")
-  endif()
-endif()
-
-find_package(OpenSSL REQUIRED)
-message(STATUS "Using OpenSSL include dir at ${OPENSSL_INCLUDE_DIR}")
-include_directories(${OPENSSL_INCLUDE_DIR})
-if(STATIC AND NOT IOS)
-  if(UNIX)
-    set(OPENSSL_LIBRARIES "${OPENSSL_LIBRARIES};${CMAKE_DL_LIBS};${CMAKE_THREAD_LIBS_INIT}")
-  endif()
-endif()
-
-find_package(PCSC)
-
-add_definition_if_library_exists(c memset_s "string.h" HAVE_MEMSET_S)
-add_definition_if_library_exists(c explicit_bzero "strings.h" HAVE_EXPLICIT_BZERO)
-add_definition_if_function_found(strptime HAVE_STRPTIME)
-
 add_definitions(-DAUTO_INITIALIZE_EASYLOGGINGPP)
 
-# Generate header for embedded translations
-include(ExternalProject)
-ExternalProject_Add(generate_translations_header
-        SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/translations"
-        BINARY_DIR "${CMAKE_CURRENT_BINARY_DIR}/translations"
-        INSTALL_COMMAND cmake -E echo "")
-include_directories("${CMAKE_CURRENT_BINARY_DIR}/translations")
-
 add_subdirectory(external)
+
+# Final setup for miniupnpc
+if(UPNP_STATIC OR IOS)
+  add_definitions("-DUPNP_STATIC")
+else()
+  add_definitions("-DUPNP_DYNAMIC")
+  include_directories(${UPNP_INCLUDE})
+endif()
 
 # Final setup for libunbound
 include_directories(${UNBOUND_INCLUDE})
@@ -449,16 +373,6 @@ endif()
 # Final setup for libunwind
 include_directories(${LIBUNWIND_INCLUDE})
 link_directories(${LIBUNWIND_LIBRARY_DIRS})
-
-# Final setup for libpcsc
-if (PCSC_FOUND)
-  message(STATUS "Using PCSC include dir at ${PCSC_INCLUDE_DIR}")
-  add_definitions(-DHAVE_PCSC)
-  include_directories(${PCSC_INCLUDE_DIR})
-  link_directories(${LIBPCSC_LIBRARY_DIRS})
-else (PCSC_FOUND)
-  message(STATUS "Could not find PCSC")
-endif()
 
 if(MSVC)
   add_definitions("/bigobj /MP /W3 /GS- /D_CRT_SECURE_NO_WARNINGS /wd4996 /wd4345 /D_WIN32_WINNT=0x0600 /DWIN32_LEAN_AND_MEAN /DGTEST_HAS_TR1_TUPLE=0 /FIinline_c.h /D__SSE4_1__")
@@ -493,7 +407,7 @@ else()
       set(WARNINGS "${WARNINGS} -Wno-error=inline-asm")
     endif()
   else()
-    set(WARNINGS "${WARNINGS} -Wlogical-op -Wno-error=maybe-uninitialized -Wno-error=cpp")
+    set(WARNINGS "${WARNINGS} -Wlogical-op -Wno-error=maybe-uninitialized")
   endif()
   if(MINGW)
     set(WARNINGS "${WARNINGS} -Wno-error=unused-value -Wno-error=unused-but-set-variable")
@@ -535,59 +449,9 @@ else()
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-strict-aliasing")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-strict-aliasing")
 
-  # if those don't work for your compiler, single it out where appropriate
-  if(CMAKE_BUILD_TYPE STREQUAL "Release")
-    set(C_SECURITY_FLAGS "${C_SECURITY_FLAGS} -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=1")
-    set(CXX_SECURITY_FLAGS "${CXX_SECURITY_FLAGS} -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=1")
-  endif()
-
-  # warnings
-  add_c_flag_if_supported(-Wformat C_SECURITY_FLAGS)
-  add_cxx_flag_if_supported(-Wformat CXX_SECURITY_FLAGS)
-  add_c_flag_if_supported(-Wformat-security C_SECURITY_FLAGS)
-  add_cxx_flag_if_supported(-Wformat-security CXX_SECURITY_FLAGS)
-
-  # -fstack-protector
-  add_c_flag_if_supported(-fstack-protector C_SECURITY_FLAGS)
-  add_cxx_flag_if_supported(-fstack-protector CXX_SECURITY_FLAGS)
-  add_c_flag_if_supported(-fstack-protector-strong C_SECURITY_FLAGS)
-  add_cxx_flag_if_supported(-fstack-protector-strong CXX_SECURITY_FLAGS)
-
-  # linker
-  if (NOT WIN32)
-    # Windows binaries die on startup with PIE
-    add_linker_flag_if_supported(-pie LD_SECURITY_FLAGS)
-  endif()
-  add_linker_flag_if_supported(-Wl,-z,relro LD_SECURITY_FLAGS)
-  add_linker_flag_if_supported(-Wl,-z,now LD_SECURITY_FLAGS)
-  add_linker_flag_if_supported(-Wl,-z,noexecstack noexecstack_SUPPORTED)
-  if (noexecstack_SUPPORTED)
-    set(LD_SECURITY_FLAGS "${LD_SECURITY_FLAGS} -Wl,-z,noexecstack")
-    set(LD_RAW_FLAGS ${LD_RAW_FLAGS} -z noexecstack)
-  endif()
-  add_linker_flag_if_supported(-Wl,-z,noexecheap noexecheap_SUPPORTED)
-  if (noexecheap_SUPPORTED)
-    set(LD_SECURITY_FLAGS "${LD_SECURITY_FLAGS} -Wl,-z,noexecheap")
-    set(LD_RAW_FLAGS ${LD_RAW_FLAGS} -z noexecheap)
-  endif()
-
-  # some windows linker bits
-  if (WIN32)
-    add_linker_flag_if_supported(-Wl,--dynamicbase LD_SECURITY_FLAGS)
-    add_linker_flag_if_supported(-Wl,--nxcompat LD_SECURITY_FLAGS)
-  endif()
-
-  message(STATUS "Using C security hardening flags: ${C_SECURITY_FLAGS}")
-  message(STATUS "Using C++ security hardening flags: ${CXX_SECURITY_FLAGS}")
-  message(STATUS "Using linker security hardening flags: ${LD_SECURITY_FLAGS}")
-
   option(NO_AES "Explicitly disable AES support" ${NO_AES})
 
-  if(NO_AES)
-    message(STATUS "AES support explicitly disabled")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DNO_AES")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DNO_AES")
-  elseif(NOT ARM AND NOT PPC64LE)
+  if(NOT NO_AES AND NOT ARM AND NOT PPC64LE)
     message(STATUS "AES support enabled")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -maes")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -maes")
@@ -609,9 +473,8 @@ else()
     message(STATUS "AES support disabled")
   endif()
 
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11 -D_GNU_SOURCE ${MINGW_FLAG} ${STATIC_ASSERT_FLAG} ${WARNINGS} ${C_WARNINGS} ${ARCH_FLAG} ${COVERAGE_FLAGS} ${PIC_FLAG} ${C_SECURITY_FLAGS}")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -D_GNU_SOURCE ${MINGW_FLAG} ${STATIC_ASSERT_CPP_FLAG} ${WARNINGS} ${CXX_WARNINGS} ${ARCH_FLAG} ${COVERAGE_FLAGS} ${PIC_FLAG} ${CXX_SECURITY_FLAGS}")
-  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${LD_SECURITY_FLAGS}")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11 -D_GNU_SOURCE ${MINGW_FLAG} ${STATIC_ASSERT_FLAG} ${WARNINGS} ${C_WARNINGS} ${ARCH_FLAG} ${COVERAGE_FLAGS} ${PIC_FLAG}")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -D_GNU_SOURCE ${MINGW_FLAG} ${STATIC_ASSERT_CPP_FLAG} ${WARNINGS} ${CXX_WARNINGS} ${ARCH_FLAG} ${COVERAGE_FLAGS} ${PIC_FLAG}")
 
   # With GCC 6.1.1 the compiled binary malfunctions due to aliasing. Until that
   # is fixed in the code (Issue #847), force compiler to be conservative.
@@ -696,9 +559,8 @@ else()
   endif(ARM)
 
   if(ANDROID AND NOT BUILD_GUI_DEPS STREQUAL "ON" OR IOS)
-    #From Android 5: "only position independent executables (PIE) are supported"
+    #From Android 5: "only position independent executables (PIE) are supported" 
     message(STATUS "Enabling PIE executable")
-    set(PIC_FLAG "")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIE")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIE")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_CXX_FLAGS} -fPIE -pie")
@@ -778,24 +640,18 @@ if(STATIC)
   set(Boost_USE_STATIC_LIBS ON)
   set(Boost_USE_STATIC_RUNTIME ON)
 endif()
-find_package(Boost 1.58 QUIET REQUIRED COMPONENTS system filesystem thread date_time chrono regex serialization program_options locale)
+find_package(Boost 1.58 QUIET REQUIRED COMPONENTS system filesystem thread date_time chrono regex serialization program_options)
 
 set(CMAKE_FIND_LIBRARY_SUFFIXES ${OLD_LIB_SUFFIXES})
 if(NOT Boost_FOUND)
   die("Could not find Boost libraries, please make sure you have installed Boost or libboost-all-dev (1.58) or the equivalent")
 elseif(Boost_FOUND)
   message(STATUS "Found Boost Version: ${Boost_VERSION}")
-  if (Boost_VERSION VERSION_LESS 106200 AND NOT (OPENSSL_VERSION VERSION_LESS 1.1))
-    message(FATAL_ERROR "Boost older than 1.62 is too old to link with OpenSSL 1.1 or newer. "
-            "Update Boost or install OpenSSL 1.0 and set path to it when running cmake: "
-            "cmake -DOPENSSL_ROOT_DIR='/usr/include/openssl-1.0;/usr/lib/openssl-1.0'")
-  endif()
 endif()
 
 include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
 if(MINGW)
   set(EXTRA_LIBRARIES mswsock;ws2_32;iphlpapi)
-  set(ICU_LIBRARIES ${Boost_LOCALE_LIBRARY} icuio icuin icuuc icudt icutu iconv)
 elseif(APPLE OR OPENBSD OR ANDROID)
   set(EXTRA_LIBRARIES "")
 elseif(FREEBSD)
@@ -803,8 +659,6 @@ elseif(FREEBSD)
 elseif(DRAGONFLY)
   find_library(COMPAT compat)
   set(EXTRA_LIBRARIES execinfo ${COMPAT})
-elseif(CMAKE_SYSTEM_NAME MATCHES "(SunOS|Solaris)")
-  set(EXTRA_LIBRARIES socket nsl resolv)
 elseif(NOT MSVC)
   find_library(RT rt)
   set(EXTRA_LIBRARIES ${RT})
@@ -812,14 +666,22 @@ endif()
 
 list(APPEND EXTRA_LIBRARIES ${CMAKE_DL_LIBS})
 
+# when ON - will install libwallet_merged into "lib"
+option(BUILD_GUI_DEPS "Build GUI dependencies." OFF)
+
 option(USE_READLINE "Build with GNU readline support." ON)
+
+if(BUILD_GUI_DEPS)
+  set(USE_READLINE OFF)
+endif()
+
 if(USE_READLINE)
   find_package(Readline)
   if(READLINE_FOUND AND GNU_READLINE_FOUND)
     add_definitions(-DHAVE_READLINE)
     include_directories(${Readline_INCLUDE_DIR})
+    list(APPEND EXTRA_LIBRARIES ${Readline_LIBRARY})
     message(STATUS "Found readline library at: ${Readline_ROOT_DIR}")
-    set(EPEE_READLINE epee_readline)
   else()
     message(STATUS "Could not find GNU readline library so building without readline support")
   endif()
@@ -828,39 +690,32 @@ endif()
 if(ANDROID)
   set(ATOMIC libatomic.a)
 endif()
-if(CMAKE_C_COMPILER_ID STREQUAL "Clang" AND ARCH_WIDTH EQUAL "32" AND NOT IOS AND NOT FREEBSD)
+if(CMAKE_C_COMPILER_ID STREQUAL "Clang" AND ARCH_WIDTH EQUAL "32" AND NOT IOS)
   find_library(ATOMIC atomic)
   list(APPEND EXTRA_LIBRARIES ${ATOMIC})
 endif()
 
-find_path(ZMQ_INCLUDE_PATH zmq.hpp)
-find_library(ZMQ_LIB zmq)
-find_library(PGM_LIBRARY pgm)
-find_library(NORM_LIBRARY norm)
-find_library(SODIUM_LIBRARY sodium)
+include(version.cmake)
 
-if(NOT ZMQ_INCLUDE_PATH)
-  message(FATAL_ERROR "Could not find required header zmq.hpp")
-endif()
-if(NOT ZMQ_LIB)
-  message(FATAL_ERROR "Could not find required libzmq")
-endif()
-if(PGM_LIBRARY)
-  set(ZMQ_LIB "${ZMQ_LIB};${PGM_LIBRARY}")
-endif()
-if(NORM_LIBRARY)
-  set(ZMQ_LIB "${ZMQ_LIB};${NORM_LIBRARY}")
-endif()
-if(SODIUM_LIBRARY)
-  set(ZMQ_LIB "${ZMQ_LIB};${SODIUM_LIBRARY}")
-endif()
+function (treat_warnings_as_errors dirs)
+  foreach(dir ${ARGV})
+    set_property(DIRECTORY ${dir}
+      APPEND PROPERTY COMPILE_FLAGS "-Werror")
+  endforeach()
+endfunction()
 
 add_subdirectory(contrib)
 add_subdirectory(src)
 
+treat_warnings_as_errors(contrib src)
+
+option(BUILD_TESTS "Build tests." OFF)
+
 if(BUILD_TESTS)
   add_subdirectory(tests)
 endif()
+
+
 
 if(BUILD_DOCUMENTATION)
   set(DOC_GRAPHS "YES" CACHE STRING "Create dependency graphs (needs graphviz)")
@@ -878,18 +733,14 @@ if(BUILD_DOCUMENTATION)
     configure_file("cmake/Doxyfile.in" "Doxyfile" @ONLY)
     configure_file("cmake/Doxygen.extra.css.in" "Doxygen.extra.css" @ONLY)
     add_custom_target(doc
-            ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
-            WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-            COMMENT "Generating API documentation with Doxygen.." VERBATIM)
+      ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
+      WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+      COMMENT "Generating API documentation with Doxygen.." VERBATIM)
   endif()
 endif()
-
-# when ON - will install libwallet_merged into "lib"
-option(BUILD_GUI_DEPS "Build GUI dependencies." OFF)
 
 # This is not nice, distribution packagers should not enable this, but depend
 # on libunbound shipped with their distribution instead
 option(INSTALL_VENDORED_LIBUNBOUND "Install libunbound binary built from source vendored with this repo." OFF)
 
 
-CHECK_C_COMPILER_FLAG(-std=c11 HAVE_C11)

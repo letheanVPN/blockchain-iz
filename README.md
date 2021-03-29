@@ -12,7 +12,6 @@ Portions Copyright (c) 2012-2013, The Cryptonote developers
 
 ## Introduction
 
-
 Lethean is the latest in Blockchain and VPN technology, aimed at unlocking the internet for all to use freely. We offer a suite of privacy tools for users that are fast and easy to use; just download the wallet, obtain some coins, and click "connect" on the VPN node of your choice! Any user can also contribute to the decentralized VPN and earn passive income by becoming an exit node, providing one more choice in our unique open marketplace for users to choose between. 
 
 The Lethean software suite comprises many pieces but this repository is for the command-line daemon. Please see our other repositories for the [GUI wallet](https://github.com/LetheanMovement/lethean-gui) or [VPN exit node](https://github.com/LetheanMovement/lethean-vpn).
@@ -86,54 +85,12 @@ build the library binary manually. This can be done with the following command `
 
 ### Build instructions
 
-### IMPORTANT Boost version must be exactly 1.68, the next release has a breaking change.
-
-
-Yyou will get an error about openssl before you find out boost is likely broken. 
-None of the needed versions are available, you will need to compile boost and link it yourself. 
-
 Lethean uses the CMake build system and a top-level [Makefile](Makefile) that
 invokes cmake commands as needed.
 
 #### On Linux and OS X
 
 * Install the dependencies
-
-** if you need boost 1.68 (hint, you probably do) open a terminal in a sensible directory
-```bash
-curl -s -L -o  boost_1_68_0.tar.bz2 https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.bz2 \
-    && echo "7f6130bc3cf65f56a618888ce9d5ea704fa10b462be126ad053e80e553d6d8b7  boost_1_68_0.tar.bz2" | sha256sum -c \
-    && tar -xvf boost_1_68_0.tar.bz2 \
-    && cd boost_1_68_0
-./bootstrap.sh --toolkit=gcc
-./b2 --build-type=minimal link=static runtime-link=static --with-chrono --with-date_time --with-filesystem --with-program_options --with-regex --with-serialization --with-system --with-thread --with-locale threading=multi threadapi=pthread cflags="-fPIC" cxxflags="-fPIC" install
-```
-the above would install into the system defaults, you can change "install" to "stage" and it wont install so you can link yourself.
-```bash
-ln -sf /FULL_PATH_TO_BOOST_1_68/lib/libboost_* /usr/local/lib
-ln -sf /FULL_PATH_TO_BOOST_1_68/include/boost /usr/local/include/boost
-```
-
-The normal instructions below should be fine now, but If you still have issues, you will need to adjust the Dockerfile and run the image so you can get the files.
-
-Find:
-```dockerfile
-RUN git clone https://gitlab.com/lethean.io/blockchain/lethean.git $SRC_DIR
-WORKDIR $SRC_DIR
-```
-Replace:
-```dockerfile
-WORKDIR $SRC_DIR
-COPY . .
-```
-Build:
-```bash
-docker build -t lethean .
-docker run -d --name lethean lethean
-docker cp lethean:/usr/local/bin "$(pwd)"/wallet
-docker stop lethean
-```
-
 * Change to the root of the source code directory and build:
 
         cd lethean
