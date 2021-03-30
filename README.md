@@ -1,10 +1,9 @@
 # Lethean
 
-Portions Copyright (c) 2017-2021, The Lethean developers
-Copyright (c) 2014-2019, The Monero Project
+[![pipeline status](https://gitlab.com/lethean.io/blockchain/lethean/badges/master/pipeline.svg)](https://gitlab.com/lethean.io/blockchain/lethean/-/commits/master) \
+Copyright (c) 2017-2021, Lethean.io Project\
+Portions Copyright (c) 2014-2019, The Monero Project\
 Portions Copyright (c) 2012-2013, The Cryptonote developers
-
-[![pipeline status](https://gitlab.com/lethean.io/blockchain/lethean/badges/master/pipeline.svg)](https://gitlab.com/lethean.io/blockchain/lethean/-/commits/master)
 
 ## Development Resources
 
