@@ -19,7 +19,8 @@ RUN set -ex \
 FROM ubuntu:16.04
 
 # grab the files made in the builder stage
-COPY --from=builder /src/build/release/bin /usr/local/bin/
+COPY --from=builder /src/build/release/bin /usr/local/bin
+COPY --from=builder /src/build/release/bin /home/leathean/bin
 
 # clean up this new ubuntu
 RUN set -ex && \
@@ -30,9 +31,12 @@ RUN set -ex && \
 
 # Create lethean user
 RUN adduser --system --group --disabled-password lethean && \
-	mkdir -p /wallet /home/lethean/.lethean && \
-	chown -R lethean:lethean /home/lethean/.lethean && \
+	mkdir -p /wallet /home/lethean/.lethean /home/lethean/.intensecoin /home/leathean/bin && \
+	chown -R lethean:lethean /home/lethean && \
 	chown -R lethean:lethean /wallet
+
+# a copy of the binaries for extraction.
+VOLUME /home/leathean/bin
 
 # Contains the blockchain
 VOLUME /home/lethean/.lethean
