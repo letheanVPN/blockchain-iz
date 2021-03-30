@@ -1,9 +1,9 @@
 # Uses a pre configured ubuntu:16.04 image
 FROM registry.gitlab.com/lethean.io/devops:latest as builder
 
-ARG LETHEAN_PROJECT=blockchain/lethean
+ARG SRC_DIR=/usr/local/src/lethean.io/blockchain/lethean
 # Where all the works done.
-WORKDIR /usr/local/src/lethean.io/${LETHEAN_PROJECT}
+WORKDIR ${SRC_DIR}
 
 # pull in from build context
 COPY . .
@@ -18,8 +18,8 @@ RUN rm -rf build && make ${RELEASE_TYPE}
 FROM ubuntu:16.04
 
 # grab the files made in the builder stage
-COPY --from=builder build/release/bin /usr/local/bin
-COPY --from=builder build/release/bin /home/leathean/bin
+COPY --from=builder ${SRC_DIR}/build/release/bin /usr/local/bin
+COPY --from=builder ${SRC_DIR}/build/release/bin /home/leathean/bin
 
 # clean up this new ubuntu
 RUN apt-get update && \
