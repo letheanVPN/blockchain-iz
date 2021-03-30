@@ -47,7 +47,7 @@ EXPOSE 48782
 EXPOSE 48772
 
 # switch to lethean
-USER letheand
+USER lethean
 
 ENTRYPOINT ["letheand", "--p2p-bind-ip=0.0.0.0", "--p2p-bind-port=48772", "--rpc-bind-ip=0.0.0.0", "--rpc-bind-port=48782", "--non-interactive", "--confirm-external-bind"]
 
