@@ -16,10 +16,6 @@ docker-build-master:
     - docker push $CI_REGISTRY_IMAGE:latest
   only:
     - master
-  artifacts:
-    paths:
-      - /usr/local/bin/lethean*
-    expire_in: 1 week
 
 docker-build-develop:
   # Official docker image.
@@ -36,10 +32,6 @@ docker-build-develop:
     - docker push $CI_REGISTRY_IMAGE:develop
   only:
     - develop
-  artifacts:
-    paths:
-      - /usr/local/bin/lethean*
-    expire_in: 1 week
 
 
 release-mac-x86_64:
@@ -57,7 +49,7 @@ release-mac-x86_64:
   artifacts:
     name: mac-x86_64
     paths:
-      - /release/mac/lethean*
+      - /release/mac/lethean
     expire_in: 1 week
 
 release-linux-x86_64:
@@ -75,5 +67,5 @@ release-linux-x86_64:
   artifacts:
     name: linux-x86_64
     paths:
-      - /release/linux-x86_64/lethean*
+      - /release/linux-x86_64/lethean
     expire_in: 1 week
