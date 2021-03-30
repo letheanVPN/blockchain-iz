@@ -1,12 +1,8 @@
 # Uses a pre configured ubuntu:16.04 image
 FROM registry.gitlab.com/lethean.io/devops:latest as builder
 
-ARG SRC_DIR=/usr/local/src/lethean.io/blockchain/lethean
 # Where all the works done.
-WORKDIR ${SRC_DIR}
-
-# pull in from build context
-COPY . .
+WORKDIR /usr/local/src/lethean.io/blockchain/lethean
 
 # make type to use, to change --build-arg RELEASE_TYPE=release-test
 ARG RELEASE_TYPE=release-static
@@ -18,8 +14,8 @@ RUN rm -rf build && make ${RELEASE_TYPE}
 FROM ubuntu:16.04
 
 # grab the files made in the builder stage
-COPY --from=builder ${SRC_DIR}/build/release/bin /usr/local/bin
-COPY --from=builder ${SRC_DIR}/build/release/bin /home/leathean/bin
+COPY --from=builder /usr/local/src/lethean.io/blockchain/lethean/build/release/bin /usr/local/bin
+COPY --from=builder /usr/local/src/lethean.io/blockchain/lethean/build/release/bin /home/leathean/bin
 
 # clean up this new ubuntu
 RUN apt-get update && \
