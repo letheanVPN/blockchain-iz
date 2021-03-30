@@ -1,4 +1,4 @@
-# Lethean
+# Lethean.io, Private, Community VPN, For Everyone
 
 [![pipeline status](https://gitlab.com/lethean.io/blockchain/lethean/badges/master/pipeline.svg)](https://gitlab.com/lethean.io/blockchain/lethean/-/commits/master) \
 Copyright (c) 2017-2021, Lethean.io Project\
