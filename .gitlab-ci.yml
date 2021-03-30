@@ -51,16 +51,13 @@ release-mac-x86_64:
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
-    - docker pull $CI_REGISTRY_IMAGE:develop-mac || true
-    - docker build --build-arg RELEASE_TYPE=release-static-mac-x86_64 --cache-from $CI_REGISTRY_IMAGE:develop-mac --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:develop-mac .
-    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
-    - docker push $CI_REGISTRY_IMAGE:develop-mac
+    - docker build --output type=local,dest=release/mac --build-arg RELEASE_TYPE=release-static-mac-x86_64 .
   only:
     - develop
   artifacts:
     name: mac-x86_64
     paths:
-      - /usr/local/bin/lethean*
+      - /release/mac/lethean*
     expire_in: 1 week
 
 release-linux-x86_64:
@@ -72,14 +69,11 @@ release-linux-x86_64:
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
-    - docker pull $CI_REGISTRY_IMAGE:develop-linux-x86_64 || true
-    - docker build --build-arg RELEASE_TYPE=release-static-linux-x86_64 --cache-from $CI_REGISTRY_IMAGE:develop-linux-x86_64 --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:develop-linux-x86_64 .
-    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
-    - docker push $CI_REGISTRY_IMAGE:develop-linux-x86_64
+    - docker build --output type=local,dest=release/linux-x86_64 --build-arg RELEASE_TYPE=release-static-linux-x86_64 .
   only:
     - develop
   artifacts:
     name: linux-x86_64
     paths:
-      - /usr/local/bin/lethean*
+      - /release/linux-x86_64/lethean*
     expire_in: 1 week
