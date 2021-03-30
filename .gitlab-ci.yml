@@ -1,3 +1,6 @@
+stages:
+  - build
+
 docker-build-master:
   # Official docker image.
   image: docker:19.03.12
@@ -29,3 +32,40 @@ docker-build-develop:
     - docker push $CI_REGISTRY_IMAGE:develop
   only:
     - develop
+
+
+release-mac-x86_64:
+  # Official docker image.
+  image: docker:19.03.12
+  stage: build
+  services:
+    - docker:19.03.12-dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - docker build --output type=local,dest=release/mac --build-arg RELEASE_TYPE=release-static-mac-x86_64 .
+  only:
+    - develop
+  artifacts:
+    name: mac-x86_64
+    paths:
+      - /release/mac/lethean
+    expire_in: 1 week
+
+release-linux-x86_64:
+  # Official docker image.
+  image: docker:19.03.12
+  stage: build
+  services:
+    - docker:19.03.12-dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - docker build --output type=local,dest=release/linux-x86_64 --build-arg RELEASE_TYPE=release-static-linux-x86_64 .
+  only:
+    - develop
+  artifacts:
+    name: linux-x86_64
+    paths:
+      - /release/linux-x86_64/lethean
+    expire_in: 1 week
