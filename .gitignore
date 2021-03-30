@@ -4,6 +4,8 @@
 /tags
 log/
 
+artifacts
+
 # vim swap files
 *.swp
 *.swo
