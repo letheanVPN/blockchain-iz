@@ -11,8 +11,7 @@ COPY . .
 ARG RELEASE_TYPE=release-static
 
 # if you want to clear build, purge the runner cache/prune the builder
-RUN set -ex \
-    && make ${RELEASE_TYPE}
+RUN make ${RELEASE_TYPE}
 
 # New image, changes output image to a fresh Ubuntu image.
 FROM ubuntu:16.04
@@ -22,8 +21,7 @@ COPY --from=builder /src/build/release/bin /usr/local/bin
 COPY --from=builder /src/build/release/bin /home/leathean/bin
 
 # clean up this new ubuntu
-RUN set -ex && \
-    apt-get update && \
+RUN apt-get update && \
     apt-get --no-install-recommends --yes install ca-certificates && \
     apt-get clean && \
     rm -rf /var/lib/apt
