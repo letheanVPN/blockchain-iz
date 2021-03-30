@@ -4,6 +4,7 @@ FROM registry.gitlab.com/lethean.io/devops:latest as builder
 # Where all the works done.
 WORKDIR /usr/local/src/lethean.io/blockchain/lethean
 
+COPY . .
 # make type to use, to change --build-arg RELEASE_TYPE=release-test
 ARG RELEASE_TYPE=release-static
 
