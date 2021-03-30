@@ -44,7 +44,7 @@ release-mac-x86_64:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
     - docker pull $CI_REGISTRY_IMAGE:release-mac-x86_64 || true
-    - docker build --build-arg RELEASE_TYPE=release-mac-x86_64 --cache-from $CI_REGISTRY_IMAGE:release-mac-x86_64 --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:release-mac-x86_64 .
+    - docker build --build-arg RELEASE_TYPE=release-static-mac-x86_64 --cache-from $CI_REGISTRY_IMAGE:release-mac-x86_64 --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:release-mac-x86_64 .
     - docker push $CI_REGISTRY_IMAGE:release-mac-x86_64
     - docker run -v $CI_REGISTRY_IMAGE:release-mac-x86_64:/home/leathean/bin $CI_REGISTRY_IMAGE:release-mac-x86_64
     - docker cp $CI_REGISTRY_IMAGE:release-mac-x86_64:/home/leathean/bin $CI_PROJECT_DIR/artifacts
@@ -66,7 +66,7 @@ release-linux-x86_64:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
     - docker pull $CI_REGISTRY_IMAGE:release-linux-x86_64 || true
-    - docker build --build-arg RELEASE_TYPE=release-linux-x86_64 --cache-from $CI_REGISTRY_IMAGE:release-linux-x86_64 --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:release-linux-x86_64 .
+    - docker build --build-arg RELEASE_TYPE=release-static-linux-x86_64 --cache-from $CI_REGISTRY_IMAGE:release-linux-x86_64 --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:release-linux-x86_64 .
     - docker push $CI_REGISTRY_IMAGE:release-linux-x86_64
     - docker run -v $CI_REGISTRY_IMAGE:release-linux-x86_64:/home/leathean/bin $CI_REGISTRY_IMAGE:release-linux-x86_64
     - docker cp $CI_REGISTRY_IMAGE:release-mac-x86_64:/home/leathean/bin $CI_PROJECT_DIR/artifacts
