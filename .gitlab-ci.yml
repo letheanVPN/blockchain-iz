@@ -43,8 +43,8 @@ release-mac-x86_64:
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
-    - docker build --build-arg RELEASE_TYPE=release-static-mac-x86_64 .
-    - docker run -v "${CI_PROJECT_DIR}":/home/leathean/bin "$CI_REGISTRY_IMAGE:${CONTAINER_TAG_LAST}" $CI_PROJECT_DIR/artifacts
+    - docker build --name release-mac-x86_64 --build-arg RELEASE_TYPE=release-static-mac-x86_64 .
+    - docker run -v "release-mac-x86_64":/home/leathean/bin "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA" $CI_PROJECT_DIR/artifacts
   only:
     - develop
   artifacts:
@@ -62,8 +62,8 @@ release-linux-x86_64:
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
-    - docker build --build-arg RELEASE_TYPE=release-static-linux-x86_64 .
-    - docker run -v "${CI_PROJECT_DIR}":/home/leathean/bin "$CI_REGISTRY_IMAGE:${CONTAINER_TAG_LAST}" ${CI_PROJECT_DIR}/artifacts
+    - docker build --name release-linux-x86_64 --build-arg RELEASE_TYPE=release-static-linux-x86_64 .
+    - docker run -v "release-linux-x86_64":/home/leathean/bin "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA" $CI_PROJECT_DIR/artifacts
   only:
     - develop
   artifacts:
