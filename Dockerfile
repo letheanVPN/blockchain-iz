@@ -12,7 +12,6 @@ ARG RELEASE_TYPE=release-static
 
 # if you want to clear build, purge the runner cache/prune the builder
 RUN set -ex \
-    && rm -rf build \
     && make ${RELEASE_TYPE}
 
 # New image, changes output image to a fresh Ubuntu image.

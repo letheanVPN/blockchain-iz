@@ -55,7 +55,7 @@ release-mac-x86_64:
   artifacts:
     name: mac-x86_64
     paths:
-      - artifacts/bin
+      - $CI_PROJECT_DIR/artifacts/bin
     expire_in: 1 week
 
 release-linux-x86_64:
@@ -79,5 +79,5 @@ release-linux-x86_64:
   artifacts:
     name: linux-x86_64
     paths:
-      - artifacts/bin
+      - $CI_PROJECT_DIR/artifacts/bin
     expire_in: 1 week
