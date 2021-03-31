@@ -109,9 +109,9 @@ freebsd-x86_64:
     - docker run --name=release-freebsd-x86_64 -d $CI_REGISTRY_IMAGE:release-freebsd-x86_64
     - docker cp release-freebsd-x86_64:/home/leathean/bin $CI_PROJECT_DIR/artifacts
   only:
-    - develop
+    - master
   artifacts:
-    name: linux-x86_64
+    name: freebsd-x86_64
     paths:
       - artifacts/lethean-blockchain-export
       - artifacts/lethean-blockchain-import
