@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalDependencies">
+    <plugin id="Docker" />
+    <plugin id="Git4Idea" />
+    <plugin id="com.codestream.jetbrains-codestream" />
+    <plugin id="com.intellij.cidr.lang" />
+    <plugin id="org.jetbrains.plugins.yaml" />
+  </component>
+</project>
