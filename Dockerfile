@@ -20,18 +20,18 @@ COPY --from=builder /usr/local/src/lethean.io/blockchain/lethean/build/release/b
 
 # clean up this new ubuntu
 RUN apt-get update && \
-    apt-get --no-install-recommends --yes install ca-certificates && \
+    apt-get --no-install-recommends --yes install ca-certificates libreadline6 && \
     apt-get clean && \
     rm -rf /var/lib/apt
 
 # Create lethean user
 RUN adduser --system --group --disabled-password lethean && \
-	mkdir -p /wallet /home/lethean/.lethean /home/lethean/.intensecoin /home/leathean/bin && \
+	mkdir -p /wallet /home/lethean/.lethean /home/lethean/.intensecoin /home/lethean/bin && \
 	chown -R lethean:lethean /home/lethean && \
 	chown -R lethean:lethean /wallet
 
 # a copy of the binaries for extraction.
-VOLUME /home/leathean/bin
+VOLUME /home/lethean/bin
 
 # Contains the blockchain
 VOLUME /home/lethean/.lethean
