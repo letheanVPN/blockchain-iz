@@ -1,13 +1,14 @@
-# Lethean
+# Lethean.io, Private, Community VPN, For Everyone
 
-Portions Copyright (c) 2017-2019, The Lethean developers
-Copyright (c) 2014-2019, The Monero Project
+[![pipeline status](https://gitlab.com/lethean.io/blockchain/lethean/badges/master/pipeline.svg)](https://gitlab.com/lethean.io/blockchain/lethean/-/commits/master) \
+Copyright (c) 2017-2021, Lethean.io Project\
+Portions Copyright (c) 2014-2019, The Monero Project\
 Portions Copyright (c) 2012-2013, The Cryptonote developers
 
 ## Development Resources
 
 - Web: [lethean.io](https://lethean.io/)
-- GitHub: [https://github.com/LetheanMovement/lethean](https://github.com/LetheanMovement/lethean)
+- GitLab: [https://gitlab.com/lethean.io/blockchain/lethean](https://gitlab.com/lethean.io/blockchain/lethean)
 - Social media: [Discord](https://discord.gg/6ARhyAc), [Twitter](https://t.me/letheanVPN), [Facebook](https://www.facebook.com/lethean.io/), [LinkedIn](https://www.linkedin.com/company/lethean/), [Reddit](https://www.reddit.com/r/Lethean), [Medium](https://medium.com/@letheanVPN), [YouTube](https://www.youtube.com/channel/UCKa_Nw7JysDxgcBJYnraUVA/featured?view_as=subscriber)
 
 ## Introduction
@@ -91,6 +92,17 @@ invokes cmake commands as needed.
 #### On Linux and OS X
 
 * Install the dependencies
+  
+Ubuntu Dependencies 
+```bash
+apt install -y build-essential cmake pkg-config libboost-all-dev libssl-dev libzmq3-dev \
+libunbound-dev libsodium-dev libunwind8-dev liblzma-dev libreadline6-dev \
+libldns-dev libexpat1-dev doxygen graphviz libpgm-dev qttools5-dev-tools \
+libhidapi-dev libusb-1.0-0-dev libprotobuf-dev protobuf-compiler libudev-dev \
+ca-certificates git
+```
+
+
 * Change to the root of the source code directory and build:
 
         cd lethean

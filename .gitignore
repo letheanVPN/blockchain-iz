@@ -4,6 +4,8 @@
 /tags
 log/
 
+artifacts
+
 # vim swap files
 *.swp
 *.swo
@@ -82,7 +84,6 @@ bin/
 tmp/
 *.tmp
 *.bak
-*.swp
 *~.nib
 local.properties
 .settings/
@@ -105,7 +106,6 @@ local.properties
 
 # TeXlipse plugin
 .texlipse
-.idea/
 
 /testnet
 
