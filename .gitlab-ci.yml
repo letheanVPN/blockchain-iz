@@ -138,7 +138,7 @@ windows_64:
     - docker run --name=release-windows_64 -d $CI_REGISTRY_IMAGE:release-windows_64
     - docker cp release-windows_64:/usr/local/bin $CI_PROJECT_DIR/artifacts
   only:
-    - master
+    - feature/windows-build
   artifacts:
     name: windows_64
     paths:
