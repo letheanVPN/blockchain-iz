@@ -3,7 +3,7 @@
 /build
 /tags
 log/
-
+.idea
 artifacts
 
 # vim swap files
