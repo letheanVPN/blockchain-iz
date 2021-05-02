@@ -11,6 +11,9 @@ ARG RELEASE_TYPE=release-static
 # if you want to clear build, purge the runner cache/prune the builder
 RUN rm -rf build && make ${RELEASE_TYPE}
 
+# ONBUILD When used as a base to extend from, runs directly after FROM into target context
+ONBUILD ADD /usr/local/src/lethean.io/blockchain/lethean/build/release/bin /usr/local/src/lethean.io/blockchain/lethean/bin
+
 # New image, changes output image to a fresh Ubuntu image.
 FROM ubuntu:16.04
 
