@@ -4,4 +4,4 @@ services:
     ports:
       - "48782:48782"
       - "48772:48772"
-    image: "registry.gitlab.com/lethean.io/blockchain/lethean:develop"
+    image: "registry.gitlab.com/lethean.io/blockchain/lethean:latest"
