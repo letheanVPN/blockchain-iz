@@ -11,15 +11,16 @@ ARG RELEASE_TYPE=release-static
 # if you want to clear build, purge the runner cache/prune the builder
 RUN rm -rf build && make ${RELEASE_TYPE}
 
-# ONBUILD When used as a base to extend from, runs directly after FROM into target context
-ONBUILD ADD /usr/local/src/lethean.io/blockchain/lethean/build/release/bin /usr/local/src/lethean.io/blockchain/lethean/bin
-
 # New image, changes output image to a fresh Ubuntu image.
 FROM ubuntu:16.04
 
 # grab the files made in the builder stage
-COPY --from=builder /usr/local/src/lethean.io/blockchain/lethean/build/release/bin /usr/local/bin
-COPY --from=builder /usr/local/src/lethean.io/blockchain/lethean/build/release/bin /home/leathean/bin
+COPY --from=builder /usr/local/src/lethean.io/blockchain/lethean/build/release/bin /home/lethean/blockchain/lethean
+
+RUN ln -s /home/lethean/blockchain/lethean/* /usr/local/bin
+
+# ONBUILD When used as a base to extend from, runs directly after FROM into target context
+ONBUILD COPY /home/lethean/blockchain/lethean/* /home/lethean/blockchain/lethean
 
 # clean up this new ubuntu
 RUN apt-get update && \
@@ -34,10 +35,7 @@ RUN adduser --system --group --disabled-password lethean && \
 	chown -R lethean:lethean /wallet
 
 # a copy of the binaries for extraction.
-VOLUME /home/lethean/bin
-
-# Contains the blockchain
-VOLUME /home/lethean/.lethean
+VOLUME /home/lethean
 
 # Generate your wallet via accessing the container and run:
 # cd /wallet
