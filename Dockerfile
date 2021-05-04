@@ -36,8 +36,6 @@ RUN adduser --system --no-create-home --group --disabled-password lthn && \
 	chown -R lthn:lthn /home/lthn/ /etc/lthn /var/log/lthn ; \
     echo "lthn ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers;
 
-RUN cp config/letheand.conf /home/lthn/data/intensecoin.conf
-
 RUN chmod +x docker-entrypoint.sh
 # ports needed when running this image
 EXPOSE 48782
