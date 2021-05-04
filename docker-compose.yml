@@ -1,7 +1,15 @@
 version: "3.9"
 services:
   lethean-cli:
+    env_file:
+      - .env
+    volumes:
+      - ${HOST_DATA_DIR_MAPPING}
     ports:
       - "48782:48782"
       - "48772:48772"
-    image: "registry.gitlab.com/lethean.io/blockchain/lethean:latest"
+    image: "registry.gitlab.com/lethean.io/blockchain/lethean:develop"
+    build:
+      context: .
+      args:
+        - RELEASE_TYPE=release-static

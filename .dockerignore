@@ -1,0 +1,8 @@
+.run/
+build/
+ci/
+debian/
+
+utils/
+!utils/docker
+*.md
