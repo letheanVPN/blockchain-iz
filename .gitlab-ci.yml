@@ -32,7 +32,7 @@ docker-build-develop:
     - docker push $CI_REGISTRY_IMAGE:develop
   only:
     - develop
-    - feature/*
+    - /^feature\/.*$/
 
 mac-x86_64:
   # Official docker image.
