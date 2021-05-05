@@ -9,7 +9,7 @@ COPY . .
 ARG RELEASE_TYPE
 
 # if you want to clear build, purge the runner cache/prune the builder
-RUN rm -rf build && make ${RELEASE_TYPE}
+#RUN rm -rf build && make ${RELEASE_TYPE}
 
 # Build stage over, now we make the end image.
 FROM ubuntu:16.04
@@ -27,8 +27,8 @@ VOLUME /home/lthn
 
 COPY --from=builder /usr/local/src/lethean.io/blockchain/lethean/utils/docker /home/lthn
 # grab the files made in the builder stage
-COPY --from=builder /usr/local/src/lethean.io/blockchain/lethean/build/release/bin /home/lthn/bin
-#COPY --from=registry.gitlab.com/lethean.io/blockchain/lethean:latest /usr/local/bin /home/lthn/bin
+#COPY --from=builder /usr/local/src/lethean.io/blockchain/lethean/build/release/bin /home/lthn/bin
+COPY --from=registry.gitlab.com/lethean.io/blockchain/lethean:latest /usr/local/bin /home/lthn/bin
 
 # Create lethean user
 RUN adduser --system --no-create-home --group --disabled-password lthn && \
