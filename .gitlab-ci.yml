@@ -4,29 +4,17 @@ stages:
 
 deploy:
   stage: deploy
+  image: $CI_REGISTRY_IMAGE:develop
   script:
-    - kubectl create secret docker-registry gitlab-registry --docker-server="$CI_REGISTRY" --docker-username="$CI_DEPLOY_USER" --docker-password="$CI_DEPLOY_PASSWORD" --docker-email="$GITLAB_USER_EMAIL" -o yaml --dry-run=client | kubectl apply -f -
-    - kubectl set image registry.gitlab.com/lethean.io/blockchain/lethean
-    - kubectl rollout status registry.gitlab.com/lethean.io/blockchain/lethean
+    - kubectl get pods
+    - kubectl get all
+    - kubectl get namespaces
   environment:
     name: production
     url: https://lethean.network
     kubernetes:
       namespace: production
   only:
-    - feature/docker-image
-
-build-prod-image:
-  stage: build
-  image: docker:20.10
-  services:
-    - docker:20.10-dind
-  script:
-    - apk add --no-cache docker-compose
-    - docker-compose pull --ignore-pull-failures
-    - docker-compose build
-    - docker-compose push
-  only: &deployable-branches
     - feature/docker-image
 
 docker-build-master:
@@ -60,7 +48,7 @@ docker-build-develop:
     - docker push $CI_REGISTRY_IMAGE:develop
   only:
     - develop
-#    - /^feature\/.*$/
+    - /^feature\/.*$/
 
 mac-x86_64:
   # Official docker image.
