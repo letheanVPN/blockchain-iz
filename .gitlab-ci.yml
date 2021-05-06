@@ -21,6 +21,7 @@ build-prod-image:
   services:
     - docker:20.10-dind
   script:
+    - apk add --no-cache docker-compose
     - docker-compose pull --ignore-pull-failures $CI_REGISTRY_IMAGE
     - docker-compose build $CI_REGISTRY_IMAGE
     - docker-compose push $CI_REGISTRY_IMAGE
