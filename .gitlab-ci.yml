@@ -5,8 +5,8 @@ stages:
 deploy:
   stage: deploy
   script:
-    - kubectl set image $CI_REGISTRY_IMAGE
-    - kubectl rollout status $CI_REGISTRY_IMAGE
+    - kubectl set image registry.gitlab.com/lethean.io/blockchain/lethean
+    - kubectl rollout status registry.gitlab.com/lethean.io/blockchain/lethean
   environment:
     name: production
     url: https://lethean.network
@@ -22,9 +22,9 @@ build-prod-image:
     - docker:20.10-dind
   script:
     - apk add --no-cache docker-compose
-    - docker-compose pull --ignore-pull-failures $CI_REGISTRY_IMAGE || true
-    - docker-compose build $CI_REGISTRY_IMAGE
-    - docker-compose push $CI_REGISTRY_IMAGE
+    - docker-compose pull --ignore-pull-failures
+    - docker-compose build
+    - docker-compose push
   only: &deployable-branches
     - feature/docker-image
 
