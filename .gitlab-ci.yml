@@ -1,5 +1,31 @@
 stages:
   - build
+  - deploy
+
+deploy:
+  stage: deploy
+  script:
+    - kubectl set image $CI_REGISTRY_IMAGE
+    - kubectl rollout status $CI_REGISTRY_IMAGE
+  environment:
+    name: production
+    url: https://lethean.network
+    kubernetes:
+      namespace: production
+  only:
+    - feature/docker-image
+
+build-prod-image:
+  stage: build
+  cache:
+    paths:
+      - node_modules/
+  script:
+    - docker compose pull --ignore-pull-failures $CI_REGISTRY_IMAGE
+    - docker compose build $CI_REGISTRY_IMAGE
+    - docker compose push $CI_REGISTRY_IMAGE
+  only: &deployable-branches
+    - feature/docker-image
 
 docker-build-master:
   # Official docker image.
