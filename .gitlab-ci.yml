@@ -17,9 +17,9 @@ deploy:
 
 build-prod-image:
   stage: build
-  image: docker:20
+  image: docker:20.10
   services:
-    - docker:20-dind
+    - docker:20.10-dind
   script:
     - docker compose pull --ignore-pull-failures $CI_REGISTRY_IMAGE
     - docker compose build $CI_REGISTRY_IMAGE
