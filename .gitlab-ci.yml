@@ -4,7 +4,7 @@ stages:
 
 deploy:
   stage: deploy
-  image: $CI_REGISTRY_IMAGE:develop
+  image: registry.gitlab.com/lethean.io/blockchain/lethean:develop
   script:
     - kubectl get pods
     - kubectl get all
