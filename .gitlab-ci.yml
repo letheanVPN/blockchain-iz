@@ -21,9 +21,9 @@ build-prod-image:
   services:
     - docker:20.10-dind
   script:
-    - docker compose pull --ignore-pull-failures $CI_REGISTRY_IMAGE
-    - docker compose build $CI_REGISTRY_IMAGE
-    - docker compose push $CI_REGISTRY_IMAGE
+    - docker-compose pull --ignore-pull-failures $CI_REGISTRY_IMAGE
+    - docker-compose build $CI_REGISTRY_IMAGE
+    - docker-compose push $CI_REGISTRY_IMAGE
   only: &deployable-branches
     - feature/docker-image
 
