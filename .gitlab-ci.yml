@@ -29,7 +29,7 @@ deploy_review:
     - branches
   except:
     - master
-    -
+
 docker-build-master:
   # Official docker image.
   image: docker:19.03.12
