@@ -1,34 +1,9 @@
+include:
+  - template: Auto-DevOps.gitlab-ci.yml
+
 stages:
   - build
   - deploy
-
-deploy_production:
-  stage: deploy
-  image: registry.gitlab.com/lethean.io/blockchain/lethean:develop
-  script:
-    - kubectl create secret docker-registry gitlab-registry --docker-server="$CI_REGISTRY" --docker-username="$CI_DEPLOY_USER" --docker-password="$CI_DEPLOY_PASSWORD" --docker-email="$GITLAB_USER_EMAIL" -o yaml --dry-run=client | kubectl apply -f -
-    - kubectl get pods
-    - kubectl get all
-    - kubectl get namespaces
-  environment:
-    name: chain
-    url: https://chain.lethean.network
-    kubernetes:
-      namespace: production
-  only:
-    - feature/docker-image
-
-deploy_review:
-  stage: deploy
-  script:
-    - echo "Deploy a review app"
-  environment:
-    name: review/$CI_COMMIT_REF_NAME
-    url: https://$CI_ENVIRONMENT_SLUG.example.com
-  only:
-    - branches
-  except:
-    - master
 
 docker-build-master:
   # Official docker image.
@@ -48,10 +23,10 @@ docker-build-master:
 
 docker-build-develop:
   # Official docker image.
-  image: docker:19.03.12
+  image: docker
   stage: build
   services:
-    - docker:19.03.12-dind
+    - docker:dind
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
