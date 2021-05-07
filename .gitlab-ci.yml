@@ -1,3 +1,7 @@
+include:
+  - template: Auto-DevOps.gitlab-ci.yml
+  - template: Jobs/Deploy.latest.gitlab-ci.yml
+
 image: docker
 
 services:
