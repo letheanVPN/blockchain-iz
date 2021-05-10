@@ -120,3 +120,32 @@ freebsd-x86_64:
       - artifacts/lethean-wallet-vpn-rpc
       - artifacts/letheand
     expire_in: 1 week
+
+windows_64:
+  # Official docker image.
+  image: docker:19.03.12
+  stage: build
+  services:
+    - docker:19.03.12-dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  after_script:
+    - docker stop release-windows_64
+  script:
+    - docker pull $CI_REGISTRY_IMAGE:release-windows_64 || true
+    - docker build --build-arg RELEASE_TYPE=release-static-win64 --cache-from $CI_REGISTRY_IMAGE:release-windows_64 --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:release-windows_64 .
+    - docker push $CI_REGISTRY_IMAGE:release-windows_64
+    - docker run --name=release-windows_64 -d $CI_REGISTRY_IMAGE:release-windows_64
+    - docker cp release-windows_64:/usr/local/bin $CI_PROJECT_DIR/artifacts
+  only:
+    - feature/windows-build
+  artifacts:
+    name: windows_64
+    paths:
+      - artifacts/lethean-blockchain-export
+      - artifacts/lethean-blockchain-import
+      - artifacts/lethean-wallet-cli
+      - artifacts/lethean-wallet-rpc
+      - artifacts/lethean-wallet-vpn-rpc
+      - artifacts/letheand
+    expire_in: 1 week
