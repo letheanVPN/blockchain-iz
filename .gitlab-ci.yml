@@ -1,45 +1,14 @@
-stages:
-  - build
+include:
+  - template: Auto-DevOps.gitlab-ci.yml
 
-docker-build-master:
-  # Official docker image.
-  image: docker:19.03.12
-  stage: build
-  services:
-    - docker:19.03.12-dind
-  before_script:
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-  script:
-    - docker pull $CI_REGISTRY_IMAGE:latest || true
-    - docker build --cache-from $CI_REGISTRY_IMAGE:latest --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:latest .
-    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
-    - docker push $CI_REGISTRY_IMAGE:latest
-  only:
-    - master
-
-docker-build-develop:
-  # Official docker image.
-  image: docker:19.03.12
-  stage: build
-  services:
-    - docker:19.03.12-dind
-  before_script:
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-  script:
-    - docker pull $CI_REGISTRY_IMAGE:develop || true
-    - docker build --cache-from $CI_REGISTRY_IMAGE:develop --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:develop .
-    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
-    - docker push $CI_REGISTRY_IMAGE:develop
-  only:
-    - develop
-
+variables:
+  TEST_DISABLED: 1
 
 mac-x86_64:
-  # Official docker image.
-  image: docker:19.03.12
+  image: docker
   stage: build
   services:
-    - docker:19.03.12-dind
+    - docker:dind
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   after_script:
@@ -61,14 +30,12 @@ mac-x86_64:
       - artifacts/lethean-wallet-rpc
       - artifacts/lethean-wallet-vpn-rpc
       - artifacts/letheand
-    expire_in: 1 week
 
 linux-x86_64:
-  # Official docker image.
-  image: docker:19.03.12
+  image: docker
   stage: build
   services:
-    - docker:19.03.12-dind
+    - docker:dind
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   after_script:
@@ -90,14 +57,12 @@ linux-x86_64:
       - artifacts/lethean-wallet-rpc
       - artifacts/lethean-wallet-vpn-rpc
       - artifacts/letheand
-    expire_in: 1 week
 
 freebsd-x86_64:
-  # Official docker image.
-  image: docker:19.03.12
+  image: docker
   stage: build
   services:
-    - docker:19.03.12-dind
+    - docker:dind
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   after_script:
@@ -119,4 +84,3 @@ freebsd-x86_64:
       - artifacts/lethean-wallet-rpc
       - artifacts/lethean-wallet-vpn-rpc
       - artifacts/letheand
-    expire_in: 1 week

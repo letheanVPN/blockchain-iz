@@ -1,0 +1,23 @@
+version: "3.9"
+services:
+#  lethean-wallet-rpc:
+#  lethean-wallet-vpn-rpc:
+  letheand
+    env_file:
+      - .env
+    volumes:
+      - ${HOST_DATA_DIR_MAPPING}
+    ports:
+      - "48782:48782"
+      - "48772:48772"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:48782/json_rpc" ]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+#    image: "registry.gitlab.com/lethean.io/blockchain/lethean:develop"
+    build:
+      context: .
+      args:
+        - RELEASE_TYPE=release-static
