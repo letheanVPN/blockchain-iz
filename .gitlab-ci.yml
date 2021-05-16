@@ -49,86 +49,83 @@ variables:
 #    - develop
 #    - /^feature\/.*$/
 #
-#mac-x86_64:
-#  # Official docker image.
-#  image: docker:19.03.12
-#  stage: build
-#  services:
-#    - docker:19.03.12-dind
-#  before_script:
-#    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-#  after_script:
-#    - docker stop release-mac-x86_64
-#  script:
-#    - docker pull $CI_REGISTRY_IMAGE:release-mac-x86_64 || true
-#    - docker build --build-arg RELEASE_TYPE=release-static-mac-x86_64 --cache-from $CI_REGISTRY_IMAGE:release-mac-x86_64 --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:release-mac-x86_64 .
-#    - docker push $CI_REGISTRY_IMAGE:release-mac-x86_64
-#    - docker run --name=release-mac-x86_64 -d $CI_REGISTRY_IMAGE:release-mac-x86_64
-#    - docker cp release-mac-x86_64:/home/leathean/bin $CI_PROJECT_DIR/artifacts
-#  only:
-#    - master
-#  artifacts:
-#    name: mac-x86_64
-#    paths:
-#      - artifacts/lethean-blockchain-export
-#      - artifacts/lethean-blockchain-import
-#      - artifacts/lethean-wallet-cli
-#      - artifacts/lethean-wallet-rpc
-#      - artifacts/lethean-wallet-vpn-rpc
-#      - artifacts/letheand
-#
-#linux-x86_64:
-#  # Official docker image.
-#  image: docker:19.03.12
-#  stage: build
-#  services:
-#    - docker:19.03.12-dind
-#  before_script:
-#    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-#  after_script:
-#    - docker stop release-linux-x86_64
-#  script:
-#    - docker pull $CI_REGISTRY_IMAGE:release-linux-x86_64 || true
-#    - docker build --build-arg RELEASE_TYPE=release-static-linux-x86_64 --cache-from $CI_REGISTRY_IMAGE:release-linux-x86_64 --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:release-linux-x86_64 .
-#    - docker push $CI_REGISTRY_IMAGE:release-linux-x86_64
-#    - docker run --name=release-linux-x86_64 -d $CI_REGISTRY_IMAGE:release-linux-x86_64
-#    - docker cp release-linux-x86_64:/home/leathean/bin $CI_PROJECT_DIR/artifacts
-#  only:
-#    - master
-#  artifacts:
-#    name: linux-x86_64
-#    paths:
-#      - artifacts/lethean-blockchain-export
-#      - artifacts/lethean-blockchain-import
-#      - artifacts/lethean-wallet-cli
-#      - artifacts/lethean-wallet-rpc
-#      - artifacts/lethean-wallet-vpn-rpc
-#      - artifacts/letheand
-#
-#freebsd-x86_64:
-#  # Official docker image.
-#  image: docker:19.03.12
-#  stage: build
-#  services:
-#    - docker:19.03.12-dind
-#  before_script:
-#    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-#  after_script:
-#    - docker stop release-freebsd-x86_64
-#  script:
-#    - docker pull $CI_REGISTRY_IMAGE:release-freebsd-x86_644 || true
-#    - docker build --build-arg RELEASE_TYPE=release-static-freebsd-x86_64 --cache-from $CI_REGISTRY_IMAGE:release-freebsd-x86_64 --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:release-freebsd-x86_64 .
-#    - docker push $CI_REGISTRY_IMAGE:release-freebsd-x86_64
-#    - docker run --name=release-freebsd-x86_64 -d $CI_REGISTRY_IMAGE:release-freebsd-x86_64
-#    - docker cp release-freebsd-x86_64:/home/leathean/bin $CI_PROJECT_DIR/artifacts
-#  only:
-#    - master
-#  artifacts:
-#    name: freebsd-x86_64
-#    paths:
-#      - artifacts/lethean-blockchain-export
-#      - artifacts/lethean-blockchain-import
-#      - artifacts/lethean-wallet-cli
-#      - artifacts/lethean-wallet-rpc
-#      - artifacts/lethean-wallet-vpn-rpc
-#      - artifacts/letheand
+mac-x86_64:
+  image: docker
+  stage: build
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  after_script:
+    - docker stop release-mac-x86_64
+  script:
+    - docker pull $CI_REGISTRY_IMAGE:release-mac-x86_64 || true
+    - docker build --build-arg RELEASE_TYPE=release-static-mac-x86_64 --cache-from $CI_REGISTRY_IMAGE:release-mac-x86_64 --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:release-mac-x86_64 .
+    - docker push $CI_REGISTRY_IMAGE:release-mac-x86_64
+    - docker run --name=release-mac-x86_64 -d $CI_REGISTRY_IMAGE:release-mac-x86_64
+    - docker cp release-mac-x86_64:/home/leathean/bin $CI_PROJECT_DIR/artifacts
+  only:
+    - master
+  artifacts:
+    name: mac-x86_64
+    paths:
+      - artifacts/lethean-blockchain-export
+      - artifacts/lethean-blockchain-import
+      - artifacts/lethean-wallet-cli
+      - artifacts/lethean-wallet-rpc
+      - artifacts/lethean-wallet-vpn-rpc
+      - artifacts/letheand
+
+linux-x86_64:
+  image: docker
+  stage: build
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  after_script:
+    - docker stop release-linux-x86_64
+  script:
+    - docker pull $CI_REGISTRY_IMAGE:release-linux-x86_64 || true
+    - docker build --build-arg RELEASE_TYPE=release-static-linux-x86_64 --cache-from $CI_REGISTRY_IMAGE:release-linux-x86_64 --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:release-linux-x86_64 .
+    - docker push $CI_REGISTRY_IMAGE:release-linux-x86_64
+    - docker run --name=release-linux-x86_64 -d $CI_REGISTRY_IMAGE:release-linux-x86_64
+    - docker cp release-linux-x86_64:/home/leathean/bin $CI_PROJECT_DIR/artifacts
+  only:
+    - master
+  artifacts:
+    name: linux-x86_64
+    paths:
+      - artifacts/lethean-blockchain-export
+      - artifacts/lethean-blockchain-import
+      - artifacts/lethean-wallet-cli
+      - artifacts/lethean-wallet-rpc
+      - artifacts/lethean-wallet-vpn-rpc
+      - artifacts/letheand
+
+freebsd-x86_64:
+  image: docker
+  stage: build
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  after_script:
+    - docker stop release-freebsd-x86_64
+  script:
+    - docker pull $CI_REGISTRY_IMAGE:release-freebsd-x86_644 || true
+    - docker build --build-arg RELEASE_TYPE=release-static-freebsd-x86_64 --cache-from $CI_REGISTRY_IMAGE:release-freebsd-x86_64 --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:release-freebsd-x86_64 .
+    - docker push $CI_REGISTRY_IMAGE:release-freebsd-x86_64
+    - docker run --name=release-freebsd-x86_64 -d $CI_REGISTRY_IMAGE:release-freebsd-x86_64
+    - docker cp release-freebsd-x86_64:/home/leathean/bin $CI_PROJECT_DIR/artifacts
+  only:
+    - master
+  artifacts:
+    name: freebsd-x86_64
+    paths:
+      - artifacts/lethean-blockchain-export
+      - artifacts/lethean-blockchain-import
+      - artifacts/lethean-wallet-cli
+      - artifacts/lethean-wallet-rpc
+      - artifacts/lethean-wallet-vpn-rpc
+      - artifacts/letheand
