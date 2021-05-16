@@ -2,9 +2,7 @@ version: "3.9"
 services:
 #  lethean-wallet-rpc:
 #  lethean-wallet-vpn-rpc:
-  letheand:
-    container_name: blockchain
-    domainname: chain.lethean.network
+  letheand
     env_file:
       - .env
     volumes:

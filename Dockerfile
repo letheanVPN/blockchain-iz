@@ -33,11 +33,11 @@ WORKDIR $BASE_DIR
 
 # Create lethean user
 RUN adduser --system --no-create-home --group --disabled-password lthn && \
-	mkdir -p $DATA_DIR/lmdb $WALLET_DIR /var/log/lthn /var/run/lthn  && \
-	chown -R lthn:lthn /home/lthn/ /etc/lthn /var/log/lthn ; \
+	mkdir -p $DATA_DIR/lmdb $WALLET_DIR $LOG_DIR $BIN_DIR $CONF_DIR && \
+	chown -R lthn:lthn $BASE_DIR ; \
     echo "lthn ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers;
 
-COPY --from=builder $SRC_DIR/utils/docker $BASE_DIR
+COPY --from=builder $SRC_DIR/utils/docker/home-dir $BASE_DIR
 # grab the files made in the builder stage
 COPY --from=builder $SRC_DIR/build/release/bin $BIN_DIR
 

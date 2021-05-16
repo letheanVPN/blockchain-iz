@@ -4,51 +4,6 @@ include:
 variables:
   TEST_DISABLED: 1
 
-#image: docker
-#
-#services:
-#  - docker:dind
-#
-#stages:
-#  - build
-#
-#before_script:
-#  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-#
-#build master:
-#  stage: build
-#  script:
-#    - docker build --pull --build-arg RELEASE_TYPE=release-static --tag "$CI_REGISTRY_IMAGE" .
-#    - docker push "$CI_REGISTRY_IMAGE"
-#  only:
-#    - master
-#
-#build:
-#  stage: build
-#  script:
-#    - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" .
-#    - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
-#  except:
-#    - master
-
-
-#docker-build-develop:
-#  # Official docker image.
-#  image: docker
-#  stage: build
-#  services:
-#    - docker:dind
-#  before_script:
-#    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-#  script:
-#    - docker pull $CI_REGISTRY_IMAGE:develop || true
-#    - docker build --build-arg RELEASE_TYPE=release-all --cache-from $CI_REGISTRY_IMAGE:develop --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:develop .
-#    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
-#    - docker push $CI_REGISTRY_IMAGE:develop
-#  only:
-#    - develop
-#    - /^feature\/.*$/
-#
 mac-x86_64:
   image: docker
   stage: build
