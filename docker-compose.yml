@@ -1,7 +1,25 @@
 version: "3.9"
 services:
-  lethean-cli:
+#  lethean-wallet-rpc:
+#  lethean-wallet-vpn-rpc:
+  letheand:
+    container_name: blockchain
+    domainname: chain.lethean.network
+    env_file:
+      - .env
+    volumes:
+      - ${HOST_DATA_DIR_MAPPING}
     ports:
       - "48782:48782"
       - "48772:48772"
-    image: "registry.gitlab.com/lethean.io/blockchain/lethean:latest"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:48782/json_rpc" ]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+#    image: "registry.gitlab.com/lethean.io/blockchain/lethean:develop"
+    build:
+      context: .
+      args:
+        - RELEASE_TYPE=release-static
