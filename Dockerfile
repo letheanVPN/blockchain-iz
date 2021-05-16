@@ -1,5 +1,5 @@
 # Uses a pre configured ubuntu:16.04 image - this file has a update in dev
-FROM registry.gitlab.com/lethean.io/sdk/build/latest as builder
+FROM registry.gitlab.com/lthn.io/sdk/build/latest as builder
 
 # Where all the works done.
 WORKDIR /usr/local/src/lethean.io/blockchain/lethean
