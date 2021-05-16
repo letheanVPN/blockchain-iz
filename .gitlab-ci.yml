@@ -1,6 +1,9 @@
 include:
   - template: Auto-DevOps.gitlab-ci.yml
 
+variables:
+  TEST_DISABLED: 1
+
 #image: docker
 #
 #services:
