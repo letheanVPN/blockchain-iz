@@ -1,18 +1,26 @@
 # Building stage, Uses a pre configured ubuntu:16.04 image
-FROM registry.gitlab.com/lethean.io/devops/build:latest as builder
+FROM registry.gitlab.com/lthn.io/projects/sdk/build/latest as builder
 
-# Where all the works done.
-WORKDIR /usr/local/src/lethean.io/blockchain/lethean
+
+WORKDIR /home/lthn/src/chain
 
 COPY . .
 # make type to use, to change --build-arg RELEASE_TYPE=release-test
-ARG RELEASE_TYPE
+ARG RELEASE_TYPE=release-static
 
-# if you want to clear build, purge the runner cache/prune the builder
-#RUN rm -rf build && make ${RELEASE_TYPE}
+RUN rm -rf build && make ${RELEASE_TYPE}
 
 # Build stage over, now we make the end image.
 FROM ubuntu:16.04
+
+ENV BASE_DIR="/home/lthn"
+ENV IMG_TAG="chain"
+ENV WALLET_DIR="${BASE_DIR}/wallet/${IMG_TAG}"
+ENV BIN_DIR="${BASE_DIR}/bin/${IMG_TAG}"
+ENV CONF_DIR="${BASE_DIR}/config/${IMG_TAG}"
+ENV LOG_DIR="${BASE_DIR}/log/${IMG_TAG}"
+ENV SRC_DIR="${BASE_DIR}/src/${IMG_TAG}"
+ENV DATA_DIR="${BASE_DIR}/data/${IMG_TAG}"
 
 # clean up this new ubuntu
 RUN apt-get update && \
@@ -21,22 +29,20 @@ RUN apt-get update && \
     rm -rf /var/lib/apt
 
 # a copy of the binaries for extraction.
-WORKDIR /home/lthn
-
-VOLUME /home/lthn
-
-COPY --from=builder /usr/local/src/lethean.io/blockchain/lethean/utils/docker /home/lthn
-# grab the files made in the builder stage
-#COPY --from=builder /usr/local/src/lethean.io/blockchain/lethean/build/release/bin /home/lthn/bin
-COPY --from=registry.gitlab.com/lethean.io/blockchain/lethean:latest /usr/local/bin /home/lthn/bin
+WORKDIR $BASE_DIR
 
 # Create lethean user
 RUN adduser --system --no-create-home --group --disabled-password lthn && \
-	mkdir -p data/lmdb wallet /etc/lthn /var/log/lthn /var/run/lthn  && \
+	mkdir -p $DATA_DIR/lmdb $WALLET_DIR /var/log/lthn /var/run/lthn  && \
 	chown -R lthn:lthn /home/lthn/ /etc/lthn /var/log/lthn ; \
     echo "lthn ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers;
 
-RUN chmod +x docker-entrypoint.sh
+COPY --from=builder $SRC_DIR/utils/docker $BASE_DIR
+# grab the files made in the builder stage
+COPY --from=builder $SRC_DIR/build/release/bin $BIN_DIR
+
+
+RUN chmod +x $BASE_DIR/docker-entrypoint.sh
 # ports needed when running this image
 EXPOSE 48782
 EXPOSE 48772
