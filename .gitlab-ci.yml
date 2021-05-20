@@ -4,6 +4,42 @@ include:
 variables:
   TEST_DISABLED: 1
 
+Docker Hub:
+  stage: deploy
+  image: docker
+  services:
+    - name: docker:dind
+      command: [ "--experimental" ]
+
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - docker build --squash -t "lthn/chain" .
+    - docker push "lthn/chain"
+  environment:
+    name: docker.io
+  only:
+    - master
+
+deploy to staging:
+  stage: deploy
+  script: make deploy
+  environment:
+    name: staging
+    url: https://vpn.staging.eu-north.pods.lthn.io/
+  only:
+    - develop
+
+deploy to production:
+  stage: deploy
+  script: make deploy
+  environment:
+    name: production
+    url: https://vpn.production.eu-north.pods.lthn.io/
+  only:
+    - master
+
+
 mac-x86_64:
   image: docker
   stage: build
