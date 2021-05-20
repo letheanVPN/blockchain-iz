@@ -8,7 +8,7 @@ COPY . .
 # make type to use, to change --build-arg RELEASE_TYPE=release-test
 ARG RELEASE_TYPE=release-static
 
-RUN rm -rf build && make ${RELEASE_TYPE}
+#RUN rm -rf build && make ${RELEASE_TYPE}
 
 # Build stage over, now we make the end image.
 FROM ubuntu:16.04
@@ -39,7 +39,8 @@ RUN adduser --system --no-create-home --group --disabled-password lthn && \
 
 COPY --from=builder $SRC_DIR/utils/docker/home-dir $BASE_DIR
 # grab the files made in the builder stage
-COPY --from=builder $SRC_DIR/build/release/bin $BIN_DIR
+COPY --from=lthn/chain $BIN_DIR $BIN_DIR
+#COPY --from=builder $SRC_DIR/build/release/bin $BIN_DIR
 
 
 RUN chmod +x $BASE_DIR/docker-entrypoint.sh
