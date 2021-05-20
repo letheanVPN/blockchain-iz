@@ -26,7 +26,7 @@ deploy to staging:
   script: make deploy
   environment:
     name: staging
-    url: https://vpn.staging.eu-north.pods.lthn.io/
+    url: https://chain.staging.eu-north.pods.lthn.io/
   only:
     - develop
 
@@ -35,7 +35,7 @@ deploy to production:
   script: make deploy
   environment:
     name: production
-    url: https://vpn.production.eu-north.pods.lthn.io/
+    url: https://chain.production.eu-north.pods.lthn.io/
   only:
     - master
 
