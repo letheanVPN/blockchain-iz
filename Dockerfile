@@ -39,6 +39,7 @@ RUN adduser --system --no-create-home --group --disabled-password lthn && \
 
 COPY --from=builder $SRC_DIR/utils/docker/home-dir $BASE_DIR
 # grab the files made in the builder stage
+#COPY --from=lthn/chain $BIN_DIR $BIN_DIR
 COPY --from=builder $SRC_DIR/build/release/bin $BIN_DIR
 
 
