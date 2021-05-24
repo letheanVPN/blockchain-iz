@@ -6,6 +6,8 @@ log/
 .idea
 artifacts
 
+artifacts
+
 # vim swap files
 *.swp
 *.swo
