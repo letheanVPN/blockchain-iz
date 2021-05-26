@@ -126,3 +126,13 @@ tags:
 	ctags -R --sort=1 --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ src contrib tests/gtest
 
 .PHONY: all cmake-debug debug debug-test debug-all cmake-release release release-test release-all clean tags
+
+
+.PHONY: docker
+docker:
+	docker build -t tmp . &&  docker run -d --name=tmp tmp \
+	&& docker cp tmp:/usr/local/bin build/ && docker stop tmp && docker container rm tmp
+
+.PHONY: test-daemon
+test-daemon:
+	build/letheand --data-dir=data/ --log-level=4
