@@ -407,14 +407,14 @@ namespace nodetool
   std::set<std::string> node_server<t_payload_net_handler>::get_seed_nodes(bool testnet) const
   {
     std::set<std::string> full_addrs;
-    if (testnet) //CHANGE ME
+    if (testnet)
     {
-		full_addrs.insert("35.217.36.217:38772");
+		    full_addrs.insert("176.9.18.120:38772");
     }
     else
     {
         // Anycast IP, N+1 nodes
-        full_addrs.insert("35.217.36.217:48772");
+        full_addrs.insert("176.9.18.120:48772");
         // Community Supporters contact@lethean.io to donate
         full_addrs.insert("89.221.223.126:48772");
     }
