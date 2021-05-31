@@ -130,8 +130,8 @@ tags:
 
 .PHONY: docker
 docker:
-	docker build -t tmp . &&  docker run -d --name=tmp tmp \
-	&& docker cp tmp:/usr/local/bin build/ && docker stop tmp && docker container rm tmp
+	docker build --pull --build-arg RELEASE_TYPE=release-static -t LthnBuild  . &&  docker run -d --name=LthnBuild LthnBuild \
+	&& docker cp LthnBuild:/usr/local/bin build/ && docker stop LthnBuild && docker container rm LthnBuild
 
 .PHONY: test-daemon
 test-daemon:
