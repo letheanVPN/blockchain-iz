@@ -130,8 +130,8 @@ tags:
 
 .PHONY: docker
 docker:
-	docker build --pull --build-arg RELEASE_TYPE=release-static -t LthnBuild  . &&  docker run -d --name=LthnBuild LthnBuild \
-	&& docker cp LthnBuild:/usr/local/bin build/ && docker stop LthnBuild && docker container rm LthnBuild
+	docker build --pull --no-cache -t lthnbuild  . &&  docker run -d --name=lthnbuild lthnbuild \
+	&& docker cp lthnbuild:/home/lthn/cli build/ && docker stop lthnbuild && docker container rm lthnbuild
 
 .PHONY: test-daemon
 test-daemon:
