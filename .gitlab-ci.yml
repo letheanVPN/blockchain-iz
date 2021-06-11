@@ -35,7 +35,7 @@ mac-x86_64:
     - docker build --build-arg RELEASE_TYPE=release-static-mac-x86_64 --cache-from $CI_REGISTRY_IMAGE:release-mac-x86_64 --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:release-mac-x86_64 .
     - docker push $CI_REGISTRY_IMAGE:release-mac-x86_64
     - docker run --name=release-mac-x86_64 -d $CI_REGISTRY_IMAGE:release-mac-x86_64
-    - docker cp release-mac-x86_64:/home/lthn/cli $CI_PROJECT_DIR/artifacts
+    - docker cp release-mac-x86_64:/home/lthn/bin/chain $CI_PROJECT_DIR/artifacts
   only:
     - master
   artifacts:
@@ -62,7 +62,7 @@ linux-x86_64:
     - docker build --build-arg RELEASE_TYPE=release-static-linux-x86_64 --cache-from $CI_REGISTRY_IMAGE:release-linux-x86_64 --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:release-linux-x86_64 .
     - docker push $CI_REGISTRY_IMAGE:release-linux-x86_64
     - docker run --name=release-linux-x86_64 -d $CI_REGISTRY_IMAGE:release-linux-x86_64
-    - docker cp release-linux-x86_64:/home/lthn/cli $CI_PROJECT_DIR/artifacts
+    - docker cp release-linux-x86_64:/home/lthn/bin/chain $CI_PROJECT_DIR/artifacts
   only:
     - master
   artifacts:
@@ -89,7 +89,7 @@ freebsd-x86_64:
     - docker build --build-arg RELEASE_TYPE=release-static-freebsd-x86_64 --cache-from $CI_REGISTRY_IMAGE:release-freebsd-x86_64 --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:release-freebsd-x86_64 .
     - docker push $CI_REGISTRY_IMAGE:release-freebsd-x86_64
     - docker run --name=release-freebsd-x86_64 -d $CI_REGISTRY_IMAGE:release-freebsd-x86_64
-    - docker cp release-freebsd-x86_64:/home/lthn/cli $CI_PROJECT_DIR/artifacts
+    - docker cp release-freebsd-x86_64:/home/lthn/bin/chain $CI_PROJECT_DIR/artifacts
   only:
     - master
   artifacts:

@@ -1,7 +1,7 @@
-.run/
 build/
+ci/
 debian/
-data/
+data
 utils/
 !utils/docker
 *.md
