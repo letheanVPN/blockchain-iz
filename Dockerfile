@@ -1,6 +1,5 @@
 # Building stage, Uses a pre configured ubuntu:16.04 image
-FROM registry.gitlab.com/lthn.io/projects/sdk/build/latest as builder
-
+FROM lthn/build as builder
 
 WORKDIR /home/lthn/src/chain
 
@@ -11,7 +10,7 @@ ARG RELEASE_TYPE=release-static
 RUN rm -rf build && make ${RELEASE_TYPE}
 
 # Build stage over, now we make the end image.
-FROM ubuntu:16.04
+FROM ubuntu:16.04 as final
 
 ENV BASE_DIR="/home/lthn"
 ENV IMG_TAG="chain"
@@ -37,13 +36,13 @@ RUN adduser --system --no-create-home --group --disabled-password lthn && \
 	chown -R lthn:lthn $BASE_DIR ; \
     echo "lthn ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers;
 
-COPY --from=builder $SRC_DIR/utils/docker/home-dir $BASE_DIR
+COPY --from=builder --chown=lthn:lthn $SRC_DIR/utils/docker/home-dir $BASE_DIR
 # grab the files made in the builder stage
 #COPY --from=lthn/chain $BIN_DIR $BIN_DIR
-COPY --from=builder $SRC_DIR/build/release/bin $BIN_DIR
+COPY --from=builder --chown=lthn:lthn $SRC_DIR/build/release/bin $BIN_DIR
 
 
-RUN chmod +x $BASE_DIR/docker-entrypoint.sh
+RUN chmod +x $BASE_DIR/lethean-blockchain.sh $BIN_DIR/*
 # ports needed when running this image
 EXPOSE 48782
 EXPOSE 48772
@@ -51,6 +50,6 @@ EXPOSE 48772
 # switch to lethean
 USER lthn
 
-ENTRYPOINT ["./docker-entrypoint.sh", "daemon"]
+ENTRYPOINT ["./lethean-blockchain.sh", "daemon"]
 
 
