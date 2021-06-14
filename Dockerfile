@@ -1,4 +1,4 @@
-FROM lthn/build as builder
+FROM lthn/build:release-3.1.0 as builder
 
 WORKDIR /home/lthn/src/chain
 
