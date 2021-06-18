@@ -1,4 +1,4 @@
-FROM lthn/build:release-3.1.0 as builder
+FROM lthn/build:lthn-chain-linux as builder
 
 WORKDIR /home/lthn/src/chain
 
@@ -9,7 +9,7 @@ ARG BUILD_THREADS=1
 RUN rm -rf build && make -j${BUILD_THREADS} ${RELEASE_TYPE}
 
 # Build stage over, now we make the end image.
-FROM ubuntu:16.04 as final
+FROM lthn/build:base-ubuntu-20-04 as final
 
 ENV BASE_DIR="/home/lthn"
 ENV IMG_TAG="chain"
@@ -19,12 +19,6 @@ ENV CONF_DIR="${BASE_DIR}/config/${IMG_TAG}"
 ENV LOG_DIR="${BASE_DIR}/log/${IMG_TAG}"
 ENV SRC_DIR="${BASE_DIR}/src/${IMG_TAG}"
 ENV DATA_DIR="${BASE_DIR}/data/${IMG_TAG}"
-
-# clean up this new ubuntu
-RUN apt-get update && \
-    apt-get --no-install-recommends --yes install ca-certificates sudo libreadline6 && \
-    apt-get clean && \
-    rm -rf /var/lib/apt
 
 # a copy of the binaries for extraction.
 WORKDIR $BASE_DIR
