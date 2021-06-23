@@ -1,9 +1,9 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 echo "We are now going to try and compile the libs we need on your machine"
 echo "If this fails please report to our discord using the Website chat button"
 echo "https://discord.lt.hn Please include the last error here, thank you, lets Compile!"
-sleep 9
+#sleep 9
 # base settings
 BASE_DIR=$(pwd)
 SRC_DIR="$(pwd)/build/libs/src"
@@ -28,6 +28,9 @@ export OPENSSL_INSTALL_DIR=$OPENSSL_INSTALL_DIR
 bash .build/lib/openssl/download.bash
 bash .build/lib/openssl/compile.bash
 
+export OPENSSL_LIBRARY="$OPENSSL_INSTALL_DIR/lib"
+export OPENSSL_INCLUDE_DIR="$OPENSSL_INSTALL_DIR/include"
+export OPENSSL_ROOT_DIR="$OPENSSL_INSTALL_DIR"
 # Boost Settings
 BOOST_VERSION=1_58_0
 BOOST_VERSION_DOT=1.58.0
@@ -44,10 +47,11 @@ export BOOST_INSTALL_DIR=$BOOST_INSTALL_DIR
 bash .build/lib/boost/download.bash
 bash .build/lib/boost/compile.bash
 
-if [ -d "${SRC_DIR}" ]; then
+export BOOST_ROOT="$BOOST_INSTALL_DIR"
+
+if [ -d "${BASE_DIR}/.build/libs/linux-amd64" ]; then
 
   echo "Cleaning up and putting a copy in ${BASE_DIR}/.build/libs/"
-  echo "you can now compile Lethean with make release-static."
   rm -rf "${SRC_DIR}"
 
   if [ ! -d "${BASE_DIR}/.build/libs/linux-amd64" ]; then
@@ -57,7 +61,8 @@ if [ -d "${SRC_DIR}" ]; then
   fi
 
   sleep 9
-
 fi
+export DEVELOPER_LOCAL_TOOLS=1
+rm -rf build/libs/src
 
 exit 0

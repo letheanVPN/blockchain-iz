@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 if [ ! -d "${BOOST_INSTALL_DIR}" ] && [ ! -d "${BOOST_SRC_DIR}" ]; then
 

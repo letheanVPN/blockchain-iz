@@ -1,10 +1,9 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-if [ -d "${BOOST_SRC_DIR}" ]; then
+if [ ! -d "${BOOST_INSTALL_DIR}" ] && [ -d "${BOOST_SRC_DIR}" ]; then
 
   echo "Compiling LibBoost 1.58 to: ${BOOST_INSTALL_DIR}"
   sleep 6
-
 
   cd "${BOOST_SRC_DIR}" || exit
 

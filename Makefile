@@ -26,7 +26,8 @@
 # STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF
 # THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-all: release-all
+all: setup
+	bash build.bash
 
 cmake-debug:
 	mkdir -p build/debug
@@ -64,7 +65,7 @@ release-all:
 
 release-static:
 	mkdir -p build/release
-	cd build/release && cmake -D STATIC=ON -D ARCH="x86-64" -D BUILD_64=ON -D CMAKE_BUILD_TYPE=release ../.. && $(MAKE)
+	cd build/release && cmake -D STATIC=ON -D ARCH="x86-64" -DBOOST_ROOT=build/libs/boost_1_58_0 -DOPENSSL_ROOT_DIR=build/libs/openssl-1.1.0h -D BUILD_64=ON -D CMAKE_BUILD_TYPE=release ../.. && $(MAKE)
 
 coverage:
 	mkdir -p build/debug
@@ -117,7 +118,7 @@ fuzz:
 	cd build/fuzz && cmake -D BUILD_TESTS=ON -D USE_LTO=OFF -D CMAKE_C_COMPILER=afl-gcc -D CMAKE_CXX_COMPILER=afl-g++ -D ARCH="x86-64" -D CMAKE_BUILD_TYPE=fuzz -D BUILD_TAG="linux-x64" ../.. && $(MAKE)
 
 clean:
-	rm -rf build/release
+	rm -rf build/release build/libs/src
 
 tags:
 	ctags -R --sort=1 --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ src contrib tests/gtest
@@ -125,6 +126,9 @@ tags:
 .PHONY: all cmake-debug debug debug-test debug-all cmake-release release release-test release-all clean tags
 
 
-.PHONY: compile-build-deps
-compile-build-deps:
-	bash .build/environment/linux/compile-libs.bash
+.PHONY: setup dev
+setup: clean
+	chmod +x build.bash
+
+dev:
+	bash build.bash
