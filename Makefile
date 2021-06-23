@@ -29,22 +29,22 @@
 all: setup
 	bash build.bash
 
-cmake-debug:
+cmake-debug: clean
 	mkdir -p build/debug
 	cd build/debug && cmake -D CMAKE_BUILD_TYPE=Debug ../..
 
 debug: cmake-debug
 	cd build/debug && $(MAKE)
 
-debug-test:
+debug-test: clean
 	mkdir -p build/debug
 	cd build/debug && cmake -D BUILD_TESTS=ON -D CMAKE_BUILD_TYPE=Debug ../.. && $(MAKE) && $(MAKE) test
 
-debug-all:
+debug-all: clean
 	mkdir -p build/debug
 	cd build/debug && cmake -D BUILD_TESTS=ON -D BUILD_SHARED_LIBS=OFF -D CMAKE_BUILD_TYPE=Debug ../.. && $(MAKE)
 
-debug-static-all:
+debug-static-all: clean
 	mkdir -p build/debug
 	cd build/debug && cmake -D BUILD_TESTS=ON -D STATIC=ON -D CMAKE_BUILD_TYPE=Debug ../.. && $(MAKE)
 
@@ -63,7 +63,7 @@ release-all:
 	mkdir -p build/release
 	cd build/release && cmake -D BUILD_TESTS=ON -D CMAKE_BUILD_TYPE=release ../.. && $(MAKE)
 
-release-static:
+release-static: clean
 	mkdir -p build/release
 	cd build/release && cmake -D STATIC=ON -D ARCH="x86-64" -DBOOST_ROOT=build/libs/boost_1_58_0 -DOPENSSL_ROOT_DIR=build/libs/openssl-1.1.0h -D BUILD_64=ON -D CMAKE_BUILD_TYPE=release ../.. && $(MAKE)
 
@@ -73,31 +73,34 @@ coverage:
 
 # Targets for specific prebuilt builds which will be advertised for updates by their build tag
 
-release-static-linux-armv6:
+release-static-linux-armv6: clean
 	mkdir -p build/release
 	cd build/release && cmake -D BUILD_TESTS=OFF -D ARCH="armv6zk" -D STATIC=ON -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-armv6" ../.. && $(MAKE)
 
-release-static-linux-armv7:
+release-static-linux-armv7: clean
 	mkdir -p build/release
 	cd build/release && cmake -D BUILD_TESTS=OFF -D ARCH="armv7-a" -D STATIC=ON -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-armv7" ../.. && $(MAKE)
 
-release-static-android:
+release-static-android: clean
 	mkdir -p build/release
 	cd build/release && cmake -D BUILD_TESTS=OFF -D ARCH="armv7-a" -D STATIC=ON -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release -D ANDROID=true -D INSTALL_VENDORED_LIBUNBOUND=ON -D BUILD_TAG="android" ../.. && $(MAKE)
 
-release-static-linux-armv8:
+release-static-linux-armv8: clean
 	mkdir -p build/release
 	cd build/release && cmake -D BUILD_TESTS=OFF -D ARCH="armv8-a" -D STATIC=ON -D BUILD_64=ON -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-armv8" ../.. && $(MAKE)
 
-release-static-linux-x86_64:
+release-static-linux-x86_64: clean
 	mkdir -p build/release
-	cd build/release && cmake -D STATIC=ON -D ARCH="x86-64" -D BUILD_64=ON -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-x64" ../.. && $(MAKE)
+	chmod +x .build/environment/Linux/cpu-x86_64-arch-x86_64.bash
+	bash .build/environment/Linux/cpu-x86_64-arch-x86_64.bash
+	cd build/release && cmake -D STATIC=ON -D ARCH="x86-64" -D BUILD_64=ON -DBOOST_ROOT=build/libs/boost_1_58_0 -DOPENSSL_ROOT_DIR=build/libs/openssl-1.1.0h -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-x64" ../.. && $(MAKE)
+	chmod -x .build/environment/Linux/cpu-x86_64-arch-x86_64.bash
 
-release-static-freebsd-x86_64:
+release-static-freebsd-x86_64: clean
 	mkdir -p build/release
 	cd build/release && cmake -D STATIC=ON -D ARCH="x86-64" -D BUILD_64=ON -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="freebsd-x64" ../.. && $(MAKE)
 
-release-static-mac-x86_64:
+release-static-mac-x86_64: clean
 	mkdir -p build/release
 	cd build/release && cmake -D STATIC=ON -D ARCH="x86-64" -D BUILD_64=ON -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="mac-x64" ../.. && $(MAKE)
 

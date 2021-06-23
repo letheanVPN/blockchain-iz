@@ -43,7 +43,6 @@ else
 fi
 BUILD_VERSION=${BUILD_VERSION//\//-}
 export BUILD_VERSION
-
 # determine build host
 if [ -x "$(command -v sw_vers)" ]; then
 	macOSVersion=`sw_vers -productVersion`
@@ -56,7 +55,6 @@ if [ -x "$(command -v sw_vers)" ]; then
 		exit 1
 	fi
 elif [ -x "$(command -v lsb_release)" ]; then
-
 	processorType=$(uname -i)
 	kernelName=$(uname -s)
 	buildScript=".build/environment/$kernelName/cpu-$processorType-arch-$processorType.bash"
@@ -92,4 +90,15 @@ export BOOST_ROOT="$BOOST_ROOT"
 
 export DEVELOPER_LOCAL_TOOLS=1
 
-make release-static
+# If OS is MacOS
+if [ -x "$(command -v sw_vers)" ]; then
+  make release-static-mac-x86_64
+
+# If OS is Linux
+elif [ -x "$(command -v lsb_release)" ]; then
+  make release-static-linux-x86_64
+
+# If OS is Windows
+elif [ -x "$(command -v uname)" ]; then
+  make release-static-win64
+fi
