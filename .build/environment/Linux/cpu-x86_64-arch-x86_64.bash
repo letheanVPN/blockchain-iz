@@ -3,7 +3,7 @@
 echo "We are now going to try and compile the libs we need on your machine"
 echo "If this fails please report to our discord using the Website chat button"
 echo "https://discord.lt.hn Please include the last error here, thank you, lets Compile!"
-#sleep 9
+
 # base settings
 BASE_DIR=$(pwd)
 SRC_DIR="$(pwd)/build/libs/src"
@@ -60,9 +60,8 @@ if [ -d "${BASE_DIR}/.build/libs/linux-amd64" ]; then
 
   fi
 
-  sleep 9
 fi
-export DEVELOPER_LOCAL_TOOLS=1
+
 rm -rf build/libs/src
 
 exit 0

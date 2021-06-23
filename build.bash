@@ -57,7 +57,8 @@ if [ -x "$(command -v sw_vers)" ]; then
 elif [ -x "$(command -v lsb_release)" ]; then
 	processorType=$(uname -i)
 	kernelName=$(uname -s)
-	buildScript=".build/environment/$kernelName/cpu-$processorType-arch-$processorType.bash"
+	archName=$(uname -m)
+	buildScript=".build/environment/$kernelName/cpu-$processorType-arch-$archName.bash"
 	if [ -f "$buildScript" ]; then
 	  printWelcome
 		bash "${buildScript}" "$1"
