@@ -127,4 +127,4 @@ tags:
 
 .PHONY: compile-build-deps
 compile-build-deps:
-	bash utils/build_scripts/compile-libs.bash
+	bash .build/environment/linux/compile-libs.bash

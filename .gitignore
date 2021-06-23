@@ -1,13 +1,14 @@
 .DS_Store
-/doc
-/build
+doc
 /tags
 log/
 .idea
 artifacts
 data
 artifacts
-build/libs
+
+build
+.build/libs
 # vim swap files
 *.swp
 *.swo
@@ -116,3 +117,5 @@ debian/.debhelper
 debian/*.log
 debian/*stamp
 debian/files
+
+
