@@ -1,5 +1,5 @@
 # Building stage, Uses a pre configured ubuntu:16.04 image
-FROM lthn/build as builder
+FROM lthn/build:lthn-chain-linux as builder
 
 WORKDIR /home/lthn/src/chain
 
