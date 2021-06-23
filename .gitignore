@@ -7,7 +7,7 @@ log/
 artifacts
 data
 artifacts
-
+build/libs
 # vim swap files
 *.swp
 *.swo
