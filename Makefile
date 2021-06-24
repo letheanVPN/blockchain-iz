@@ -26,6 +26,7 @@
 # STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF
 # THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+.ONESHELL:
 all: setup
 	bash build.bash
 
@@ -89,6 +90,7 @@ release-static-linux-armv8: clean
 	mkdir -p build/release
 	cd build/release && cmake -D BUILD_TESTS=OFF -D ARCH="armv8-a" -D STATIC=ON -D BUILD_64=ON -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-armv8" ../.. && $(MAKE)
 
+.ONESHELL:
 release-static-linux-x86_64: clean
 	mkdir -p build/release
 	chmod +x .build/environment/Linux/cpu-x86_64-arch-x86_64.bash
@@ -108,9 +110,13 @@ release-static-linux-i686:
 	mkdir -p build/release
 	cd build/release && cmake -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-x86" ../.. && $(MAKE)
 
+.ONESHELL:
 release-static-win64:
 	mkdir -p build/release
-	cd build/release && cmake -G "MSYS Makefiles" -D STATIC=ON -D ARCH="x86-64" -D BUILD_64=ON -D CMAKE_BUILD_TYPE=Release -D BUILD_TAG="win-x64" -D CMAKE_TOOLCHAIN_FILE=../../cmake/64-bit-toolchain.cmake -D MSYS2_FOLDER=c:/msys64 ../.. && $(MAKE)
+	chmod +x .build/environment/windows/MINGW64_NT-arch-x86_64.bash
+	bash .build/environment/windows/MINGW64_NT-arch-x86_64.bash
+	cd build/release && cmake -G "MSYS Makefiles" -D STATIC=ON -D ARCH="x86-64" -D BUILD_64=ON -DBOOST_ROOT=build/libs/boost_1_58_0 -DOPENSSL_ROOT_DIR=build/libs/openssl-1.1.0h -D CMAKE_BUILD_TYPE=Release -D BUILD_TAG="win-x64" -D CMAKE_TOOLCHAIN_FILE=../../cmake/64-bit-toolchain.cmake -D MSYS2_FOLDER=c:/msys64 ../.. && $(MAKE)
+	chmod -x .build/environment/windows/MINGW64_NT-arch-x86_64.bash
 
 release-static-win32:
 	mkdir -p build/release
