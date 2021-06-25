@@ -1,8 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# shellcheck shell=bash
 
-echo "We are now going to try and compile the libs we need on your machine"
-echo "If this fails please report to our discord using the Website chat button"
-echo "https://discord.lt.hn Please include the last error here, thank you, lets Compile!"
+printf "We are now going to try and compile the libs we need on your machine\n"
+printf "If this fails please report to our discord using the Website chat button\n"
+printf "https://discord.lt.hn Please include the last error here, thank you, lets Compile!\n\n\n"
 
 # base settings
 BASE_DIR=$(pwd)
@@ -11,6 +12,11 @@ INSTALL_DIR="$(pwd)/build/libs"
 export BASE_DIR=$BASE_DIR
 export SRC_DIR=$SRC_DIR
 export INSTALL_DIR=$INSTALL_DIR
+
+if [ ! -d "$INSTALL_DIR" ]; then
+  echo "Triggering brew install because install dir is missing $INSTALL_DIR"
+  brew update && brew bundle --file="$BASE_DIR/.build/environment/macos/Brewfile"
+fi
 
 mkdir -p "${SRC_DIR}"
 
@@ -25,8 +31,8 @@ export OPENSSL_HASH=$OPENSSL_HASH
 export OPENSSL_SRC_DIR=$OPENSSL_SRC_DIR
 export OPENSSL_INSTALL_DIR=$OPENSSL_INSTALL_DIR
 
-bash .build/lib/openssl/download.bash
-bash .build/lib/openssl/compile.bash
+#bash .build/lib/openssl/download.bash
+#bash .build/lib/openssl/compile.bash
 
 export OPENSSL_LIBRARY="$OPENSSL_INSTALL_DIR/lib"
 export OPENSSL_INCLUDE_DIR="$OPENSSL_INSTALL_DIR/include"
@@ -49,17 +55,15 @@ bash .build/lib/boost/compile.bash
 
 export BOOST_ROOT="$BOOST_INSTALL_DIR"
 
-if [ -d "${BASE_DIR}/.build/libs/linux-amd64" ]; then
+if [ -d "${BASE_DIR}/.build/libs/macos-arm64" ]; then
 
   echo "Cleaning up and putting a copy in ${BASE_DIR}/.build/libs/"
   rm -rf "${SRC_DIR}"
 
-  if [ ! -d "${BASE_DIR}/.build/libs/linux-amd64" ]; then
-    mkdir -p "${BASE_DIR}/.build/libs/linux-amd64"
-    cp -rf "${INSTALL_DIR}/" "${BASE_DIR}/.build/libs/linux-amd64"
+  if [ ! -d "${BASE_DIR}/.build/libs/macos-arm64" ]; then
+    mkdir -p "${BASE_DIR}/.build/libs/macos-arm64"
+    cp -rf "${INSTALL_DIR}/" "${BASE_DIR}/.build/libs/macos-arm64"
 
   fi
 
 fi
-
-
