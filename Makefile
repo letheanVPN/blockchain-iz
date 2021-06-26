@@ -94,21 +94,21 @@ release-static-linux-armv8:
 
 .ONESHELL:
 release-static-linux-x86_64:
-	mkdir -p build/release-static-linux-x86_64
+	mkdir -p build/release-static-linux-x86_64 build/release
 	(cd build/release-static-linux-x86_64 && cmake -D STATIC=ON -D ARCH="x86-64" -D BUILD_64=ON -DBOOST_ROOT=build/libs/x86_64/boost_1_58_0 -DOPENSSL_ROOT_DIR=build/libs/x86_64/openssl-1.1.0h -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-x64" ../.. && $(MAKE) )
 	(cd build/release-static-linux-x86_64/bin; tar -cvMaf ../../release/linux-x86_64.tar.gz *)
 	(cp -rf build/release-static-linux-x86_64/bin build/release)
 
 .ONESHELL:
 release-static-freebsd-x86_64:
-	mkdir -p build/release-static-freebsd-x86_64
+	mkdir -p build/release-static-freebsd-x86_64 build/release
 	(cd build/release-static-freebsd-x86_64 && cmake -D STATIC=ON -D ARCH="x86-64" -D BUILD_64=ON -DBOOST_ROOT=build/libs/x86_64/boost_1_58_0 -DOPENSSL_ROOT_DIR=build/libs/x86_64/openssl-1.1.0h -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="freebsd-x64" ../.. && $(MAKE) )
 	(cd build/release-static-freebsd-x86_64/bin; tar -cvMaf ../../release/freebsd-x86_64.tar.gz *)
 	cp -rf build/release-static-freebsd-x86_64/bin build/release
 
 .ONESHELL:
 release-static-macos-x86_64:
-	mkdir -p build/release-static-macos-x86_64
+	mkdir -p build/release-static-macos-x86_64 build/release
 	(cd build/release-static-macos-x86_64 && cmake -D STATIC=ON -D ARCH="x86-64" -D BUILD_64=ON -DBOOST_ROOT=build/libs/x86_64/boost_1_58_0 -DOPENSSL_ROOT_DIR=build/libs/x86_64/openssl-1.1.0h -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="mac-x64" ../.. && $(MAKE) )
 	(cd build/release-static-macos-x86_64/bin; tar -cvMaf ../../release/macos-x86_64.tar.gz *)
 	cp -rf build/release-static-macos-x86_64/bin build/release
