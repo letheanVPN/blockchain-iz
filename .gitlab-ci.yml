@@ -1,6 +1,13 @@
 include:
   - template: Auto-DevOps.gitlab-ci.yml
 
+stages:
+  - build
+  - upload
+  - release
+  - deploy
+
+
 variables:
   TEST_DISABLED: 1
 
