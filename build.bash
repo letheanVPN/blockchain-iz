@@ -70,9 +70,8 @@ configureHostSettings() {
   # Linux setup
   elif [ -x "$(command -v lsb_release)" ]; then
     osName='linux'
-    processorType=$(uname -i)
-    kernelName=$(uname -s)
-    archType=$(uname -m)
+    processorType=$(uname -p)
+    archType=$(uname -i)
     buildScript="cpu-$processorType-arch-$archType.bash"
 
   # Windows setup
@@ -116,7 +115,8 @@ configureEnvironment() {
     else
       bash ".build/environment/$osName/${buildScript}" "$1"
     fi
-
+    echo "Removing Lib Source Files, build/libs now has openssl and libboost. use make clean, it will keep them."
+    rm -rf build/libs/src
 
   else
     echo "Sorry, the builder cant auto compile for you. Please tell us the name of the preloader we tried to use: "
@@ -143,7 +143,7 @@ startCompile() {
   # If OS is Linux
   elif [ "$osName" = "linux" ]; then
     echo "Performing Linux x86_64 Compile"
-    make release-static-linux-x86_64
+    make release-static-linux-x86_64 -j5
 
   # If OS is Windows
   elif [ "$osName" = "windows" ]; then
@@ -153,11 +153,39 @@ startCompile() {
 
 }
 
-while getopts qd option; do
+buildRelease() {
+
+  # If OS is MacOS
+  if [ "$osName" = "macos" ]; then
+    if [ "$archType" = "i386" ] && [ "$(sysctl -in sysctl.proc_translated)" = "1" ]; then
+      echo "MacOS M1 (Rosetta 2) Compile"
+#      make release-static-macos-x86_64
+    elif [ "$archType" = "arm64" ]; then
+      echo "MacOS M1(arm64) Compile"
+#      make release-static-macos-arm64
+    elif [ "$archType" = "x86_64" ]; then
+      echo "MacOS Intel(x86_64) Compile"
+#      make release-static-macos-x86_64
+    fi
+  # If OS is Linux
+  elif [ "$osName" = "linux" ]; then
+    echo "Performing Release Compile. Linux, Mac & FreeBSD"
+    make release-static
+
+  # If OS is Windows
+  elif [ "$osName" = "windows" ]; then
+    echo "Performing Windows 64 Compile"
+#    make release-static-win64
+  fi
+
+}
+
+while getopts qdr option; do
   # shellcheck disable=SC2220
   case "${option}" in
   q) QUIET=${OPTARG} ;;
-  d) DEPS_ONLY=${OPTARG} ;;
+  d) DEPS_ONLY=1 ;;
+  r) BUILD_RELEASE=1 ;;
   esac
 done
 
@@ -173,4 +201,8 @@ if [ -n "$DEPS_ONLY" ]; then
   exit 0
 fi
 
-startCompile "${@}"
+if [ -n "$BUILD_RELEASE" ]; then
+  buildRelease "${@}"
+else
+  startCompile "${@}"
+fi
