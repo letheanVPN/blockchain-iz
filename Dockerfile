@@ -5,7 +5,7 @@ WORKDIR /home/lthn/src/chain
 
 COPY . .
 # make type to use, to change --build-arg RELEASE_TYPE=release-test
-ARG RELEASE_TYPE=release-static
+ARG RELEASE_TYPE=release-static-linux-x86_64
 
 RUN rm -rf build && make ${RELEASE_TYPE}
 

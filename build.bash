@@ -116,7 +116,7 @@ configureEnvironment() {
       bash ".build/environment/$osName/${buildScript}" "$1"
     fi
     echo "Removing Lib Source Files, build/libs now has openssl and libboost. use make clean, it will keep them."
-    rm -rf build/libs/src
+    rm -rf build/libs/src/arm build/libs/src/x86_64
 
   else
     echo "Sorry, the builder cant auto compile for you. Please tell us the name of the preloader we tried to use: "
@@ -180,12 +180,13 @@ buildRelease() {
 
 }
 
-while getopts qdr option; do
+while getopts qdrt: option; do
   # shellcheck disable=SC2220
   case "${option}" in
   q) QUIET=${OPTARG} ;;
   d) DEPS_ONLY=1 ;;
   r) BUILD_RELEASE=1 ;;
+  t) BUILD_TARGET=${OPTARG} ;;
   esac
 done
 
@@ -201,7 +202,9 @@ if [ -n "$DEPS_ONLY" ]; then
   exit 0
 fi
 
-if [ -n "$BUILD_RELEASE" ]; then
+if [ -n "$BUILD_TARGET" ]; then
+  make "$BUILD_TARGET"
+elif [ -n "$BUILD_RELEASE" ]; then
   buildRelease "${@}"
 else
   startCompile "${@}"

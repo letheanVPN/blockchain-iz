@@ -31,7 +31,7 @@ mac-x86_64:
     paths:
       - build/release/macos-x86_64.tar.gz
   cache:
-    key: $CI_COMMIT_REF_SLUG-linux-x86_64
+    key: $CI_COMMIT_REF_SLUG
     paths:
       - build/libs/
     policy: pull-push
@@ -46,7 +46,7 @@ linux-x86_64:
     paths:
       - build/release/linux-x86_64.tar.gz
   cache:
-    key: $CI_COMMIT_REF_SLUG-linux-x86_64
+    key: $CI_COMMIT_REF_SLUG
     paths:
       - build/libs/
     policy: pull-push
@@ -61,7 +61,7 @@ freebsd-x86_64:
     paths:
       - build/release/freebsd-x86_64.tar.gz
   cache:
-    key: $CI_COMMIT_REF_SLUG-linux-x86_64
+    key: $CI_COMMIT_REF_SLUG
     paths:
       - build/libs/
     policy: pull-push
