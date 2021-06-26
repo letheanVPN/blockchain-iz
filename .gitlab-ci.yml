@@ -26,10 +26,12 @@ mac-x86_64:
   stage: build
   script:
     - make release-static-macos-x86_64
+    - cp build/release/macos-x86_64.tar.gz ./
   artifacts:
     name: macos-x86_64
+    expose_as: 'MacOS'
     paths:
-      - build/release/macos-x86_64.tar.gz
+      - macos-x86_64.tar.gz
   cache:
     key: $CI_COMMIT_REF_SLUG
     paths:
@@ -41,10 +43,12 @@ linux-x86_64:
   stage: build
   script:
     - make release-static-linux-x86_64
+    - cp build/release/linux-x86_64.tar.gz ./
   artifacts:
-    name: macos-x86_64
+    name: linux-x86_64
+    expose_as: 'Linux'
     paths:
-      - build/release/linux-x86_64.tar.gz
+      - linux-x86_64.tar.gz
   cache:
     key: $CI_COMMIT_REF_SLUG
     paths:
@@ -56,10 +60,12 @@ freebsd-x86_64:
   stage: build
   script:
     - make release-static-freebsd-x86_64
+    - cp build/release/freebsd-x86_64.tar.gz ./
   artifacts:
-    name: macos-x86_64
+    name: freebsd-x86_64
+    expose_as: 'FreeBSD'
     paths:
-      - build/release/freebsd-x86_64.tar.gz
+      - freebsd-x86_64.tar.gz
   cache:
     key: $CI_COMMIT_REF_SLUG
     paths:
