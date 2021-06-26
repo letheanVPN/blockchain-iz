@@ -2,11 +2,24 @@ include:
   - template: Auto-DevOps.gitlab-ci.yml
 
 stages:
+  - .pre
   - build
   - test
   - upload
   - release
   - deploy
+  - review
+  - dast
+  - staging
+  - canary
+  - production
+  - incremental rollout 10%
+  - incremental rollout 25%
+  - incremental rollout 50%
+  - incremental rollout 100%
+  - performance
+  - cleanup
+  - .post
 
 
 variables:
