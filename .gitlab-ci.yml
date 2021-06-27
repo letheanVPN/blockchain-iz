@@ -33,6 +33,7 @@ Docker Hub:
 Docker Image:
   stage: build
   image: docker
+  interruptible: true
   variables:
     DOCKER_HOST: tcp://docker:2375
   services:
@@ -43,13 +44,12 @@ Docker Image:
   script:
     - docker build --squash --cache-from $CI_REGISTRY_IMAGE:latest -t $CI_REGISTRY_IMAGE:latest -f build-conf/build.Dockerfile build-src
     - docker push $CI_REGISTRY_IMAGE:latest
-  rules:
-    - changes:
-        - "Dockerfile"
+
 
 MacOS:
   image: lthn/build:lthn-wallet-linux
   stage: build
+  interruptible: true
   script:
     - make release-static-macos-x86_64
     - cp build/release/macos-x86_64.tar.gz ./
@@ -67,6 +67,7 @@ MacOS:
 GNU Linux:
   image: lthn/build:lthn-wallet-linux
   stage: build
+  interruptible: true
   script:
     - make release-static-linux-x86_64
     - cp build/release/linux-x86_64.tar.gz ./
@@ -84,6 +85,7 @@ GNU Linux:
 FreeBSD:
   image: lthn/build:lthn-wallet-linux
   stage: build
+  interruptible: true
   script:
     - make release-static-freebsd-x86_64
     - cp build/release/freebsd-x86_64.tar.gz ./
