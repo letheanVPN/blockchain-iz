@@ -85,12 +85,24 @@ coverage:
 
 # Targets for specific prebuilt builds which will be advertised for updates by their build tag
 
-release-static-linux-armv8:
-	mkdir -p build/release-static-linux-armv8
-	export CC=aarch64-linux-gnu-gcc
-	export CXX=aarch64-linux-gnu-g++
-	export ARCH=aarch64
-	cd build/release-static-linux-armv8 && cmake -D BUILD_TESTS=OFF -D ARCH="armv8-a" -D STATIC=ON -DBOOST_ROOT=build/libs/arm8/boost_1_58_0 -DOPENSSL_ROOT_DIR=build/libs/arm8/openssl-1.1.0h -D BUILD_64=ON -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-armv8" ../.. && $(MAKE)
+release-static-linux-armv7:
+	mkdir -p build/release-static-linux-armv7 build/release
+	cd build/release-static-linux-armv7 && cmake -D BUILD_TESTS=OFF -D ARCH="armv7-a" -D STATIC=ON -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-armv7" ../.. && $(MAKE)
+
+.ONESHELL:
+release-static-rasbian-armv8:
+	mkdir -p build/release-static-rasbian-armv8 build/release
+	(cd build/release-static-rasbian-armv8 && cmake -D BUILD_TESTS=OFF -D ARCH="armv8-a" -DBOOST_ROOT=build/libs/arm8/boost_1_58_0 -D STATIC=ON -D BUILD_64=ON -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-armv8" ../.. && $(MAKE) )
+	(cd build/release-static-rasbian-armv8/bin; tar -cvMaf ../../release/rasbian-armv8.tar.gz *)
+	(cp -rf build/release-static-rasbian-armv8/bin build/release)
+
+
+#release-static-linux-armv8:
+#	mkdir -p build/release-static-linux-armv8
+#	export CC=aarch64-linux-gnu-gcc
+#	export CXX=aarch64-linux-gnu-g++
+#	export ARCH=aarch64
+#	cd build/release-static-linux-armv8 && cmake -D BUILD_TESTS=OFF -D ARCH="armv8-a" -D STATIC=ON -DBOOST_ROOT=build/libs/arm8/boost_1_58_0 -DOPENSSL_ROOT_DIR=build/libs/arm8/openssl-1.1.0h -D BUILD_64=ON -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-armv8" ../.. && $(MAKE)
 
 .ONESHELL:
 release-static-linux-x86_64:

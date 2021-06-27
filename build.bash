@@ -39,6 +39,9 @@ EOF
 
 configureHostSettings() {
 
+  echo "Testing your host to try and figure out if we can build."
+  echo "$(lsb_release -a)"
+
   # macos setup
   if [ -x "$(command -v sw_vers)" ]; then
     echo "Compiling on MacOS is not supported in this version, please download our pre built library's"
@@ -67,12 +70,23 @@ configureHostSettings() {
 
     buildScript="os-$osVersion-arch-$archType.bash"
 
+  # Pi4 Model B	
+  elif [ "$(lsb_release -sd)" == "Raspbian GNU/Linux 10 (buster)" ]; then
+
+    osName='raspbian'
+    processorType='armv8'
+    archType="$(arch)"
+    buildScript="$processorType-$archType.bash"
+
+
   # Linux setup
   elif [ -x "$(command -v lsb_release)" ]; then
+
     osName='linux'
     processorType=$(uname -p)
     archType=$(uname -i)
     buildScript="cpu-$processorType-arch-$archType.bash"
+
 
   # Windows setup
   elif [ -x "$(command -v uname)" ]; then
@@ -108,7 +122,7 @@ configureBuildSettings() {
 
 configureEnvironment() {
   if [ -f ".build/environment/$osName/$buildScript" ]; then
-    printWelcome
+
     if [ "$osName" = "macos" ] && [ "$(sysctl -in sysctl.proc_translated)" = "1" ]; then
       echo "Configure is running intel compat"
       /usr/bin/env arch -x86_64 bash ".build/environment/$osName/${buildScript}" "$1"
@@ -120,7 +134,7 @@ configureEnvironment() {
 
   else
     echo "Sorry, the builder cant auto compile for you. Please tell us the name of the preloader we tried to use: "
-    echo "${buildScript:?}"
+    echo ".build/environment/$osName/${buildScript:?}"
     echo "Sorry I can't help you right now, you can try to compile yourself or use our pre compiled binaries."
     exit 1
   fi
@@ -143,7 +157,13 @@ startCompile() {
   # If OS is Linux
   elif [ "$osName" = "linux" ]; then
     echo "Performing Linux x86_64 Compile"
-    make release-static-linux-x86_64 -j5
+    make release-static-linux-x86_64
+
+  # If OS is Linux
+  elif [ "$osName" = "raspbian" ]; then
+    echo "Performing Raspbian 10 armv8-a Compile"
+    make release-static-rasbian-armv8
+
 
   # If OS is Windows
   elif [ "$osName" = "windows" ]; then
@@ -189,6 +209,8 @@ while getopts qdrt: option; do
   t) BUILD_TARGET=${OPTARG} ;;
   esac
 done
+
+printWelcome
 
 configureHostSettings "${@}"
 
