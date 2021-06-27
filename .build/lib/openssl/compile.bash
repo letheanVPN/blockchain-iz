@@ -41,8 +41,11 @@ fi
 if [ ! -d "$OPENSSL_INSTALL_DIR_ARM8" ] && [ -d "$OPENSSL_SRC_DIR_ARM8/openssl-${OPENSSL_VERSION}" ]; then
       set -x &&
     cd "$OPENSSL_SRC_DIR_ARM8/openssl-${OPENSSL_VERSION}" &&
-    ./Configure linux-aarch64 no-shared --cross-compile-prefix=aarch64-linux-gnu- --static -fPIC --prefix="${OPENSSL_INSTALL_DIR_ARM8}" &&
+    ./Config &&
+    ./Configure no-shared --cross-compile-prefix=aarch64-linux-gnu- --static -fPIC --prefix="${OPENSSL_INSTALL_DIR_ARM8}" &&
     make build_generated &&
     make libcrypto.a &&
     make install
 fi
+
+

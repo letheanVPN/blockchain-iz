@@ -53,13 +53,33 @@ MacOS:
   tags:
     - snider.dev
   script:
-    - make release-static-macos-x86_64 -j4
+    - make release-static-macos-x86_64
     - cp build/release/macos-x86_64.tar.gz ./
   artifacts:
     name: lethean-chain-macos-x86_64
     expose_as: 'MacOS'
     paths:
       - macos-x86_64.tar.gz
+  cache:
+    key: $CI_COMMIT_REF_SLUG
+    paths:
+      - build/libs/
+    policy: pull-push
+
+Pi4:
+  image: lthn/build:lthn-wallet-linux
+  stage: build
+  interruptible: true
+  tags:
+    - pi4
+  script:
+    - make
+    - cp build/release/macos-x86_64.tar.gz ./
+  artifacts:
+    name: lethean-chain-macos-x86_64
+    expose_as: 'Pi 4 Arm64'
+    paths:
+      - pi4-arm64.tar.gz
   cache:
     key: $CI_COMMIT_REF_SLUG
     paths:
