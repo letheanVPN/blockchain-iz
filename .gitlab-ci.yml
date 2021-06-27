@@ -55,7 +55,7 @@ MacOS:
   tags:
     - snider.dev
   script:
-    - make release-static-macos-x86_64
+    - make release-static-macos-x86_64 -j4
     - cp build/release/macos-x86_64.tar.gz ./
   artifacts:
     name: lethean-chain-macos-x86_64
