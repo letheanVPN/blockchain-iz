@@ -36,6 +36,8 @@ Docker Image:
   interruptible: true
   variables:
     DOCKER_HOST: tcp://docker:2375
+  tags:
+    - snider.dev
   services:
     - name: docker:dind
       command: [ "--experimental" ]
@@ -50,6 +52,8 @@ MacOS:
   image: lthn/build:lthn-wallet-linux
   stage: build
   interruptible: true
+  tags:
+    - snider.dev
   script:
     - make release-static-macos-x86_64
     - cp build/release/macos-x86_64.tar.gz ./
