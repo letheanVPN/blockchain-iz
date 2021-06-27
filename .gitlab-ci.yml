@@ -36,8 +36,6 @@ Docker Image:
   interruptible: true
   variables:
     DOCKER_HOST: tcp://docker:2375
-  tags:
-    - snider.dev
   services:
     - name: docker:dind
       command: [ "--experimental" ]
