@@ -2,6 +2,7 @@ stages:
   - build
   - test
   - create_new_package
+  - download_test
   - upload
   - release
   - deploy
@@ -83,8 +84,8 @@ freebsd-x86_64:
 upload:
   stage: upload
   image: curlimages/curl:latest
-  #rules:
-  #  - if: $CI_COMMIT_TAG
+  rules:
+    - if: $CI_COMMIT_TAG
   script:
     - |
       curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file "freebsd-x86_64.tar.gz" "${PACKAGE_REGISTRY_URL}/freebsd-x86_64.tar.gz"
@@ -130,7 +131,6 @@ download_test:
       curl --request PUT --header "PRIVATE-TOKEN: ${PAT}" "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/variables/LASTVERSION" --form "value=$VERSION"
       echo "Also writing it to the group level (Must have at least maintainer permissions to the group)..."
       curl --request PUT --header "PRIVATE-TOKEN: ${PAT}" "${CI_API_V4_URL}/groups/9120367/variables/LASTVERSION" --form "value=$VERSION"
-
 
 release:
   # Caution, as of 2021-02-02 these assets links require a login, see:
