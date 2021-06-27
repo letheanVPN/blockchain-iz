@@ -30,7 +30,24 @@ Docker Hub:
   only:
     - master
 
-mac-x86_64:
+Docker Image:
+  stage: build
+  image: docker
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+  services:
+    - name: docker:dind
+      command: [ "--experimental" ]
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - docker build --squash --cache-from $CI_REGISTRY_IMAGE:latest -t $CI_REGISTRY_IMAGE:latest -f build-conf/build.Dockerfile build-src
+    - docker push $CI_REGISTRY_IMAGE:latest
+  rules:
+    - changes:
+        - "Dockerfile"
+
+MacOS:
   image: lthn/build:lthn-wallet-linux
   stage: build
   script:
@@ -47,7 +64,7 @@ mac-x86_64:
       - build/libs/
     policy: pull-push
 
-linux-x86_64:
+GNU Linux:
   image: lthn/build:lthn-wallet-linux
   stage: build
   script:
@@ -64,7 +81,7 @@ linux-x86_64:
       - build/libs/
     policy: pull-push
 
-freebsd-x86_64:
+FreeBSD:
   image: lthn/build:lthn-wallet-linux
   stage: build
   script:
