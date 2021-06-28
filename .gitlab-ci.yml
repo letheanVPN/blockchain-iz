@@ -50,8 +50,8 @@ MacOS:
   image: lthn/build:lthn-wallet-linux
   stage: build
   interruptible: true
-  tags:
-    - snider.dev
+  only:
+    - master
   script:
     - make release-static-macos-x86_64
     - cp build/release/macos-x86_64.tar.gz ./
@@ -70,6 +70,8 @@ Pi4:
   image: lthn/build:lthn-wallet-linux
   stage: build
   interruptible: true
+  only:
+    - master
   tags:
     - pi4
   script:
@@ -108,6 +110,8 @@ FreeBSD:
   image: lthn/build:lthn-wallet-linux
   stage: build
   interruptible: true
+  only:
+    - master
   script:
     - make release-static-freebsd-x86_64
     - cp build/release/freebsd-x86_64.tar.gz ./
@@ -138,9 +142,10 @@ upload:
 
 create_new_package:
   stage: create_new_package
+  image: alpine
   script:
     - |
-      apk add curl
+      apk add tar curl
       echo "Version metadata pattern 1: number is expresssed in filename as well so that version metadata is available when file is downloaded."
       echo "Version metadata pattern 2: version is placed inside a file in the archive."
       echo "Version metadata pattern 3: structured file name shows version."
@@ -159,6 +164,7 @@ create_new_package:
 
 download_test:
   stage: download_test
+  image: alipne
   # The $VERSION is propagated from the previous job via dotenv files capability of Gitlab CI
   script:
     - |
