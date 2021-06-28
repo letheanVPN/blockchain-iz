@@ -74,12 +74,12 @@ Pi4:
     - pi4
   script:
     - make
-    - cp build/release/macos-x86_64.tar.gz ./
+    - cp build/release/rasbian-armv8.tar.gz ./
   artifacts:
-    name: lethean-chain-macos-x86_64
+    name: lethean-chain-rasbian-armv8
     expose_as: 'Pi 4 Arm64'
     paths:
-      - pi4-arm64.tar.gz
+      - rasbian-armv8.tar.gz
   cache:
     key: $CI_COMMIT_REF_SLUG
     paths:
