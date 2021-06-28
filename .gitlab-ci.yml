@@ -122,41 +122,41 @@ FreeBSD:
       - build/libs/
     policy: pull-push
 
-upload:
-  stage: upload
-  image: curlimages/curl:latest
-  rules:
-    - if: $CI_COMMIT_TAG
-  script:
-    - |
-      curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file "freebsd-x86_64.tar.gz" "${PACKAGE_REGISTRY_URL}/freebsd-x86_64.tar.gz"
-    - |
-      curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file "linux-x86_64.tar.gz" "${PACKAGE_REGISTRY_URL}/linux-x86_64.tar.gz"
-    - |
-      curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file "macos-x86_64.tar.gz" "${PACKAGE_REGISTRY_URL}/macos-x86_64.tar.gz"
+#upload:
+#  stage: upload
+#  image: curlimages/curl:latest
+#  rules:
+#    - if: $CI_COMMIT_TAG
+#  script:
+#    - |
+#      curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file "freebsd-x86_64.tar.gz" "${PACKAGE_REGISTRY_URL}/freebsd-x86_64.tar.gz"
+#    - |
+#      curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file "linux-x86_64.tar.gz" "${PACKAGE_REGISTRY_URL}/linux-x86_64.tar.gz"
+#    - |
+#      curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file "macos-x86_64.tar.gz" "${PACKAGE_REGISTRY_URL}/macos-x86_64.tar.gz"
+#
 
+#create_new_package:
+#  stage: create_new_package
+#  image: alpine
+#  script:
+#    - |
+#      apk add tar curl
+#      echo "Version metadata pattern 1: number is expresssed in filename as well so that version metadata is available when file is downloaded."
+#      echo "Version metadata pattern 2: version is placed inside a file in the archive."
+#      echo "Version metadata pattern 3: structured file name shows version."
+#      echo "IMPORTANT: Please see the readme for how filename stored version variables can cause duplicate versions to be pushed to a package endpoint when doing multibranch development."
+#      VERSION=$(. .build/release/increment_version.sh ${VERSIONCOMPONENTTOINCREMENT} ${LASTVERSION})
+#      echo "${VERSION}" > version.txt
+#      echo "${VERSION}" > version-${VERSION}.txt
+#      echo "VERSION=${VERSION}" > version.env
+#      tar -czvf ${PACKAGENAME}.${VERSION}.tar.gz .
+#      curl --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file ${PACKAGENAME}.${VERSION}.tar.gz ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/${PACKAGENAME}/${VERSION}/${PACKAGENAME}.${VERSION}.tar.gz
 
-create_new_package:
-  stage: create_new_package
-  image: alpine
-  script:
-    - |
-      apk add tar curl
-      echo "Version metadata pattern 1: number is expresssed in filename as well so that version metadata is available when file is downloaded."
-      echo "Version metadata pattern 2: version is placed inside a file in the archive."
-      echo "Version metadata pattern 3: structured file name shows version."
-      echo "IMPORTANT: Please see the readme for how filename stored version variables can cause duplicate versions to be pushed to a package endpoint when doing multibranch development."
-      VERSION=$(. .build/release/increment_version.sh ${VERSIONCOMPONENTTOINCREMENT} ${LASTVERSION})
-      echo "${VERSION}" > version.txt
-      echo "${VERSION}" > version-${VERSION}.txt
-      echo "VERSION=${VERSION}" > version.env
-      tar -czvf ${PACKAGENAME}.${VERSION}.tar.gz .
-      curl --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file ${PACKAGENAME}.${VERSION}.tar.gz ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/${PACKAGENAME}/${VERSION}/${PACKAGENAME}.${VERSION}.tar.gz
-
-  artifacts:
-    reports:
-      #propagates variables into the pipeline level, but never stores the actual file
-      dotenv: version.env
+#  artifacts:
+#    reports:
+#      #propagates variables into the pipeline level, but never stores the actual file
+#      dotenv: version.env
 
 download_test:
   stage: download_test
@@ -175,15 +175,15 @@ download_test:
       echo "Also writing it to the group level (Must have at least maintainer permissions to the group)..."
       curl --request PUT --header "PRIVATE-TOKEN: ${PAT}" "${CI_API_V4_URL}/groups/9120367/variables/LASTVERSION" --form "value=$VERSION"
 
-release:
-  # Caution, as of 2021-02-02 these assets links require a login, see:
-  # https://gitlab.com/gitlab-org/gitlab/-/issues/299384
-  stage: release
-  image: registry.gitlab.com/gitlab-org/release-cli:latest
-  rules:
-    - if: $CI_COMMIT_TAG
-  script:
-    - |
-      release-cli create --name "Release $CI_COMMIT_TAG" --tag-name $CI_COMMIT_TAG \
-        --assets-link "{\"name\":\"lethean-chain-linux\",\"url\":\"${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/${PACKAGENAME}/${VERSION}/${PACKAGENAME}.${VERSION}.tar.gz\"}" \
-        --assets-link "{\"name\":\"lethean-chain-freebsd\",\"url\":\"${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/${PACKAGENAME}/${VERSION}/${PACKAGENAME}.${VERSION}.tar.gz\"}"
+#release:
+#  # Caution, as of 2021-02-02 these assets links require a login, see:
+#  # https://gitlab.com/gitlab-org/gitlab/-/issues/299384
+#  stage: release
+#  image: registry.gitlab.com/gitlab-org/release-cli:latest
+#  rules:
+#    - if: $CI_COMMIT_TAG
+#  script:
+#    - |
+#      release-cli create --name "Release $CI_COMMIT_TAG" --tag-name $CI_COMMIT_TAG \
+#        --assets-link "{\"name\":\"lethean-chain-linux\",\"url\":\"${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/${PACKAGENAME}/${VERSION}/${PACKAGENAME}.${VERSION}.tar.gz\"}" \
+#        --assets-link "{\"name\":\"lethean-chain-freebsd\",\"url\":\"${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/${PACKAGENAME}/${VERSION}/${PACKAGENAME}.${VERSION}.tar.gz\"}"
