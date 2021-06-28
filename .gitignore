@@ -8,8 +8,8 @@ artifacts
 data
 artifacts
 
-artifacts
-
+build
+.build/libs
 # vim swap files
 *.swp
 *.swo
