@@ -158,22 +158,22 @@ FreeBSD:
 #      #propagates variables into the pipeline level, but never stores the actual file
 #      dotenv: version.env
 
-download_test:
-  stage: download_test
-  image: alipne
-  # The $VERSION is propagated from the previous job via dotenv files capability of Gitlab CI
-  script:
-    - |
-      apk add wget curl
-      wget --header="JOB-TOKEN: $CI_JOB_TOKEN" ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/${PACKAGENAME}/${VERSION}/${PACKAGENAME}.${VERSION}.tar.gz
-      tar -xzvf ${PACKAGENAME}.${VERSION}.tar.gz
-      ls -ashl
-      echo "Contents of version.txt:"
-      cat version.txt
-      echo "Tested successful, updating last version to the project (Must have at least developer to the project)..."
-      curl --request PUT --header "PRIVATE-TOKEN: ${PAT}" "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/variables/LASTVERSION" --form "value=$VERSION"
-      echo "Also writing it to the group level (Must have at least maintainer permissions to the group)..."
-      curl --request PUT --header "PRIVATE-TOKEN: ${PAT}" "${CI_API_V4_URL}/groups/9120367/variables/LASTVERSION" --form "value=$VERSION"
+#download_test:
+#  stage: download_test
+#  image: alipne
+#  # The $VERSION is propagated from the previous job via dotenv files capability of Gitlab CI
+#  script:
+#    - |
+#      apk add wget curl
+#      wget --header="JOB-TOKEN: $CI_JOB_TOKEN" ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/${PACKAGENAME}/${VERSION}/${PACKAGENAME}.${VERSION}.tar.gz
+#      tar -xzvf ${PACKAGENAME}.${VERSION}.tar.gz
+#      ls -ashl
+#      echo "Contents of version.txt:"
+#      cat version.txt
+#      echo "Tested successful, updating last version to the project (Must have at least developer to the project)..."
+#      curl --request PUT --header "PRIVATE-TOKEN: ${PAT}" "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/variables/LASTVERSION" --form "value=$VERSION"
+#      echo "Also writing it to the group level (Must have at least maintainer permissions to the group)..."
+#      curl --request PUT --header "PRIVATE-TOKEN: ${PAT}" "${CI_API_V4_URL}/groups/9120367/variables/LASTVERSION" --form "value=$VERSION"
 
 #release:
 #  # Caution, as of 2021-02-02 these assets links require a login, see:
