@@ -24,7 +24,7 @@ Docker Hub:
   environment:
     name: docker.io
   only:
-    - master
+    - main
 
 Docker Image:
   stage: build
@@ -47,7 +47,7 @@ MacOS:
   stage: build
   interruptible: true
   only:
-    - master
+    - main
   script:
     - make release-static-macos-x86_64
     - cp build/release/macos-x86_64.tar.gz ./
@@ -67,7 +67,7 @@ Pi4:
   stage: build
   interruptible: true
   only:
-    - master
+    - main
   tags:
     - pi4
   script:
@@ -107,7 +107,7 @@ FreeBSD:
   stage: build
   interruptible: true
   only:
-    - master
+    - main
   script:
     - make release-static-freebsd-x86_64
     - cp build/release/freebsd-x86_64.tar.gz ./
