@@ -1,10 +1,6 @@
 stages:
   - build
   - test
-  - create_new_package
-  - download_test
-  - upload
-  - release
   - deploy
 
 variables:
