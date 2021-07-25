@@ -49,7 +49,7 @@ EXPOSE 48772
 
 # switch to lethean
 USER lthn
-
-ENTRYPOINT ["./lethean-blockchain.sh", "daemon"]
+CMD ["daemon"]
+ENTRYPOINT ["./lethean-blockchain.sh"]
 
 

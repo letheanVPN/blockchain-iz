@@ -1,10 +1,11 @@
 version: "3"
 services:
   letheand:
+    container_name: chain-daemon
     env_file:
       - .env
     volumes:
-      - "chain:/home/lthn/data/chain"
+      - "chain:/home/lthn/data/chain/lmdb"
     ports:
       - "48782:48782"
       - "48772:48772"
@@ -13,11 +14,6 @@ services:
       interval: 1m30s
       timeout: 10s
       retries: 3
-#    image: "registry.gitlab.com/lethean.io/blockchain/lethean:develop"
-    build:
-      context: .
-      args:
-        - RELEASE_TYPE=release-static
+    image: "lthn/chain"
 volumes:
   chain:
-    external: true
