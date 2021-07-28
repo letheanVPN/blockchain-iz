@@ -5,10 +5,8 @@ services:
     env_file:
       - .env
     volumes:
-      - "chain:/home/lthn/data/chain/lmdb"
-    ports:
-      - "48782:48782"
-      - "48772:48772"
+      - .:/home/lthn/data/chain/lmdb
+    network_mode: host
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:48782/json_rpc" ]
       interval: 1m30s
