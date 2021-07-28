@@ -62,27 +62,6 @@ MacOS:
       - build/libs/
     policy: pull-push
 
-Pi4:
-  image: lthn/build:lthn-wallet-linux
-  stage: build
-  interruptible: true
-  only:
-    - main
-  tags:
-    - pi4
-  script:
-    - make
-    - cp build/release/rasbian-armv8.tar.gz ./
-  artifacts:
-    name: lethean-chain-rasbian-armv8
-    expose_as: 'Pi 4 Arm64'
-    paths:
-      - rasbian-armv8.tar.gz
-  cache:
-    key: $CI_COMMIT_REF_SLUG
-    paths:
-      - build/libs/
-    policy: pull-push
 
 GNU Linux:
   image: lthn/build:lthn-wallet-linux
