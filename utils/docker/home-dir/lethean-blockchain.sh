@@ -5,7 +5,7 @@ case $1 in
 wallet-rpc)
   shift
   echo "Starting Wallet cli with $WALLET_FILE."
-  "$BIN_DIR/lethean-wallet-rpc" --wallet-file "$WALLET_FILE" --daemon-host "$DAEMON_HOST" --password "$WALLET_PASSWORD" --rpc-bind-port "$PORT_RPC" --confirm-external-bind --trusted-daemon
+  "$BIN_DIR/lethean-wallet-rpc" --wallet-file "$WALLET_FILE" --daemon-host $DAEMON_HOST --password $WALLET_PASSWORD --rpc-bind-port $PORT_RPC --confirm-external-bind --trusted-daemon
   ;;
 
 daemon)

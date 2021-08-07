@@ -42,26 +42,8 @@ BOOST_HASH=fdfc204fc33ec79c99b9a74944c3e54bd78be4f7f15e260c0e2700a36dc7d3e5
 BOOST_SRC_DIR="${SRC_DIR}/boost_${BOOST_VERSION}"
 BOOST_INSTALL_DIR="${INSTALL_DIR}/boost_${BOOST_VERSION}"
 
-export BOOST_VERSION=$BOOST_VERSION
-export BOOST_VERSION_DOT=$BOOST_VERSION_DOT
-export BOOST_HASH=$BOOST_HASH
-export BOOST_SRC_DIR=$BOOST_SRC_DIR
-export BOOST_INSTALL_DIR=$BOOST_INSTALL_DIR
+export BOOST_VERSION BOOST_VERSION_DOT BOOST_HASH BOOST_SRC_DIR BOOST_INSTALL_DIR
 
 bash .build/lib/boost/download.bash
 bash .build/lib/boost/compile.bash
 
-export BOOST_ROOT="$BOOST_INSTALL_DIR"
-
-if [ -d "${BASE_DIR}/.build/libs/macos-x86_64" ]; then
-
-  echo "Cleaning up and putting a copy in ${BASE_DIR}/.build/libs/"
-  rm -rf "${SRC_DIR}"
-
-  if [ ! -d "${BASE_DIR}/.build/libs/macos-x86_64" ]; then
-    mkdir -p "${BASE_DIR}/.build/libs/macos-x86_64"
-    cp -rf "${INSTALL_DIR}/" "${BASE_DIR}/.build/libs/macos-x86_64"
-
-  fi
-
-fi

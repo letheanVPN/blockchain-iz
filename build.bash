@@ -44,8 +44,6 @@ configureHostSettings() {
 
   # macos setup
   if [ -x "$(command -v sw_vers)" ]; then
-    echo "Compiling on MacOS is not supported in this version, please download our pre built library's"
-    exit 2
     osName="macos"
     osVersion=$(sw_vers -productVersion)
     osVersion="${osVersion%.*}"
