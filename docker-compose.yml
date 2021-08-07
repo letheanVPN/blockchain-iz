@@ -5,7 +5,7 @@ services:
     env_file:
       - .env
     volumes:
-      - .:/home/lthn/data/chain/lmdb
+      - chain:/home/lthn/data/chain/lmdb
     network_mode: host
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:48782/json_rpc" ]
