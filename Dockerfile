@@ -11,7 +11,7 @@ WORKDIR $SRC_DIR
 
 COPY . ${SRC_DIR}
 
-RUN if [ "${COMPILE}" = 1 ] ; then cd $SRC_DIR && rm -rf build && make ${RELEASE_TYPE} ; else echo "using precompile from lthn/chain"; fi
+RUN if [ "${COMPILE}" = 1 ] ; then cd $SRC_DIR && rm -rf build && make -j8 ${RELEASE_TYPE} ; else echo "using precompile from lthn/chain"; fi
 
 FROM ubuntu:20.04 as final
 
@@ -26,7 +26,7 @@ ENV CONF_DIR="${BASE_DIR}/etc"
 ENV LOG_DIR="${BASE_DIR}/log"
 ENV DATA_DIR="${BASE_DIR}/data"
 
-RUN adduser lthn --disabled-password
+RUN adduser --disabled-password  --gecos "" lthn
 
 COPY --from=builder --chown=lthn:lthn $SRC_DIR/utils/docker/home-dir $BASE_DIR
 COPY --from=builder --chown=lthn:lthn $SRC_DIR/build/release/bin $BIN_DIR
