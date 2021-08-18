@@ -1,13 +1,13 @@
 FROM lthn/build:lthn-chain-linux as builder
 
 ARG BASE_DIR="/home/lthn/chain"
-ARG BIN_DIR="${BASE_DIR}/cli"
+ARG BIN_DIR="${BASE_DIR}/bin"
 ARG SRC_DIR="${BASE_DIR}/src"
 ARG COMPILE=0
 ARG RELEASE_TYPE=release-static-linux-x86_64
 # this is only in the build layers,
 WORKDIR $SRC_DIR
-COPY --from=lthn/chain $BIN_DIR $SRC_DIR/build/release/bin
+#COPY --from=lthn/chain $BIN_DIR $SRC_DIR/build/release/bin
 
 COPY . ${SRC_DIR}
 
