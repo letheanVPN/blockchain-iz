@@ -2,12 +2,6 @@
 
 case $1 in
 
-wallet-rpc)
-  shift
-  echo "Starting Wallet cli with $WALLET_FILE."
-  "$BIN_DIR/lethean-wallet-rpc" --wallet-file "$WALLET_FILE" --daemon-host $DAEMON_HOST --password $WALLET_PASSWORD --rpc-bind-port $PORT_RPC --confirm-external-bind --trusted-daemon
-  ;;
-
 daemon)
   shift
   echo "Starting Lethean Daemon"
@@ -17,12 +11,21 @@ daemon)
 docker)
   shift
   echo "Starting Lethean Daemon"
-  "$BIN_DIR/letheand" --non-interactive --standard-json --config-file="$CONF_DIR" --log-file "$LOG_DIR" --data-dir "$DATA_DIR"
+  "$BIN_DIR/letheand" --non-interactive --standard-json --config-file="$CONF_DIR" --log-level 0 --log-file "$LOG_DIR" --data-dir "$DATA_DIR"
   ;;
 
-sh|bash)
-  /bin/sh
+export)
+  shift
+  echo "Exporting Chain"
+  "$BIN_DIR/lethean-blockchain-export" --data-dir "$DATA_DIR" --output-file "$DATA_DIR/export.raw"
   ;;
+
+import)
+  shift
+  echo "Exporting Chain"
+  "$BIN_DIR/lethean-blockchain-import" --data-dir "$DATA_DIR" --input-file "$DATA_DIR/export.raw"
+  ;;
+
 *)
-  echo "daemon|docker|sh"
+  echo "daemon|docker|export"
 esac

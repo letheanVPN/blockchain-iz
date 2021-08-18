@@ -7,7 +7,7 @@ ARG COMPILE=0
 ARG RELEASE_TYPE=release-static-linux-x86_64
 # this is only in the build layers,
 WORKDIR $SRC_DIR
-#COPY --from=lthn/chain $BIN_DIR $SRC_DIR/build/release/bin
+COPY --from=lthn/chain $BIN_DIR $SRC_DIR/build/release/bin
 
 COPY . ${SRC_DIR}
 
@@ -21,7 +21,6 @@ ARG SRC_DIR="${BASE_DIR}/src"
 
 ENV BIN_DIR="${BIN_DIR}"
 
-ENV WALLET_DIR="${BASE_DIR}/wallet"
 ENV CONF_DIR="${BASE_DIR}/etc"
 ENV LOG_DIR="${BASE_DIR}/log"
 ENV DATA_DIR="${BASE_DIR}/data"
