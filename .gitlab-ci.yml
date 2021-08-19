@@ -15,11 +15,10 @@ Docker Hub:
   services:
     - name: docker:dind
       command: [ "--experimental" ]
-
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
-    - docker pull --squash --build-arg COMPILE=1 -t "lthn/chain" .
+    - docker pull $CI_REGISTRY_IMAGE
     - docker push "lthn/chain"
   environment:
     name: docker.io
