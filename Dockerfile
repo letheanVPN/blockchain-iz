@@ -11,7 +11,7 @@ COPY --from=lthn/chain $BIN_DIR $SRC_DIR/build/release/bin
 
 COPY . ${SRC_DIR}
 
-RUN if [ "${COMPILE}" = 1 ] ; then cd $SRC_DIR && rm -rf build && make -j8 ${RELEASE_TYPE} ; else echo "using precompile from lthn/chain"; fi
+RUN if [ "${COMPILE}" = 1 ] ; then cd $SRC_DIR && rm -rf build && make ${RELEASE_TYPE} ; else echo "using precompile from lthn/chain"; fi
 
 FROM ubuntu:20.04 as final
 
