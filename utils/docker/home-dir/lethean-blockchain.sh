@@ -11,7 +11,7 @@ daemon)
 docker)
   shift
   echo "Starting Lethean Daemon"
-  "$BIN_DIR/letheand" --non-interactive --standard-json --config-file="$CONF_DIR" --log-level 0 --log-file "$LOG_DIR" --data-dir "$DATA_DIR"
+  "$BIN_DIR/letheand" --non-interactive --confirm-external-bind --standard-json --config-file="$CONF_DIR" --log-level 0 --log-file "$LOG_DIR" --data-dir "$DATA_DIR"
   ;;
 
 export)
