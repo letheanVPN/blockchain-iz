@@ -2,17 +2,16 @@ version: "3"
 services:
   letheand:
     command:
-      - import
+      - docker
     container_name: chain-daemon
     env_file:
       - .env
     volumes:
       - ./data:/home/lthn/chain/data
-    network_mode: host
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:48782/json_rpc" ]
-      interval: 1m30s
-      timeout: 10s
-      retries: 3
+    expose:
+      - "48782"
+      - "48772"
+    ports:
+      - "48782:48782"
+      - "48772:48772"
     image: "lthn/chain"
-
