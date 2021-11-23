@@ -1,3 +1,6 @@
 [submodule "lthn"]
 	path = lthn
 	url = https://github.com/letheanVPN/lthn.git
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/letheanVPN/app.git
