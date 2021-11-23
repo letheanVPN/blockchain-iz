@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/leaanthony/debme v1.2.1
-	github.com/wailsapp/wails/v2 v2.0.0-beta.20
+	github.com/wailsapp/wails/v2 v2.0.0-beta.21
 )
 
 require (
@@ -16,6 +16,7 @@ require (
 	github.com/gofiber/fiber/v2 v2.17.0 // indirect
 	github.com/gofiber/websocket/v2 v2.0.8 // indirect
 	github.com/google/uuid v1.1.2 // indirect
+	github.com/gotk3/gotk3 v0.6.1 // indirect
 	github.com/imdario/mergo v0.3.12 // indirect
 	github.com/jchv/go-winloader v0.0.0-20210711035445-715c2860da7e // indirect
 	github.com/klauspost/compress v1.12.2 // indirect
