@@ -4,3 +4,6 @@
 [submodule "frontend"]
 	path = frontend
 	url = https://github.com/letheanVPN/app.git
+[submodule "blockchain"]
+	path = blockchain
+	url = https://github.com/letheanVPN/blockchain.git
