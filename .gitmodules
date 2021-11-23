@@ -1,0 +1,3 @@
+[submodule "lthn"]
+	path = lthn
+	url = https://github.com/letheanVPN/lthn.git
