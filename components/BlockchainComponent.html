@@ -1,0 +1,716 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>lethean-app documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">lethean-app documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li
+  >
+  BlockchainComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/plugins/lthn/chain/blockchain.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+                    <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">providers</td>
+                <td class="col-md-9">
+                                <code><a href="../injectables/ChartService.html" target="_self" >ChartService</a></code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>lthn-chain</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./blockchain.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./blockchain.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#buildType" >buildType</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#recentTxs" >recentTxs</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#isWeb" >isWeb</a>
+                                </li>
+                                <li>
+                                    <a href="#isApp" >isApp</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(http: <a href="https://angular.io/api/common/http/HttpClient" target="_blank">HttpClient</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/plugins/lthn/chain/blockchain.component.ts:14</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>http</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/common/http/HttpClient" target="_blank" >HttpClient</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="38"
+                            class="link-to-prism">src/app/plugins/lthn/chain/blockchain.component.ts:38</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="29"
+                            class="link-to-prism">src/app/plugins/lthn/chain/blockchain.component.ts:29</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="buildType"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>buildType</b></span>
+                        <a href="#buildType"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/plugins/lthn/chain/blockchain.component.ts:14</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="recentTxs"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>recentTxs</b></span>
+                        <a href="#recentTxs"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/plugins/lthn/chain/blockchain.component.ts:13</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="isWeb"></a>
+                        <span class="name"><b>isWeb</b><a href="#isWeb"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>isWeb()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/plugins/lthn/chain/blockchain.component.ts:19</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="isApp"></a>
+                        <span class="name"><b>isApp</b><a href="#isApp"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>isApp()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/plugins/lthn/chain/blockchain.component.ts:25</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+</section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, OnDestroy, OnInit} from &#x27;@angular/core&#x27;;
+import {HttpClient} from &#x27;@angular/common/http&#x27;;
+import {ChartService} from &#x27;../../../modules/chart/chart.service&#x27;;
+import {APP_CONFIG} from &#x27;../../../../environments/environment&#x27;;
+
+@Component({
+	selector: &#x27;lthn-chain&#x27;,
+	templateUrl: &#x27;./blockchain.component.html&#x27;,
+	styleUrls: [&#x27;./blockchain.component.scss&#x27;],
+	providers: [ChartService]
+})
+export class BlockchainComponent implements OnInit, OnDestroy {
+	public recentTxs: any;
+	public buildType: string;
+
+	constructor(private http: HttpClient) {
+	}
+
+	public get isWeb() {
+		return (
+			APP_CONFIG.environment &#x3D;&#x3D;&#x3D; &#x27;WEB&#x27; || APP_CONFIG.environment &#x3D;&#x3D;&#x3D; &#x27;DEV&#x27;
+		);
+	}
+
+	public get isApp() {
+		return APP_CONFIG.environment &#x3D;&#x3D;&#x3D; &#x27;APP&#x27;;
+	}
+
+	ngOnInit(): void {
+		// https://lethean.hashvault.pro/explorer/api/transactions
+		this.http
+			.get&lt;any&gt;(&#x27;https://lethean.hashvault.pro/explorer/api/transactions&#x27;)
+			.subscribe((data) &#x3D;&gt; {
+				this.recentTxs &#x3D; data.data.blocks;
+			});
+	}
+
+	ngOnDestroy(): void {
+		console.log(&#x27;BlockchainComponent DESTROY&#x27;);
+	}
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;container&quot; fxLayout&#x3D;&quot;column&quot;&gt;
+  &lt;div fxFlex&#x3D;&quot;100&quot; style&#x3D;&quot;padding: 12px 12px 3px 12px;&quot;&gt;
+    &lt;div fxLayout&#x3D;&quot;row&quot;&gt;
+      &lt;mat-card fxFlex&#x3D;&quot;100&quot;&gt;
+        &lt;mat-card-title&gt;Network Hash Rate&lt;/mat-card-title&gt;
+        &lt;mat-card-subtitle&gt;
+          Data provided by&lt;a color&#x3D;&quot;accent&quot; href&#x3D;&quot;https://hashvault.pro&quot; mat-button&gt;HashVault
+          Mining Pool&lt;/a&gt;
+        &lt;/mat-card-subtitle&gt;
+        &lt;mat-card-content&gt;
+          &lt;div lthnChart&#x3D;&quot;networkDifficulty&quot;&gt;&lt;/div&gt;
+        &lt;/mat-card-content&gt;
+      &lt;/mat-card&gt;
+
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;vertically-filled-mat-card-container&quot; fxLayout&#x3D;&quot;row&quot;&gt;
+      &lt;div fxFlex&#x3D;&quot;40&quot; style&#x3D;&quot;padding: 6px 3px 6px 0;&quot;&gt;
+        &lt;mat-card&gt;
+          &lt;mat-card-title&gt;Local Chain&lt;/mat-card-title&gt;
+          &lt;mat-card-content&gt;
+            &lt;p *ngIf&#x3D;&quot;this.isWeb&quot;&gt;
+              To sync the Lethean blockchain, you need to &lt;a class&#x3D;&quot;lthn-brand&quot; href&#x3D;&quot;https://lt.hn/en/download&quot;&gt;download
+              our app&lt;/a&gt; or
+              the &lt;a class&#x3D;&quot;lthn-brand&quot; href&#x3D;&quot;https://github.com/letheanVPN/lethean/releases&quot;&gt;Standalone CLI&lt;/a&gt;
+            &lt;/p&gt;
+            &lt;p *ngIf&#x3D;&quot;this.isApp&quot;&gt;
+              Did you know you can start the Lethean blockchain clicking the cloud icon in the bottom left corner?
+            &lt;/p&gt;
+          &lt;/mat-card-content&gt;
+        &lt;/mat-card&gt;
+      &lt;/div&gt;
+      &lt;div fxFlex&#x3D;&quot;30&quot; style&#x3D;&quot;padding: 6px 3px 6px 0;&quot;&gt;
+        &lt;mat-card&gt;
+          &lt;mat-card-title&gt;CLI Downloads&lt;/mat-card-title&gt;
+          &lt;mat-card-content&gt;
+            &lt;mat-nav-list fxLayout&#x3D;&quot;row&quot;&gt;
+              &lt;a
+                href&#x3D;&quot;https://github.com/letheanVPN/lethean/releases/download/v3.1.0/lethean-cli-linux-64bit-v3.1.tar.bz2&quot;
+                mat-list-item&gt;Linux&lt;/a&gt;
+              &lt;a
+                href&#x3D;&quot;https://github.com/letheanVPN/lethean/releases/download/v3.1.0/lethean-cli-mac-64bit-v3.1.tar.bz2&quot;
+                mat-list-item&gt;Macos&lt;/a&gt;
+              &lt;a href&#x3D;&quot;https://github.com/letheanVPN/lethean/releases/download/v3.1.0/lethean-cli-win-64bit-v3.1.zip&quot;
+                 mat-list-item&gt;Windows&lt;/a&gt;
+
+            &lt;/mat-nav-list&gt;
+          &lt;/mat-card-content&gt;
+        &lt;/mat-card&gt;
+      &lt;/div&gt;
+      &lt;div fxFlex&#x3D;&quot;30&quot; style&#x3D;&quot;padding: 6px 0 6px 3px;&quot;&gt;
+        &lt;mat-card&gt;
+          &lt;mat-card-title&gt;Remote Node&lt;/mat-card-title&gt;
+          &lt;mat-card-content&gt;
+            &lt;mat-list fxLayout&#x3D;&quot;row&quot;&gt;
+              &lt;mat-list-item&gt;sync.lethean.io&lt;/mat-list-item&gt;
+              &lt;mat-list-item&gt;nodes.hashvault.pro&lt;/mat-list-item&gt;
+            &lt;/mat-list&gt;
+          &lt;/mat-card-content&gt;
+        &lt;/mat-card&gt;
+      &lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div&gt;
+      &lt;mat-card&gt;
+        &lt;mat-card-title&gt;Recent Blocks&lt;/mat-card-title&gt;
+        &lt;mat-card-content&gt;
+          &lt;table *ngIf&#x3D;&quot;recentTxs&quot; style&#x3D;&quot;width: 100%;&quot;&gt;
+            &lt;thead&gt;
+            &lt;tr&gt;
+              &lt;th&gt;Age&lt;/th&gt;
+              &lt;th&gt;Hash&lt;/th&gt;
+              &lt;th&gt;Height&lt;/th&gt;
+              &lt;th&gt;Time&lt;/th&gt;
+            &lt;/tr&gt;
+            &lt;/thead&gt;
+
+            &lt;tbody&gt;
+            &lt;tr *ngFor&#x3D;&quot;let block of recentTxs&quot;&gt;
+              &lt;td&gt;{{block.age}}&lt;/td&gt;
+              &lt;td&gt;
+                &lt;a color&#x3D;&quot;accent&quot; href&#x3D;&quot;https://lethean.hashvault.pro/explorer/block/{{block.hash}}&quot;
+                   mat-button
+                   rel&#x3D;&quot;nofollow&quot;&gt;{{block.hash}}&lt;/a&gt;
+              &lt;/td&gt;
+              &lt;td&gt;
+                {{block.height}}&lt;/td&gt;
+              &lt;td&gt;{{block.timestamp * 1000 | date: &#x27;dd/MM/yyyy @ HH:mm:ss&#x27;}}&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/tbody&gt;
+          &lt;/table&gt;
+        &lt;/mat-card-content&gt;
+      &lt;/mat-card&gt;
+    &lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./blockchain.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">:host {
+
+}
+
+@mixin vertical-fill {
+	box-sizing: border-box;
+	height: 100%;
+}
+
+.vertically-filled-mat-card-container {
+	mat-card {
+		@include vertical-fill;
+	}
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="container" fxLayout="column">  <div fxFlex="100" style="padding: 12px 12px 3px 12px;">    <div fxLayout="row">      <mat-card fxFlex="100">        <mat-card-title>Network Hash Rate</mat-card-title>        <mat-card-subtitle>          Data provided by<a color="accent" href="https://hashvault.pro" mat-button>HashVault          Mining Pool</a>        </mat-card-subtitle>        <mat-card-content>          <div lthnChart="networkDifficulty"></div>        </mat-card-content>      </mat-card>    </div>    <div class="vertically-filled-mat-card-container" fxLayout="row">      <div fxFlex="40" style="padding: 6px 3px 6px 0;">        <mat-card>          <mat-card-title>Local Chain</mat-card-title>          <mat-card-content>            <p *ngIf="this.isWeb">              To sync the Lethean blockchain, you need to <a class="lthn-brand" href="https://lt.hn/en/download">download              our app</a> or              the <a class="lthn-brand" href="https://github.com/letheanVPN/lethean/releases">Standalone CLI</a>            </p>            <p *ngIf="this.isApp">              Did you know you can start the Lethean blockchain clicking the cloud icon in the bottom left corner?            </p>          </mat-card-content>        </mat-card>      </div>      <div fxFlex="30" style="padding: 6px 3px 6px 0;">        <mat-card>          <mat-card-title>CLI Downloads</mat-card-title>          <mat-card-content>            <mat-nav-list fxLayout="row">              <a                href="https://github.com/letheanVPN/lethean/releases/download/v3.1.0/lethean-cli-linux-64bit-v3.1.tar.bz2"                mat-list-item>Linux</a>              <a                href="https://github.com/letheanVPN/lethean/releases/download/v3.1.0/lethean-cli-mac-64bit-v3.1.tar.bz2"                mat-list-item>Macos</a>              <a href="https://github.com/letheanVPN/lethean/releases/download/v3.1.0/lethean-cli-win-64bit-v3.1.zip"                 mat-list-item>Windows</a>            </mat-nav-list>          </mat-card-content>        </mat-card>      </div>      <div fxFlex="30" style="padding: 6px 0 6px 3px;">        <mat-card>          <mat-card-title>Remote Node</mat-card-title>          <mat-card-content>            <mat-list fxLayout="row">              <mat-list-item>sync.lethean.io</mat-list-item>              <mat-list-item>nodes.hashvault.pro</mat-list-item>            </mat-list>          </mat-card-content>        </mat-card>      </div>    </div>    <div>      <mat-card>        <mat-card-title>Recent Blocks</mat-card-title>        <mat-card-content>          <table *ngIf="recentTxs" style="width: 100%;">            <thead>            <tr>              <th>Age</th>              <th>Hash</th>              <th>Height</th>              <th>Time</th>            </tr>            </thead>            <tbody>            <tr *ngFor="let block of recentTxs">              <td>{{block.age}}</td>              <td>                <a color="accent" href="https://lethean.hashvault.pro/explorer/block/{{block.hash}}"                   mat-button                   rel="nofollow">{{block.hash}}</a>              </td>              <td>                {{block.height}}</td>              <td>{{block.timestamp * 1000 | date: \'dd/MM/yyyy @ HH:mm:ss\'}}</td>            </tr>            </tbody>          </table>        </mat-card-content>      </mat-card>    </div>  </div></div></div>'
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'lthn-app'},{'name': 'BackupComponent', 'selector': 'lthn-app-backup'},{'name': 'BlockchainComponent', 'selector': 'lthn-chain'},{'name': 'ConsoleComponent', 'selector': 'lthn-app-console'},{'name': 'LoginComponent', 'selector': 'lthn-login'},{'name': 'LogsComponent', 'selector': 'lthn-app-logs'},{'name': 'NewComponent', 'selector': 'lthn-app-new'},{'name': 'NoDaemonRunningDialog', 'selector': 'lthn-app-status-no-daemon'},{'name': 'PostComponent', 'selector': 'lthn-app-post'},{'name': 'ProfileComponent', 'selector': 'lthn-user-profile'},{'name': 'RestoreComponent', 'selector': 'lthn-app-restore'},{'name': 'RootComponent', 'selector': 'lthn-root'},{'name': 'SettingsComponent', 'selector': 'lthn-settings'},{'name': 'SettingsComponent', 'selector': 'lthn-app-settings'},{'name': 'StatusComponent', 'selector': 'lthn-app-status'},{'name': 'UserComponent', 'selector': 'lthn-user'},{'name': 'VpnComponent', 'selector': 'lthn-vpn'},{'name': 'WalletComponent', 'selector': 'lthn-spp-wallet'}];
+    var DIRECTIVES = [{'name': 'ChartDirective', 'selector': '[lthnChart]'}];
+    var ACTUAL_COMPONENT = {'name': 'BlockchainComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'BlockchainComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
