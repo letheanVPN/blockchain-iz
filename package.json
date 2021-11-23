@@ -1,0 +1,42 @@
+{
+  "license": "EUPL-1.2",
+  "description": "Lethean GUI APP",
+  "homepage": "https://github.com/letheanVPN/app/wiki",
+  "bugs": {
+    "url": "https://github.com/letheanVPN/app/issues",
+    "email": "hello@lt.hn"
+  },
+  "author": "Snider <snider@lt.hn> (https://lt.hn)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/letheanVPN/app.git"
+  },
+  "os": [
+    "darwin",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "ia32",
+    "arm"
+  ],
+  "private": true,
+  "scripts": {
+    "install": "cd lthn && npm install",
+    "ng": "cd frontend && npm run ng",
+    "postinstall": "npm run setup && cd frontend && npm install",
+    "build": "wails build --clean",
+    "build:macos": "cd lthn && npm run server:build:macos-intel && cd .. && npm run build -- --platform darwin/universal",
+    "build:macos-arm": "cd lthn && npm run server:build:macos-arm && cd .. && npm run build -- --platform darwin/arm64",
+    "build:macos-intel": "cd lthn && npm run server:build:macos-intel && cd .. && npm run build -- --platform darwin",
+    "build:windows": "cd lthn && npm run server:build:windows && cd .. && npm run build -- --platform windows/amd64",
+    "ci:windows": "cd lthn && npm run ci:windows && cd .. && npm run build -- --platform windows/amd64",
+    "dev": "cd frontend && npm run dev",
+    "setup": "go install github.com/wailsapp/wails/v2/cmd/wails@v2.0.0-beta.20"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
+    "eslint": "^8.3.0"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "lethean",
+  "assetdir": "./frontend/dist",
+  "frontend:build": "npm run ng build",
+  "frontend:install": "npm install",
+  "frontend:dev": "npm run ng build -c development",
+  "wailsjsdir": "./frontend/src",
+  "version": "2",
+  "Path": "",
+  "BuildDir": "",
+  "outputfilename": "lethean",
+  "OutputType": "",
+  "Platform": "",
+  "Author": {
+    "name": "Snider",
+    "email": "snider@lt.hn"
+  },
+  "debounceMS": 100,
+  "devserverurl": "http://localhost:34115",
+  "appargs": ""
+}

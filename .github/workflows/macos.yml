@@ -1,0 +1,108 @@
+name: MacOS
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  macos-intel:
+    runs-on: macos-11
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: NodeJS Cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+            frontend/node_modules
+            lthn/node_modules
+          key: ${{ runner.os }}-nodejs-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nodejs-
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.17
+      - name: GoLang Cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/go/pkg/mod
+            ~/.cache/go-build
+            ~/Library/Caches/go-build
+            %LocalAppData%\go-build
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      - run: npm install
+      - name: Install Deno
+        run: curl -fsSL https://deno.land/x/install/install.sh | sh && echo "$HOME/.deno/bin" >> $GITHUB_PATH
+      - name: Build
+        run: npm run build:macos-intel
+      - uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest-macos-intel"
+          prerelease: true
+          title: "MacOS Intel"
+          files: |
+            LICENCE
+            build/bin/lethean.app/Contents/MacOS/lethean
+
+
+  macos-arm64:
+    runs-on: macos-11
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: NodeJS Cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+            frontend/node_modules
+            lthn/node_modules
+          key: ${{ runner.os }}-nodejs-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nodejs-
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.17
+      - name: GoLang Cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/go/pkg/mod
+            ~/.cache/go-build
+            ~/Library/Caches/go-build
+            %LocalAppData%\go-build
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      - run: npm install
+      - name: Install Deno
+        run: curl -fsSL https://deno.land/x/install/install.sh | sh && echo "$HOME/.deno/bin" >> $GITHUB_PATH
+      - name: Build
+        run: npm run build:macos-arm
+      - uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest-macos-arm"
+          prerelease: true
+          title: "MacOS Apple Silicon"
+          files: |
+            LICENCE
+            build/bin/lethean.app/Contents/MacOS/lethean
+
