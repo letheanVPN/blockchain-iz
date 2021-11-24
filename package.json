@@ -24,13 +24,15 @@
   "scripts": {
     "ng": "ng",
     "start": "wails dev",
-    "postinstall": "go install github.com/wailsapp/wails/v2/cmd/wails@latest",
-    "build": "wails build --clean",
+    "install": "go install github.com/wailsapp/wails/v2/cmd/wails@latest",
+    "build": "wails build -v 2 --clean",
+    "clean": "rimraf build/bin/lethean* && rimraf build/cli/lth* && rimraf frontend/dist && rimraf lthn/build/lth*",
     "build:macos": "npm run server:build:macos-intel --workspace=lthn && npm run build -- --platform darwin/universal",
     "build:macos-arm": "npm run server:build:macos-arm --workspace=lthn && npm run build -- --platform darwin/arm64",
     "build:macos-intel": "npm run server:build:macos-intel --workspace=lthn && npm run build -- --platform darwin",
     "build:windows": "npm run server:build:windows --workspace=lthn && npm run build -- --platform windows",
-    "ci:windows": "npm run ci:windows --workspace=lthn && npm run build -- --platform windows/amd64"
+    "ci:windows": "npm run ci:windows --workspace=lthn && npm run build -- --platform windows/amd64",
+    "sign:macos": "node-codesign build/bin/lethean.app 'Developer ID Application: Lethean LTD (W2DNA5L5DY)'"
   },
   "workspaces": [
     "frontend",
@@ -39,6 +41,8 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
-    "eslint": "^8.3.0"
+    "eslint": "^8.3.0",
+    "node-codesign": "^0.3.3",
+    "rimraf": "^3.0.2"
   }
 }

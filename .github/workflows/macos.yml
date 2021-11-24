@@ -104,5 +104,5 @@ jobs:
 #          title: "MacOS Apple Silicon"
 #          files: |
 #            LICENCE
-#            build/bin/lethean.app/Contents/MacOS/lethean
+#            build/bin/lethean.app
 
