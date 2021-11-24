@@ -8,7 +8,7 @@ import (
 	"github.com/leaanthony/debme"
 	"os"
 	"os/exec"
-	"path"
+	"path/filepath"
 	goruntime "runtime"
 
 	"github.com/wailsapp/wails/v2/pkg/runtime"
@@ -35,13 +35,14 @@ func (b *App) startup(ctx context.Context) {
 	b.ctx = ctx
 	homeDir, _ := os.UserHomeDir()
 	exeName := ""
+	fmt.Println(goruntime.GOOS)
 	if goruntime.GOOS == "windows" {
 		exeName = "lthn.exe"
 	} else {
 		exeName = "lthn"
 	}
 
-	exePath := path.Join(homeDir, "Lethean", exeName)
+	exePath := filepath.Join(homeDir, "Lethean", exeName)
 
 	if _, err := os.Stat(exePath); err == nil {
 

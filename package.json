@@ -29,7 +29,7 @@
     "build:macos": "npm run server:build:macos-intel --workspace=lthn && npm run build -- --platform darwin/universal",
     "build:macos-arm": "npm run server:build:macos-arm --workspace=lthn && npm run build -- --platform darwin/arm64",
     "build:macos-intel": "npm run server:build:macos-intel --workspace=lthn && npm run build -- --platform darwin",
-    "build:windows": "npm run server:build:windows --workspace=lthn && npm run build -- --platform windows/amd64",
+    "build:windows": "npm run server:build:windows --workspace=lthn && npm run build -- --platform windows",
     "ci:windows": "npm run ci:windows --workspace=lthn && npm run build -- --platform windows/amd64"
   },
   "workspaces": [
