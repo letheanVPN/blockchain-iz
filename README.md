@@ -2,6 +2,9 @@
 
 # Lethean
 
+[![Windows](https://github.com/letheanVPN/lethean/actions/workflows/windows.yml/badge.svg)](https://github.com/letheanVPN/lethean/actions/workflows/windows.yml)
+[![MacOS](https://github.com/letheanVPN/lethean/actions/workflows/macos.yml/badge.svg)](https://github.com/letheanVPN/lethean/actions/workflows/macos.yml)
+
 https://github.com/letheanVPN/blockchain
 
 CryptoNote privacy for VPN transactions
