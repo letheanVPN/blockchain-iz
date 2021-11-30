@@ -41,6 +41,9 @@ func (b *App) startup(ctx context.Context) {
 	} else {
 		exeName = "lthn"
 	}
+	// make folder $HOME/Lethean
+    homeDirTest := filepath.Join(homeDir, "Lethean")
+    os.MkdirAll(homeDirTest, os.ModePerm)
 
 	exePath := filepath.Join(homeDir, "Lethean", exeName)
 
