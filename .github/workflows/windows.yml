@@ -40,7 +40,7 @@ jobs:
           key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-
-      - run: npm ci
+      - run: npm install --legacy-peer-deps
       - name: Install Deno
         run: iwr https://deno.land/x/install/install.ps1 -useb | iex
       - name: Build
