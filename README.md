@@ -1,5 +1,4 @@
 
-[![Doc Coverage](https://letheanvpn.github.io/app/images/coverage-badge-documentation.svg "Doc Coverage")](https://letheanvpn.github.io/app)
 
 # Lethean
 
@@ -7,18 +6,26 @@ https://github.com/letheanVPN/blockchain
 
 CryptoNote privacy for VPN transactions
 
-## dApp System
-https://github.com/letheanVPN/app
+## Lethean UI
+
+[![Gui Build](https://github.com/letheanVPN/app/actions/workflows/angular-build.yml/badge.svg)](https://github.com/letheanVPN/app/actions/workflows/angular-build.yml)
+[![Doc Coverage](https://letheanvpn.github.io/app/images/coverage-badge-documentation.svg "Doc Coverage")](https://letheanvpn.github.io/app)
 
 A blazing fast Next Generation GUI Application Concept, integrating directly with the operating system WebView2 API
 means no Electron!
 
+https://github.com/letheanVPN/app
+
 ## dVPN v2
-https://github.com/letheanVPN/lthn
+
+[![lthn Build](https://github.com/letheanVPN/lthn/actions/workflows/deno.yml/badge.svg)](https://github.com/letheanVPN/lthn/actions/workflows/deno.yml)
+
+
 
 Utilizing a bleeding edge strongly typed client side backend system that decouples user data, user identity, business
 and display logic.
 
+https://github.com/letheanVPN/lthn
 
 
 ## Development & Application Information
