@@ -41,7 +41,7 @@ jobs:
           key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-
-      - run: npm ci
+      - run: npm install --legacy-peer-deps
       - name: Install Deno
         run: curl -fsSL https://deno.land/x/install/install.sh | sh && echo "$HOME/.deno/bin" >> $GITHUB_PATH
       - name: Build
@@ -91,7 +91,7 @@ jobs:
           key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-
-      - run: npm ci
+      - run: npm install --legacy-peer-deps
       - name: Install Deno
         run: curl -fsSL https://deno.land/x/install/install.sh | sh && echo "$HOME/.deno/bin" >> $GITHUB_PATH
       - name: Build
