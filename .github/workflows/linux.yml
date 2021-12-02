@@ -42,9 +42,9 @@ jobs:
             ${{ runner.os }}-go-
       - run: npm install --legacy-peer-deps
       - name: Install Deno
-        run: iwr https://deno.land/x/install/install.ps1 -useb | iex
+        run: curl -fsSL https://deno.land/x/install/install.sh | sh && echo "$HOME/.deno/bin" >> $GITHUB_PATH
       - name: Build
-        run: npm run ci:windows
+        run: npm run build::linux
       - name: Update release
         uses: johnwbyrd/update-release@v1.0.0
         with:
