@@ -48,6 +48,7 @@ jobs:
       - name: Update release
         uses: johnwbyrd/update-release@v1.0.0
         with:
+          release: development
           token: ${{ secrets.GITHUB_TOKEN }}
           files: build/bin/lethean
 #      - uses: marvinpinto/action-automatic-releases@latest
