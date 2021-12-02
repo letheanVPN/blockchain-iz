@@ -25,14 +25,16 @@
     "ng": "ng",
     "start": "wails dev",
     "install": "go install github.com/wailsapp/wails/v2/cmd/wails@latest",
-    "build": "wails build -v 2 --clean",
-    "clean": "rimraf build/bin/lethean* && rimraf build/cli/lth* && rimraf frontend/dist && rimraf lthn/build/lth*",
+    "build": "wails build -v 2 --clean --noPackage",
+    "clean": "rimraf build/bin/lethean* && rimraf build/cli/lth* && rimraf lthn/node_modules && rimraf frontend/node_modules && rimraf lthn/build/lth*",
     "build:macos": "npm run server:build:macos-intel --workspace=lthn && npm run build -- --platform darwin/universal",
     "build:macos-arm": "npm run server:build:macos-arm --workspace=lthn && npm run build -- --platform darwin/arm64",
-    "build:macos-intel": "npm run server:build:macos-intel --workspace=lthn && npm run build -- --platform darwin",
+    "build:macos-intel": "npm run server:build:macos-intel --workspace=lthn && npm run build -- --platform darwin/amd64",
     "build:windows": "npm run server:build:windows --workspace=lthn && npm run build -- --platform windows",
+    "build:linux": "npm run server:build:linux --workspace=lthn && npm run build -- --platform linux",
     "ci:windows": "npm run ci:windows --workspace=lthn && npm run build -- --platform windows/amd64",
-    "sign:macos": "node-codesign build/bin/lethean.app 'Developer ID Application: Lethean LTD (W2DNA5L5DY)'"
+    "sign:macos": "node-codesign build/bin/lethean.app 'Developer ID Application: Lethean LTD (W2DNA5L5DY)'",
+    "dev:git-update": "git submodule update --remote"
   },
   "workspaces": [
     "frontend",

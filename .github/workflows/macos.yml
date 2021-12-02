@@ -46,15 +46,11 @@ jobs:
         run: curl -fsSL https://deno.land/x/install/install.sh | sh && echo "$HOME/.deno/bin" >> $GITHUB_PATH
       - name: Build
         run: npm run build:macos-intel
-#      - uses: marvinpinto/action-automatic-releases@latest
-#        with:
-#          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-#          automatic_release_tag: "latest-macos-intel"
-#          prerelease: true
-#          title: "MacOS Intel"
-#          files: |
-#            LICENCE
-#            build/bin/lethean.app/Contents/MacOS/lethean
+      - name: Update release
+        uses: johnwbyrd/update-release@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          files: build/bin/lethean-darwin-amd64
 
 
   macos-arm64:
@@ -96,13 +92,9 @@ jobs:
         run: curl -fsSL https://deno.land/x/install/install.sh | sh && echo "$HOME/.deno/bin" >> $GITHUB_PATH
       - name: Build
         run: npm run build:macos-arm
-#      - uses: marvinpinto/action-automatic-releases@latest
-#        with:
-#          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-#          automatic_release_tag: "latest-macos-arm"
-#          prerelease: true
-#          title: "MacOS Apple Silicon"
-#          files: |
-#            LICENCE
-#            build/bin/lethean.app
+      - name: Update release
+        uses: johnwbyrd/update-release@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          files: build/bin/lethean-darwin-arm64
 

@@ -1,4 +1,4 @@
-name: Windows
+name: Linux
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   windows:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
@@ -49,7 +49,7 @@ jobs:
         uses: johnwbyrd/update-release@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          files: build/bin/lethean.exe
+          files: build/bin/lethean
 #      - uses: marvinpinto/action-automatic-releases@latest
 #        with:
 #          repo_token: "${{ secrets.GITHUB_TOKEN }}"

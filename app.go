@@ -35,7 +35,7 @@ func (b *App) startup(ctx context.Context) {
 	b.ctx = ctx
 	homeDir, _ := os.UserHomeDir()
 	exeName := ""
-	fmt.Println(goruntime.GOOS)
+	//fmt.Println(goruntime.GOOS)
 	if goruntime.GOOS == "windows" {
 		exeName = "lthn.exe"
 	} else {
@@ -48,17 +48,18 @@ func (b *App) startup(ctx context.Context) {
 	exePath := filepath.Join(homeDir, "Lethean", exeName)
 
 	if _, err := os.Stat(exePath); err == nil {
-
+        spawnCmd = exec.Command(exePath, "backend", "start")
 	} else if errors.Is(err, os.ErrNotExist) {
 		root, _ := debme.FS(lthn, "build/cli")
 		err := root.CopyFile(exeName, exePath, 0777)
 		if err != nil {
 			return
 		}
+		spawnCmd = exec.Command(exePath, "backend", "start")
 		//_ = os.WriteFile(exePath, data, 0777)
 	}
 
-	spawnCmd = exec.Command(exePath, "backend", "start")
+
 	_, err := spawnCmd.Output()
 	if err != nil {
 		panic(err)
