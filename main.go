@@ -20,8 +20,8 @@ func main() {
 	// Create application with options
 	err := wails.Run(&options.App{
 		Title:  "Lethean",
-		Width:  720,
-		Height: 570,
+		Width:  960,
+		Height: 720,
 		// MinWidth:          720,
 		// MinHeight:         570,
 		// MaxWidth:          1280,
