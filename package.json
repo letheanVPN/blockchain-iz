@@ -33,7 +33,7 @@
     "build:macos-arm": "cd lthn && npm run server:build:macos-arm && cd ..  && npm run build -- --platform darwin/arm64",
     "build:macos-intel": "cd lthn && npm run server:build:macos-intel && cd ..  && npm run build -- --platform darwin/amd64",
     "build:windows": "cd lthn && npm run server:build:windows && cd ..  && npm run build -- --platform windows",
-    "build:linux": "cd lthn && npm run server:build:linux && cd ..  && npm run build -- --platform linux",
+    "build:linux": "cd lthn && npm run server:build:linux && cd .. && npm run build -- --platform linux",
     "ci:windows": "cd lthn && npm run ci:windows && cd ..  && npm run build -- --platform windows/amd64",
     "sign:macos": "node-codesign build/bin/lethean.app 'Developer ID Application: Lethean LTD (W2DNA5L5DY)'",
     "dev:git-update": "git submodule update --remote"
