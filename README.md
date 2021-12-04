@@ -2,6 +2,8 @@
 
 # Lethean
 
+Technical Documentation: https://docs.lt.hn/
+
 [![Windows](https://github.com/letheanVPN/lethean/actions/workflows/windows.yml/badge.svg)](https://github.com/letheanVPN/lethean/actions/workflows/windows.yml)
 [![MacOS](https://github.com/letheanVPN/lethean/actions/workflows/macos.yml/badge.svg)](https://github.com/letheanVPN/lethean/actions/workflows/macos.yml)
 
