@@ -27,26 +27,21 @@
     "ng": "ng",
     "start": "wails dev",
     "install": "go install github.com/wailsapp/wails/v2/cmd/wails@latest",
-    "build": "wails build -v 2 --clean --noPackage",
-    "clean": "rimraf build/bin/lethean* && rimraf build/cli/lth* && rimraf lthn/node_modules && rimraf frontend/node_modules && rimraf lthn/build/lth*",
-    "build:macos": "npm run server:build:macos-intel --workspace=lthn && npm run build -- --platform darwin/universal",
-    "build:macos-arm": "npm run server:build:macos-arm --workspace=lthn && npm run build -- --platform darwin/arm64",
-    "build:macos-intel": "npm run server:build:macos-intel --workspace=lthn && npm run build -- --platform darwin/amd64",
-    "build:windows": "npm run server:build:windows --workspace=lthn && npm run build -- --platform windows",
-    "build:linux": "npm run server:build:linux --workspace=lthn && npm run build -- --platform linux",
-    "ci:windows": "npm run ci:windows --workspace=lthn && npm run build -- --platform windows/amd64",
+    "build": "cd frontend && npm run build && cd .. && wails build --clean --noPackage",
+    "clean": "rimraf build/bin/lethean* build/cli/lth* lthn/node_modules frontend/node_modules frontend/dist lthn/build/lth* **-lock.json",
+    "build:macos": "cd lthn && npm run server:build:macos-intel && cd ..  && npm run build -- --platform darwin/universal",
+    "build:macos-arm": "cd lthn && npm run server:build:macos-arm && cd ..  && npm run build -- --platform darwin/arm64",
+    "build:macos-intel": "cd lthn && npm run server:build:macos-intel && cd ..  && npm run build -- --platform darwin/amd64",
+    "build:windows": "cd lthn && npm run server:build:windows && cd ..  && npm run build -- --platform windows",
+    "build:linux": "cd lthn && npm run server:build:linux && cd ..  && npm run build -- --platform linux",
+    "ci:windows": "cd lthn && npm run ci:windows && cd ..  && npm run build -- --platform windows/amd64",
     "sign:macos": "node-codesign build/bin/lethean.app 'Developer ID Application: Lethean LTD (W2DNA5L5DY)'",
     "dev:git-update": "git submodule update --remote"
   },
-  "workspaces": [
-    "frontend",
-    "lthn"
-  ],
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
     "eslint": "^8.3.0",
-    "node-codesign": "^0.3.3",
     "rimraf": "^3.0.2"
   }
 }

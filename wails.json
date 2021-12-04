@@ -1,9 +1,9 @@
 {
   "name": "lethean",
   "assetdir": "./frontend/dist/lethean-app/browser",
-  "frontend:build": "npm run build:ssr",
+  "frontend:build": "npm run build",
   "frontend:install": "npm install",
-  "frontend:dev": "npm run build:ssr",
+  "frontend:dev": "npm run build",
   "wailsjsdir": "./",
   "version": "2",
   "Path": "",

@@ -35,7 +35,7 @@ func (b *App) startup(ctx context.Context) {
 	b.ctx = ctx
 	homeDir, _ := os.UserHomeDir()
 	exeName := ""
-	//fmt.Println(goruntime.GOOS)
+	//
 	if goruntime.GOOS == "windows" {
 		exeName = "lthn.exe"
 	} else {
@@ -50,6 +50,7 @@ func (b *App) startup(ctx context.Context) {
 	if _, err := os.Stat(exePath); err == nil {
         spawnCmd = exec.Command(exePath, "backend", "start")
 	} else if errors.Is(err, os.ErrNotExist) {
+	    fmt.Println("Installing backend service")
 		root, _ := debme.FS(lthn, "build/cli")
 		err := root.CopyFile(exeName, exePath, 0777)
 		if err != nil {
@@ -62,7 +63,7 @@ func (b *App) startup(ctx context.Context) {
 
 	_, err := spawnCmd.Output()
 	if err != nil {
-		panic(err)
+		// panic(err)
 	}
 
 }
@@ -81,10 +82,7 @@ func (b *App) shutdown(ctx context.Context) {
 	}
 }
 
-// Greet returns a greeting for the given name
-func (b *App) Greet(name string) string {
-	return fmt.Sprintf("Hello %s, It's show time!", name)
-}
+
 
 // Shows a Dialog
 func (b *App) ShowDialog() {
