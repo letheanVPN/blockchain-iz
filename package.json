@@ -27,7 +27,7 @@
     "ng": "ng",
     "start": "wails dev",
     "install": "go install github.com/wailsapp/wails/v2/cmd/wails@latest",
-    "build": "cd frontend && npm run build && cd .. && wails build --clean --noPackage",
+    "build": "cd frontend && npm run build && cd .. && wails build -v 2 --clean --noPackage",
     "clean": "rimraf build/bin/lethean* build/cli/lth* lthn/node_modules frontend/node_modules frontend/dist lthn/build/lth* **-lock.json",
     "build:macos": "cd lthn && npm run server:build:macos-intel && cd ..  && npm run build -- --platform darwin/universal",
     "build:macos-arm": "cd lthn && npm run server:build:macos-arm && cd ..  && npm run build -- --platform darwin/arm64",
