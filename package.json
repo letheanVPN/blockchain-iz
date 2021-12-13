@@ -35,7 +35,7 @@
     "build:windows": "cd lthn && npm run server:build:windows && cd ..  && npm run build -- --platform windows",
     "build:linux": "cd lthn && npm run server:build:linux && cd .. && npm run build -- --platform linux",
     "ci:windows": "cd lthn && npm run ci:windows && cd ..  && npm run build -- --platform windows/amd64",
-    "sign:macos": "node-codesign build/bin/lethean.app 'Developer ID Application: Lethean LTD (W2DNA5L5DY)'",
+    "sign:macos": "npx node-codesign build/bin/lethean.app 'Developer ID Application: Lethean LTD (W2DNA5L5DY)'",
     "dev:git-update": "git submodule update --remote"
   },
   "devDependencies": {
