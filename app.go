@@ -48,6 +48,7 @@ func (b *App) startup(ctx context.Context) {
 	exePath := filepath.Join(homeDir, "Lethean", exeName)
 
 	if _, err := os.Stat(exePath); err == nil {
+	    fmt.Println("LTHN Found, Starting backend service")
         spawnCmd = exec.Command(exePath, "backend", "start")
 	} else if errors.Is(err, os.ErrNotExist) {
 	    fmt.Println("Installing backend service")
@@ -56,6 +57,7 @@ func (b *App) startup(ctx context.Context) {
 		if err != nil {
 			return
 		}
+		fmt.Println("LTHN Installed, Starting backend service")
 		spawnCmd = exec.Command(exePath, "backend", "start")
 		//_ = os.WriteFile(exePath, data, 0777)
 	}
@@ -63,7 +65,8 @@ func (b *App) startup(ctx context.Context) {
 
 	_, err := spawnCmd.Output()
 	if err != nil {
-		// panic(err)
+	    fmt.Println(err)
+		 panic(err)
 	}
 
 }

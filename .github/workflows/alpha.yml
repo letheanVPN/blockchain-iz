@@ -1,0 +1,150 @@
+name: Alpha Build
+
+on:
+  push:
+    branches: [ alpha ]
+  pull_request:
+    branches: [ alpha ]
+
+jobs:
+  macos-intel:
+    runs-on: macos-11
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: NodeJS Cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+            frontend/node_modules
+            lthn/node_modules
+          key: ${{ runner.os }}-nodejs-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nodejs-
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.17
+      - name: GoLang Cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/go/pkg/mod
+            ~/.cache/go-build
+            ~/Library/Caches/go-build
+            %LocalAppData%\go-build
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      - run: npm install --legacy-peer-deps
+      - run: cd frontend && npm install --legacy-peer-deps
+      - name: Install Deno
+        run: curl -fsSL https://deno.land/x/install/install.sh | sh && echo "$HOME/.deno/bin" >> $GITHUB_PATH
+      - name: Build
+        run: npm run build:macos-intel
+      - name: Update release
+        uses: johnwbyrd/update-release@v1.0.0
+        with:
+          release: alpha
+          token: ${{ secrets.GITHUB_TOKEN }}
+          files: build/bin/lethean-darwin-amd64
+
+
+  macos-arm64:
+    runs-on: macos-11
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: NodeJS Cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+            frontend/node_modules
+            lthn/node_modules
+          key: ${{ runner.os }}-nodejs-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nodejs-
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.17
+      - name: GoLang Cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/go/pkg/mod
+            ~/.cache/go-build
+            ~/Library/Caches/go-build
+            %LocalAppData%\go-build
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      - run: npm install --legacy-peer-deps
+      - run: cd frontend && npm install --legacy-peer-deps
+      - name: Install Deno
+        run: curl -fsSL https://deno.land/x/install/install.sh | sh && echo "$HOME/.deno/bin" >> $GITHUB_PATH
+      - name: Build
+        run: npm run build:macos-arm
+      - name: Update release
+        uses: johnwbyrd/update-release@v1.0.0
+        with:
+          release: alpha
+          token: ${{ secrets.GITHUB_TOKEN }}
+          files: build/bin/lethean-darwin-arm64
+
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: NodeJS Cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+            frontend/node_modules
+            lthn/node_modules
+          key: ${{ runner.os }}-nodejs-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nodejs-
+      - uses: actions/setup-go@v2
+        with:
+          go-version: 1.17
+      - name: GoLang Cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/go/pkg/mod
+            ~/.cache/go-build
+            ~/Library/Caches/go-build
+            %LocalAppData%\go-build
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      - run: npm install --legacy-peer-deps
+      - run: cd frontend && npm install --legacy-peer-deps
+      - name: Install Deno
+        run: iwr https://deno.land/x/install/install.ps1 -useb | iex
+      - name: Build
+        run: npm run ci:windows
+      - name: Update release
+        uses: johnwbyrd/update-release@v1.0.0
+        with:
+          release: alpha
+          token: ${{ secrets.GITHUB_TOKEN }}
+          files: build/bin/lethean.exe
+
