@@ -3,7 +3,7 @@
   "assetdir": "./frontend/dist/lethean-app/browser",
   "frontend:build": "npm run build",
   "frontend:install": "npm install",
-  "frontend:dev": "npm run build",
+  "frontend:dev": "ng build",
   "wailsjsdir": "./",
   "version": "2",
   "Path": "",

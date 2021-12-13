@@ -26,7 +26,10 @@
   "scripts": {
     "ng": "ng",
     "start": "wails dev",
-    "install": "go install github.com/wailsapp/wails/v2/cmd/wails@latest",
+    "install": "run-s wails:install fe:install be:install",
+    "wails:install": "go install github.com/wailsapp/wails/v2/cmd/wails@latest",
+    "fe:install": "cd frontend && npm install --legacy-peer-deps",
+    "be:install": "cd lthn && npm install",
     "build": "cd frontend && npm run build && cd .. && wails build --clean --noPackage",
     "clean": "rimraf build/bin/lethean* build/cli/lth* lthn/node_modules frontend/node_modules frontend/dist lthn/build/lth* **-lock.json",
     "build:macos": "cd lthn && npm run server:build:macos-intel && cd ..  && npm run build -- --platform darwin/universal",
@@ -36,12 +39,14 @@
     "build:linux": "cd lthn && npm run server:build:linux && cd .. && npm run build -- --platform linux",
     "ci:windows": "cd lthn && npm run ci:windows && cd ..  && npm run build -- --platform windows/amd64",
     "sign:macos": "node-codesign build/bin/lethean.app 'Developer ID Application: Lethean LTD (W2DNA5L5DY)'",
-    "dev:git-update": "git submodule update --remote"
+    "dev:git-update": "git submodule sync && git update",
+    "dev:setup": "npm run wails:install && cd frontend && npm run build && cd .."
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
     "eslint": "^8.3.0",
+    "npm-run-all": "^4.1.5",
     "rimraf": "^3.0.2"
   }
 }
