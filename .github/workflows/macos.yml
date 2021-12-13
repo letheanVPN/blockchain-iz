@@ -23,9 +23,9 @@ jobs:
             node_modules
             frontend/node_modules
             lthn/node_modules
-          key: ${{ runner.os }}-nodejs-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-intel-nodejs-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-nodejs-
+            ${{ runner.os }}-intel-nodejs-
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
@@ -38,7 +38,7 @@ jobs:
             ~/.cache/go-build
             ~/Library/Caches/go-build
             %LocalAppData%\go-build
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          key: ${{ runner.os }}-intel-go-${{ hashFiles('**/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-
       - run: npm install --legacy-peer-deps
@@ -71,9 +71,9 @@ jobs:
             node_modules
             frontend/node_modules
             lthn/node_modules
-          key: ${{ runner.os }}-nodejs-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-arm-nodejs-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-nodejs-
+            ${{ runner.os }}-arm-nodejs-
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
@@ -86,7 +86,7 @@ jobs:
             ~/.cache/go-build
             ~/Library/Caches/go-build
             %LocalAppData%\go-build
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          key: ${{ runner.os }}-arm-go-${{ hashFiles('**/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-
       - run: npm install --legacy-peer-deps
