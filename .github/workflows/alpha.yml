@@ -16,31 +16,10 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '16'
-      - name: NodeJS Cache
-        uses: actions/cache@v2
-        with:
-          path: |
-            node_modules
-            frontend/node_modules
-            lthn/node_modules
-          key: ${{ runner.os }}-nodejs-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nodejs-
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
           go-version: 1.17
-      - name: GoLang Cache
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/go/pkg/mod
-            ~/.cache/go-build
-            ~/Library/Caches/go-build
-            %LocalAppData%\go-build
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
       - run: npm install --legacy-peer-deps
       - run: cd frontend && npm install --legacy-peer-deps
       - name: Install Deno
@@ -64,31 +43,10 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '16'
-      - name: NodeJS Cache
-        uses: actions/cache@v2
-        with:
-          path: |
-            node_modules
-            frontend/node_modules
-            lthn/node_modules
-          key: ${{ runner.os }}-nodejs-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nodejs-
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
           go-version: 1.17
-      - name: GoLang Cache
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/go/pkg/mod
-            ~/.cache/go-build
-            ~/Library/Caches/go-build
-            %LocalAppData%\go-build
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
       - run: npm install --legacy-peer-deps
       - run: cd frontend && npm install --legacy-peer-deps
       - name: Install Deno
@@ -111,30 +69,9 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '16'
-      - name: NodeJS Cache
-        uses: actions/cache@v2
-        with:
-          path: |
-            node_modules
-            frontend/node_modules
-            lthn/node_modules
-          key: ${{ runner.os }}-nodejs-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nodejs-
       - uses: actions/setup-go@v2
         with:
           go-version: 1.17
-      - name: GoLang Cache
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/go/pkg/mod
-            ~/.cache/go-build
-            ~/Library/Caches/go-build
-            %LocalAppData%\go-build
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
       - run: npm install --legacy-peer-deps
       - run: cd frontend && npm install --legacy-peer-deps
       - name: Install Deno
