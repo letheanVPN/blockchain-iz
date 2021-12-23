@@ -1101,7 +1101,7 @@ char *strsep(char **stringp, const char *delim);
 int isblank(int c);
 #endif
 
-#if defined(HAVE_INET_NTOP) && !HAVE_DECL_INET_NTOP
+#if defined(HAVE_INET_NTOP) && !defined(HAVE_DECL_INET_NTOP)
 const char *inet_ntop(int af, const void *__restrict src, char *__restrict dst, socklen_t size);
 #endif
 

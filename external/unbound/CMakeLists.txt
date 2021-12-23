@@ -37,6 +37,7 @@ include(configure_checks.cmake)
 if (WIN32)
   set(USE_MINI_EVENT 1)
   set(USE_WINSOCK 1)
+  set(HAVE_DECL_INET_NTOP 1)
 else ()
   find_package(PkgConfig REQUIRED)
   set(USE_MINI_EVENT 1)
@@ -206,7 +207,30 @@ if (MINGW)
   # library is implicit with a link in msys).
   find_library(win32pthread
     NAMES libwinpthread-1.dll)
-  foreach (input IN LISTS win32pthread OPENSSL_LIBRARIES)
+
+  find_library(std_lib_dll
+    NAMES libstdc++-6.dll)
+
+  find_library(lib_s_seh_dll
+    NAMES libgcc_s_seh-1.dll)
+
+
+  if (NOT win32pthread)
+    message(STATUS "libwinpthread not found, setting manualy")
+    set(win32pthread "${MSYS2_FOLDER}/mingw64/bin/libwinpthread-1.dll")
+  endif()
+
+  if (NOT std_lib_dll)
+    message(STATUS "libstdc++ not found, setting manualy")
+    set(std_lib_dll "${MSYS2_FOLDER}/mingw64/bin/libstdc++-6.dll")
+  endif()
+
+  if (NOT lib_s_seh_dll)
+    message(STATUS "libgcc_s_seh-1.dll not found, setting manualy")
+    set(lib_s_seh_dll "${MSYS2_FOLDER}/mingw64/bin/libgcc_s_seh-1.dll")
+  endif()
+
+  foreach (input IN LISTS win32pthread std_lib_dll lib_s_seh_dll)
     # Copy shared libraries into the build tree so that no PATH manipulation is
     # necessary.
     get_filename_component(name "${input}" NAME)

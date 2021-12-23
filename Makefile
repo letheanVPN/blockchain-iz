@@ -108,6 +108,9 @@ release-static-win64:
 	mkdir -p build/release
 	cd build/release && cmake -G "MSYS Makefiles" -D STATIC=ON -D ARCH="x86-64" -D BUILD_64=ON -D CMAKE_BUILD_TYPE=Release -D BUILD_TAG="win-x64" -D CMAKE_TOOLCHAIN_FILE=../../cmake/64-bit-toolchain.cmake -D MSYS2_FOLDER=$(shell cd ${MINGW_PREFIX}/.. && pwd -W) ../.. && $(MAKE)
 
+release-static-win64-boost:
+	cd boost && ./bootstrap.sh && ./b2 --prefix=$(shell cd ${MINGW_PREFIX} && pwd -W) --layout=system address-model=64 runtime-link=static link=static variant=release threading=multi --with-system --with-filesystem --with-thread --with-date_time --with-chrono --with-regex --with-serialization --with-program_options --with-atomic --with-locale install
+
 release-static-win32:
 	mkdir -p build/release
 	cd build/release && cmake -G "MSYS Makefiles" -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=Release -D BUILD_TAG="win-x32" -D CMAKE_TOOLCHAIN_FILE=../../cmake/32-bit-toolchain.cmake -D MSYS2_FOLDER=$(shell cd ${MINGW_PREFIX}/.. && pwd -W) ../.. && $(MAKE)

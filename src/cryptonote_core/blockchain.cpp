@@ -4376,4 +4376,5 @@ bool Blockchain::for_all_outputs(std::function<bool(uint64_t amount, const crypt
 
 namespace cryptonote {
 template bool Blockchain::get_transactions(const std::vector<crypto::hash>&, std::list<transaction>&, std::list<crypto::hash>&) const;
+template bool Blockchain::get_transactions_blobs(const std::vector<crypto::hash>&, std::list<cryptonote::blobdata>&, std::list<crypto::hash>&) const;
 }

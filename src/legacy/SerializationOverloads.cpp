@@ -17,6 +17,7 @@
 
 #include "SerializationOverloads.h"
 
+#include <stdexcept>
 #include <limits>
 
 namespace CryptoNote {

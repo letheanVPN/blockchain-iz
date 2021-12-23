@@ -5,6 +5,7 @@
 [![Linux](https://github.com/letheanVPN/blockchain/actions/workflows/linux.yml/badge.svg?branch=release-3.1.0)](https://github.com/letheanVPN/blockchain/actions/workflows/linux.yml)
 
 - Web: [www.lt.hn](https://lt.hn/)
+- Email: [hello@lt.hn](mailto:hello@lt.hn)
 - Exchange: [BTC-LTHN](https://tradeogre.com/exchange/BTC-LTHN), [LTC-LTHN](https://tradeogre.com/exchange/LTC-LTHN)
 - Social media: [Discord](https://discord.gg/6ARhyAc), [Twitter](https://twitter.com/letheanVPN), [Facebook](https://www.facebook.com/lethean.io/), [LinkedIn](https://www.linkedin.com/company/lethean/), [Reddit](https://www.reddit.com/r/Lethean), [Medium](https://medium.com/@letheanVPN), [YouTube](https://www.youtube.com/channel/UCKa_Nw7JysDxgcBJYnraUVA/featured?view_as=subscriber)
 - Docker Hub: [lthn/chain:release-3.1.0](https://hub.docker.com/r/lthn/chain/tags?page=1&name=release-3.1)
@@ -26,12 +27,17 @@ cryptocurrency ecosystem effortlessly, keeping transactional and operational dat
 
 If you have a fix or code change, feel free to submit it as a pull request directly to the "main" branch.
 
+## Projects We Sponsor
 
-## Lethean software updates and consensus protocol changes (hard fork schedule)
+Wails.io              |  MkDocs Material
+:-------------------------:|:-------------------------:        
+ [ <img src="https://raw.githubusercontent.com/wailsapp/wails/master/logo.png" width="250px">](https://wails.io)  | [ ![MkDocs Material](https://raw.githubusercontent.com/squidfunk/mkdocs-material/master/.github/assets/logo.svg)](https://squidfunk.github.io/mkdocs-material/)
 
-Lethean uses a fixed-schedule hard fork mechanism to implement new features. This means that users of Lethean (end users and service providers) need to run current versions and update their software on a regular schedule.
 
-**The last hard fork was on March 9, 2019. Version 3.1.0 (Congo) or later of the software is required to be compliant with the latest hard fork!**
+
+
+
+
 
 ## Sponsors
 Docker              |  GitLab
