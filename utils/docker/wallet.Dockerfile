@@ -1,4 +1,4 @@
-FROM debian:11.6-slim
+FROM debian:bullseye-20230814-slim
 
 ARG DAEMON_CHAIN=seed.lethean.io:48782
 ENV DAEMON_CHAIN=${DAEMON_CHAIN}
