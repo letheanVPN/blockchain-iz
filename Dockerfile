@@ -12,7 +12,7 @@ RUN make -j$(nproc) ${RELEASE_TYPE}
 
 RUN make ci-release
 
-FROM debian:11.6-slim as container
+FROM debian:bullseye-20231009-slim as container
 
 COPY --from=build /lethean/build/packaged/lethean* /usr/local/bin
 RUN apt-get update && apt-get install -y ca-certificates
