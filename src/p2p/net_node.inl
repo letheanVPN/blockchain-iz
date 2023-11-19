@@ -413,9 +413,9 @@ namespace nodetool
     }
     else
     {
-      full_addrs.insert("88.99.61.2:48772"); // seed.lethean.io
-	  full_addrs.insert("46.4.23.58:48772"); // node.hashvault.pro
-
+      
+	full_addrs.insert("185.240.242.36:48772"); // node.hashvault.pro
+//full_addrs.insert("88.99.61.2:48772"); // seed.lethean.io
     }
     return full_addrs;
   }
