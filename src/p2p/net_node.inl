@@ -409,13 +409,12 @@ namespace nodetool
     std::set<std::string> full_addrs;
     if (testnet)
     {
-		full_addrs.insert("195.201.207.40:38772");
+		  full_addrs.insert("78.129.252.12:38772");
     }
     else
     {
-      
-	full_addrs.insert("185.240.242.36:48772"); // node.hashvault.pro
-//full_addrs.insert("88.99.61.2:48772"); // seed.lethean.io
+	    full_addrs.insert("185.240.242.36:48772"); // node.hashvault.pro
+      full_addrs.insert("78.129.252.12:48772"); // seed.lethean.io
     }
     return full_addrs;
   }
