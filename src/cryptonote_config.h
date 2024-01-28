@@ -33,7 +33,7 @@
 #include <string>
 #include <boost/uuid/uuid.hpp>
 
-#define MONERO_VERSION_FULL                             "5.0.1 - Love Train"
+#define MONERO_VERSION_FULL                             "5.0.2 - Love Train"
 #define MONERO_RELEASE_NAME                             "Love Train"
 #define CRYPTONOTE_DNS_TIMEOUT_MS                       20000
 
