@@ -29,10 +29,10 @@
         "url": "https://github.com/letheanVPN/blockchain-iz/releases/latest/download/lethean-cli-macos.zip"
       },
       "linux": {
-        "url": "https://github.com/letheanVPN/blockchain-iz/releases/latest/download/linux.tar"
+        "url": "https://github.com/letheanVPN/blockchain-iz/releases/latest/download/lethean-cli-linux.tar"
       },
       "windows": {
-        "url": "https://github.com/letheanVPN/blockchain-iz/releases/latest/download/windows.tar"
+        "url": "https://github.com/letheanVPN/blockchain-iz/releases/latest/download/lethean-cli-windows.tar"
       }
     }
   }
