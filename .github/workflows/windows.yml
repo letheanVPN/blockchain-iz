@@ -55,7 +55,7 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: windows.tar
-        path: ${{ github.workspace }}/build/lethean-cli-windows.tar
+        path: ${{ github.workspace }}\build\lethean-cli-windows.tar
     - name: Get the version
       id: get_version
       if: startsWith(github.ref, 'refs/tags/')
@@ -64,5 +64,5 @@ jobs:
       uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
       with:
-        files: ${{ github.workspace }}/build/lethean-cli-windows.tar
+        files: ${{ github.workspace }}\build\lethean-cli-windows.tar
 
