@@ -1,6 +1,6 @@
 {
   "code": "blockchain-lthn",
-  "version": "4.0.7a",
+  "version": "5.0.2",
   "tags": {
     "ticker": "lthn"
   },
@@ -8,8 +8,8 @@
   "name": "Lethean Blockchain",
   "install": "lthn",
   "uninstall": [
-    {"rm": "/cli/lthn"},
-    {"rm": "/data/lmdb"}
+    {"rm": "/conf/lthn"},
+    {"rm": "/data/lthn"}
   ],
   "commands": {
     "chain.export": "lethean-blockchain-export --data-dir {data-dir}",
@@ -26,13 +26,13 @@
   "downloads": {
     "x86_64": {
       "darwin": {
-        "url": "https://github.com/letheanVPN/blockchain-iz/releases/download/v4.0.7a/lethean-cli-macos.zip"
+        "url": "https://github.com/letheanVPN/blockchain-iz/releases/latest/download/lethean-cli-macos.zip"
       },
       "linux": {
-        "url": "https://github.com/letheanVPN/blockchain-iz/releases/download/v4.0.7a/linux.tar"
+        "url": "https://github.com/letheanVPN/blockchain-iz/releases/latest/download/lethean-cli-linux.tar"
       },
       "windows": {
-        "url": "https://github.com/letheanVPN/blockchain-iz/releases/download/v4.0.7a/windows.tar"
+        "url": "https://github.com/letheanVPN/blockchain-iz/releases/latest/download/lethean-cli-windows.tar"
       }
     }
   }
