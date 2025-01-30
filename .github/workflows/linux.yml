@@ -63,7 +63,7 @@ jobs:
         ${{env.CCACHE_SETTINGS}}
         ${{env.BUILD_DEFAULT_LINUX}}
     - run: LETHEAN_RELEASE=lethean-cli-linux make zip-release
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v4
       with:
         name: linux.tar
         path: ${{ github.workspace }}/build/lethean-cli-linux.tar
