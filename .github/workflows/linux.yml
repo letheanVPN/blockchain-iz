@@ -6,6 +6,7 @@ on:
       - 'main'
       - 'dev'
       - 'v*'
+      - '291-testnet'
     tags:
       - 'v*'
     paths-ignore:
