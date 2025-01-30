@@ -53,7 +53,7 @@ jobs:
         make release-static-win64-boost
         make release-static-win64 -j2
     - run: LETHEAN_RELEASE=lethean-cli-windows make zip-release
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v4
       with:
         name: windows.tar
         path: ${{ github.workspace }}\build\lethean-cli-windows.tar
