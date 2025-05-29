@@ -21,8 +21,8 @@ on:
 env:
   REMOVE_BUNDLED_BOOST : rm -rf /usr/local/share/boost
   CCACHE_SETTINGS: |
-        ccache --max-size=150M
-        ccache --set-config=compression=true
+    ccache --max-size=150M
+    ccache --set-config=compression=true
 
 jobs:
   windows:
@@ -34,35 +34,37 @@ jobs:
       run:
         shell: msys2 {0}
     steps:
-    - uses: actions/checkout@v1
-      with:
-        submodules: recursive
-    - uses: actions/cache@v2
-      with:
-        path: C:\Users\runneradmin\.ccache
-        key: ccache-${{ runner.os }}-build-${{ github.sha }}
-        restore-keys: ccache-${{ runner.os }}-build-
-    - uses: eine/setup-msys2@v2
-      with:
-        update: true
-        install: mingw-w64-x86_64-toolchain make mingw-w64-x86_64-cmake mingw-w64-x86_64-ccache mingw-w64-x86_64-openssl mingw-w64-x86_64-zeromq mingw-w64-x86_64-libsodium mingw-w64-x86_64-hidapi mingw-w64-x86_64-protobuf-c mingw-w64-x86_64-libusb mingw-w64-x86_64-unbound mingw-w64-x86_64-winpthreads-git mingw-w64-x86_64-libwinpthread-git git
-    - name: build
-      run: |
-        ${{env.CCACHE_SETTINGS}}
-        make release-static-win64-boost
-        make release-static-win64 -j2
-    - run: LETHEAN_RELEASE=lethean-cli-windows make zip-release
-    - uses: actions/upload-artifact@v2
-      with:
-        name: windows.tar
-        path: ${{ github.workspace }}\build\lethean-cli-windows.tar
-    - name: Get the version
-      id: get_version
-      if: startsWith(github.ref, 'refs/tags/')
-      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
-    - name: Release
-      uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')
-      with:
-        files: ${{ github.workspace }}\build\lethean-cli-windows.tar
-
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/cache@v4
+        with:
+          path: C:\Users\runneradmin\.ccache
+          key: ccache-${{ runner.os }}-build-${{ github.sha }}
+          restore-keys: | 
+            ccache-${{ runner.os }}-build-
+      - uses: eine/setup-msys2@v2
+        with:
+          update: true
+          install: mingw-w64-x86_64-toolchain make mingw-w64-x86_64-cmake mingw-w64-x86_64-ccache mingw-w64-x86_64-openssl mingw-w64-x86_64-zeromq mingw-w64-x86_64-libsodium mingw-w64-x86_64-hidapi mingw-w64-x86_64-protobuf-c mingw-w64-x86_64-libusb mingw-w64-x86_64-unbound mingw-w64-x86_64-winpthreads-git mingw-w64-x86_64-libwinpthread-git git
+      - name: build
+        run: |
+          ${{env.CCACHE_SETTINGS}}
+          # Consider if 'make release-static-win64-boost' is still needed
+          # if Boost is now part of the MSYS2 packages or handled differently.
+          make release-static-win64-boost
+          make release-static-win64 -j2
+      - run: LETHEAN_RELEASE=lethean-cli-windows make zip-release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows.tar
+          path: ${{ github.workspace }}\build\lethean-cli-windows.tar
+      - name: Get the version
+        id: get_version
+        if: startsWith(github.ref, 'refs/tags/')
+        run: echo "VERSION=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_OUTPUT
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: ${{ github.workspace }}\build\lethean-cli-windows.tar

@@ -1,5 +1,4 @@
 name: macOS
-
 on:
   workflow_dispatch:
   push:
@@ -22,45 +21,46 @@ on:
 env:
   REMOVE_BUNDLED_BOOST : rm -rf /usr/local/share/boost
   CCACHE_SETTINGS: |
-        ccache --max-size=150M
-        ccache --set-config=compression=true
+    ccache --max-size=150M
+    ccache --set-config=compression=true
 
 jobs:
   macos:
-    runs-on: macos-latest
+    runs-on: macos-12
     env:
       HOMEBREW_MAKE_JOBS: 2
       HOMEBREW_NO_AUTO_UPDATE: 1
       CCACHE_TEMPDIR: /tmp/.ccache-temp
     steps:
-    - uses: actions/checkout@v1
-      with:
-        submodules: recursive
-    - uses: actions/cache@v2
-      with:
-        path: /Users/runner/Library/Caches/ccache
-        key: ccache-${{ runner.os }}-build-${{ github.sha }}
-        restore-keys: ccache-${{ runner.os }}-build-
-    - name: install dependencies
-      run: |
-        brew install hidapi openssl zmq libpgm miniupnpc ldns expat libunwind-headers protobuf ccache
-        brew install mitchellh/gon/gon
-        brew install --build-from-source ./utils/homebrew/boost@169.rb
-    - name: build
-      run: |
-        ${{env.CCACHE_SETTINGS}}
-        make release-static-mac-x86_64 -j${HOMEBREW_MAKE_JOBS}
-    - run: LETHEAN_RELEASE=lethean-cli-macos make zip-release
-    - run: chmod +x build/packaged/lethean*
-    - uses: actions/upload-artifact@v2
-      with:
-        name: lethean-cli-macos
-        path: |
-           ${{ github.workspace }}/build/lethean-cli-macos.tar
-    - name: Release
-      uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')
-      with:
-        files: |
-          ${{ github.workspace }}/build/lethean-cli-macos.tar
-
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/cache@v4
+        with:
+          path: /Users/runner/Library/Caches/ccache
+          key: ccache-${{ runner.os }}-build-${{ github.sha }}
+          restore-keys: |
+            ccache-${{ runner.os }}-build-
+      - name: install dependencies
+        run: |
+          brew install hidapi openssl zmq libpgm miniupnpc ldns expat libunwind-headers protobuf ccache
+          brew install mitchellh/gon/gon
+          # Ensure the custom boost formula path is correct relative to the checkout directory
+          brew install --build-from-source ./utils/homebrew/boost@169.rb
+      - name: build
+        run: |
+          ${{env.CCACHE_SETTINGS}}
+          make release-static-mac-x86_64 -j${HOMEBREW_MAKE_JOBS}
+      - run: LETHEAN_RELEASE=lethean-cli-macos make zip-release
+      - run: chmod +x build/packaged/lethean*
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lethean-cli-macos
+          path: |
+            ${{ github.workspace }}/build/lethean-cli-macos.tar
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            ${{ github.workspace }}/build/lethean-cli-macos.tar
