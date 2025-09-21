@@ -1,5 +1,5 @@
 #define MONERO_VERSION_TAG "@VERSIONTAG@"
 // Passed as directive from compiler
 //#define MONERO_VERSION "5.0.0"
-#define MONERO_RELEASE_NAME "5.0.3 - Love Train"
+#define MONERO_RELEASE_NAME "5.0.4 - Love Train"
 #define MONERO_VERSION_FULL MONERO_VERSION "-" MONERO_VERSION_TAG
